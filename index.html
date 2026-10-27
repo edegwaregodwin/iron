@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Iron &amp; Icebox</title>
+<meta name="description" content="4-day upper/lower training log and two-cook meal plan. Works offline.">
+<meta name="theme-color" content="#0f7a72">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Iron">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="icon" href="./icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: single column app shell, sticky header + tab bar, content max 680px */
+:root{
+  --bg:#f4f6f5; --surface:#ffffff; --surface-2:#eaefed; --line:#d3dbd8;
+  --fg:#16211e; --fg-dim:#5d6b66; --fg-faint:#879590;
+  --accent:#0f7a72; --accent-soft:#d6ebe8; --warm:#b4651f; --warm-soft:#f6e6d4;
+  --on-accent:#ffffff;
+  --font-display:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-body:'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --radius:10px;
+  color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#101614; --surface:#182220; --surface-2:#1f2b28; --line:#2c3a36;
+  --fg:#e8efec; --fg-dim:#9bada7; --fg-faint:#708079;
+  --accent:#4cc3b5; --accent-soft:#17312e; --warm:#e0a062; --warm-soft:#33261a;
+  --on-accent:#06201d;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#101614; --surface:#182220; --surface-2:#1f2b28; --line:#2c3a36;
+  --fg:#e8efec; --fg-dim:#9bada7; --fg-faint:#708079;
+  --accent:#4cc3b5; --accent-soft:#17312e; --warm:#e0a062; --warm-soft:#33261a;
+  --on-accent:#06201d;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:14px;line-height:1.5;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+img{max-width:100%}
+[hidden]{display:none!important}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;line-height:1.2}
+p{margin:0}
+button{font:inherit;color:inherit}
+.wrap{max-width:680px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--line)}
+header.top .wrap{padding-block:12px 0}
+.brand{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.brand h1{font-size:1.1rem;letter-spacing:-.01em}
+.brand .meta{font-size:.72rem;color:var(--fg-faint);text-transform:uppercase;letter-spacing:.08em}
+nav.tabs{display:flex;gap:4px;margin-top:10px}
+nav.tabs button{flex:1;min-width:0;background:none;border:0;border-bottom:2px solid transparent;padding:10px 4px;font-family:var(--font-display);font-size:.84rem;font-weight:600;color:var(--fg-dim);cursor:pointer}
+nav.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+main .wrap{padding-block:18px 48px}
+section{display:flex;flex-direction:column;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+.daybtn{width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center}
+.daybtn:hover{border-color:var(--accent)}
+.daybtn .idx{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--accent);min-width:2ch;font-variant-numeric:tabular-nums}
+.daybtn .body{flex:1;min-width:0}
+.daybtn .body strong{font-family:var(--font-display);font-size:1rem;display:block}
+.daybtn .body span{font-size:.82rem;color:var(--fg-dim)}
+.chip{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:999px;background:var(--surface-2);color:var(--fg-dim);white-space:nowrap}
+.chip.done{background:var(--accent-soft);color:var(--accent)}
+.chip.warm{background:var(--warm-soft);color:var(--warm)}
+.lede{font-size:.88rem;color:var(--fg-dim)}
+.sessionhead{display:flex;align-items:flex-start;gap:12px;justify-content:space-between}
+.back{background:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:.78rem;cursor:pointer;color:var(--fg-dim)}
+.ex{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.ex:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.ex h3{font-size:.95rem;display:flex;gap:8px;align-items:baseline}
+.ex h3 .tag{font-family:var(--font-body);font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.ex .target{font-size:.78rem;color:var(--fg-dim);margin-top:2px}
+.ex .note{font-size:.78rem;color:var(--fg-faint);margin-top:4px}
+.sets{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.setrow,.colhead{display:grid;grid-template-columns:2.2rem 1fr 1fr 4.6rem;gap:6px;align-items:center}
+.setrow .n{font-size:.74rem;color:var(--fg-faint);font-variant-numeric:tabular-nums}
+.setrow input{width:100%;min-width:0;padding:9px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);font:inherit;font-size:.9rem;font-variant-numeric:tabular-nums}
+.setrow input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.setrow .last{font-size:.72rem;color:var(--fg-faint);text-align:right;font-variant-numeric:tabular-nums}
+.colhead{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--fg-faint);margin-top:10px}
+.save{position:sticky;bottom:0;background:linear-gradient(to top,var(--bg) 72%,transparent);padding-block:12px;padding-bottom:max(12px,env(safe-area-inset-bottom,0px))}
+.btn{width:100%;background:var(--accent);color:var(--on-accent);border:0;border-radius:var(--radius);padding:13px;font-family:var(--font-display);font-weight:600;font-size:.95rem;cursor:pointer}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--fg)}
+.btn[disabled]{opacity:.5;cursor:default}
+.btnrow{display:flex;gap:8px;margin-top:10px}
+.btnrow .btn{flex:1}
+.status{font-size:.78rem;color:var(--fg-dim);text-align:center;margin-top:6px;min-height:1.2em}
+.histrow{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.86rem}
+.histrow:last-child{border-bottom:0}
+.histrow .d{color:var(--fg-dim);font-variant-numeric:tabular-nums;white-space:nowrap}
+.histrow .sub{color:var(--fg-dim);font-size:.8rem}
+.empty{text-align:center;color:var(--fg-dim);font-size:.86rem;padding:26px 10px}
+.empty strong{display:block;font-family:var(--font-display);color:var(--fg);font-size:1rem;margin-bottom:4px}
+details.dish{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
+details.dish:first-of-type{border-top:0;margin-top:0;padding-top:0}
+details.dish summary{cursor:pointer;font-family:var(--font-display);font-weight:600;font-size:.95rem;list-style:none;display:flex;justify-content:space-between;gap:8px;align-items:center}
+details.dish summary::-webkit-details-marker{display:none}
+details.dish ul,details.dish ol{margin:8px 0 0;padding-left:1.1rem;font-size:.85rem;color:var(--fg-dim)}
+details.dish li{margin-bottom:4px}
+.shopgroup{font-family:var(--font-display);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-faint);margin:12px 0 4px}
+.shopgroup:first-child{margin-top:0}
+.shopitem{display:flex;gap:10px;align-items:center;padding:7px 0;font-size:.88rem;cursor:pointer}
+.shopitem input{width:19px;height:19px;accent-color:var(--accent);flex:none}
+.shopitem .q{margin-left:auto;color:var(--fg-faint);font-size:.8rem;text-align:right;font-variant-numeric:tabular-nums}
+.shopitem.on .nm{text-decoration:line-through;color:var(--fg-faint)}
+.macros{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.macro{flex:1 1 90px;background:var(--surface-2);border-radius:8px;padding:8px 10px}
+.macro b{display:block;font-family:var(--font-display);font-size:1.1rem;font-variant-numeric:tabular-nums}
+.macro span{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-faint)}
+.note-bar{font-size:.78rem;color:var(--fg-dim);background:var(--surface-2);border-radius:8px;padding:9px 11px}
+.offline-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--warm);margin-right:5px;vertical-align:middle}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <div class="brand"><h1>Iron &amp; Icebox</h1><span class="meta" id="hdr-meta">4-day upper/lower</span></div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="tab-train" aria-selected="true">Train</button>
+    <button role="tab" id="tab-history" aria-selected="false">History</button>
+    <button role="tab" id="tab-meals" aria-selected="false">Meals</button>
+  </nav>
+</div></header>
+
+<main><div class="wrap">
+  <section id="view-train"></section>
+  <section id="view-session" hidden></section>
+  <section id="view-history" hidden></section>
+  <section id="view-meals" hidden></section>
+</div></main>
+
+<script>
+/* ---------- the plan ---------- */
+const PLAN=[
+ {key:"upperA",n:1,name:"Upper A",day:"Monday",focus:"Horizontal push, vertical pull",
+  ex:[
+   {id:"bench",tag:"1",n:"Barbell bench press",s:4,r:"6–8",rest:"2–3 min",note:"Main strength lift. Add weight before reps."},
+   {id:"csrow",tag:"2",n:"Chest-supported row",s:4,r:"8–10",rest:"2 min",note:"Pull to the lower ribs."},
+   {id:"inclinedb",tag:"3",n:"Incline dumbbell press",s:3,r:"10–12",rest:"60 s",note:"30° bench. Stretch at the bottom."},
+   {id:"latraise",tag:"4A",n:"Cable lateral raise",s:3,r:"12–15",rest:"45 s",note:"One arm at a time, cable behind you."},
+   {id:"ezcurl",tag:"4B",n:"EZ-bar curl",s:3,r:"10–12",rest:"45 s",note:"Elbows pinned to your sides."},
+   {id:"ohtri",tag:"4C",n:"Overhead cable triceps extension",s:3,r:"12–15",rest:"45 s",note:"Rope, full stretch overhead."},
+   {id:"crunch",tag:"5",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",note:"Round the spine, ribs to hips."}]},
+ {key:"lowerA",n:2,name:"Lower A",day:"Tuesday",focus:"Squat",
+  ex:[
+   {id:"squat",tag:"1",n:"Back squat",s:4,r:"5–8",rest:"3 min",note:"Below parallel if your hips allow."},
+   {id:"legpress",tag:"2",n:"Leg press",s:3,r:"10–12",rest:"2 min",note:"Feet mid-platform, knees over toes."},
+   {id:"lunge",tag:"3",n:"Walking lunge",s:2,r:"10–12 / leg",rest:"60 s",note:"Dumbbells at your sides. Long strides."},
+   {id:"seatedcurl",tag:"4A",n:"Seated leg curl",s:3,r:"12–15",rest:"45 s",note:"More stretch than lying — that's the point."},
+   {id:"standcalf",tag:"4B",n:"Standing calf raise",s:3,r:"10–15",rest:"45 s",note:"2-second pause at the bottom."}]},
+ {key:"upperB",n:3,name:"Upper B",day:"Thursday",focus:"Vertical push, horizontal pull",
+  ex:[
+   {id:"ohp",tag:"1",n:"Standing overhead press",s:4,r:"6–8",rest:"2–3 min",note:"Squeeze glutes, don't lean back."},
+   {id:"pullup",tag:"2",n:"Pull-up, weighted if you can",s:3,r:"6–10",rest:"2 min",note:"Neutral-grip pulldowns if 6 clean reps is a stretch."},
+   {id:"cablerow",tag:"3",n:"Seated cable row",s:3,r:"10–12",rest:"60 s",note:"Pause a second at your stomach."},
+   {id:"dbraise",tag:"4A",n:"Dumbbell lateral raise",s:3,r:"15–20",rest:"60 s",note:"Light. Stop at shoulder height."},
+   {id:"inclinecurl",tag:"4B",n:"Incline dumbbell curl",s:3,r:"10–12",rest:"45 s",note:"Bench at 45°, arms hanging behind you."},
+   {id:"pushdown",tag:"4C",n:"Rope pushdown or dips",s:3,r:"10–12",rest:"45 s",note:"Dips if your shoulders are happy."},
+   {id:"facepull",tag:"4D",n:"Face pull",s:3,r:"15–20",rest:"45 s",note:"The only rear-delt work in the week."},
+   {id:"abwheel",tag:"5",n:"Core — ab wheel or long-lever plank",s:2,r:"8–12 or 30 s",rest:"45 s",note:"Ribs down, no sagging."}]},
+ {key:"lowerB",n:4,name:"Lower B",day:"Friday",focus:"Single-leg and posterior chain",
+  ex:[
+   {id:"bulgarian",tag:"1",n:"Bulgarian split squat",s:4,r:"8–10 / leg",rest:"2–3 min",note:"Upright for quads, leaned forward for glutes."},
+   {id:"backext",tag:"2",n:"45° back extension, weighted",s:3,r:"10–12",rest:"2 min",note:"Plate at the chest. Don't hyperextend."},
+   {id:"lyingcurl",tag:"3",n:"Lying leg curl",s:4,r:"10–12",rest:"60 s",note:"Different hip angle to Day 2's seated curl."},
+   {id:"legext",tag:"4A",n:"Leg extension",s:3,r:"12–15",rest:"45 s",note:"Last set as a drop set once a fortnight."},
+   {id:"seatedcalf",tag:"4B",n:"Seated calf raise",s:3,r:"12–15",rest:"45 s",note:"Soleus work — standing covers the other half."}]}
+];
+
+const MEALS=[
+ {day:"Sunday cook",time:"about 75 min",covers:"Mon, Tue, Wed + Thu lunch",
+  dishes:[
+   {name:"Chicken, chorizo and rice traybake",portions:"4 portions",
+    ing:["8 chicken thigh fillets (~900 g)","150 g cooking chorizo, sliced","300 g rice (dry)","700 ml chicken stock","2 red peppers, sliced","1 large onion, diced","4 garlic cloves","2 tsp smoked paprika, 1 tsp oregano","2 tbsp olive oil"],
+    steps:["Oven to 200°C fan. Toss the chicken with oil, paprika, oregano, salt and pepper.","Fry chorizo, onion and peppers in a deep roasting tin on the hob for 5 min, then the garlic for 30 s.","Stir in the dry rice, pour over hot stock, lay the chicken on top, cover tightly with foil.","35 min covered, 10 min uncovered to crisp. Rest 10 min, fork through."]},
+   {name:"Beef and black bean chilli",portions:"5 portions",
+    ing:["1 kg beef mince, 5% (two 500 g packs)","2 tins chopped tomatoes","2 tins black beans, drained","1 onion, 2 peppers, 4 garlic cloves","2 tbsp tomato purée","1 tbsp cumin, 2 tsp smoked paprika, chilli flakes","1 beef stock cube"],
+    steps:["Brown the mince hard in two batches so it colours rather than steams.","Soften onion and peppers 8 min, add garlic, spices and purée for 2 min.","Return the mince with tomatoes, beans and the crumbled cube.","Simmer uncovered 30–40 min until thick. Season at the end."]}]},
+ {day:"Wednesday cook",time:"about 60 min",covers:"Thu dinner, Fri, Sat, Sun",
+  dishes:[
+   {name:"Harissa chicken and chickpea stew",portions:"4 portions",
+    ing:["8 chicken thigh fillets (~900 g), halved","2 tins chickpeas, drained","1 tin chopped tomatoes","3 tbsp rose harissa (or plain harissa + 1 tsp honey)","1 onion, 3 garlic cloves, 1 tbsp ginger","400 ml chicken stock","200 g spinach, juice of half a lemon"],
+    steps:["Brown the chicken 4 min a side in a casserole. Set aside.","Soften the onion 6 min, add garlic, ginger and harissa for 2 min.","Return the chicken with tomatoes, chickpeas and stock. 25 min covered, 10 uncovered.","Wilt the spinach through at the end, then the lemon. Couscous on the night."]},
+   {name:"Turkey bolognese",portions:"5 portions",
+    ing:["1 kg turkey mince, 8% (two 500 g packs)","2 tins chopped tomatoes","2 tbsp tomato purée","1 onion, 2 carrots, 2 celery sticks, finely diced","3 garlic cloves, oregano, 1 bay leaf","1 chicken stock cube, 100 ml milk"],
+    steps:["Soften onion, carrot and celery 10 min — don't rush this.","Garlic and purée 2 min, then the turkey until no pink remains. Drain the rendered fat.","Milk in and cooked off, then tomatoes, oregano, bay and the crumbled cube.","Simmer uncovered 35–40 min. Pasta fresh on the night."]}]}
+];
+
+const SHOPPING=[
+ {group:"Meat",items:[["Chicken thigh fillets","1.8 kg"],["Beef mince 5%","2 × 500 g"],["Turkey mince 8%","2 × 500 g"],["Cooking chorizo","150 g"]]},
+ {group:"Tins",items:[["Chopped tomatoes","5"],["Black beans","2"],["Chickpeas","2"]]},
+ {group:"Dry goods",items:[["Basmati rice","1 kg"],["Pasta","500 g"],["Couscous","500 g"],["Porridge oats","1 kg"],["Granola","500 g"],["Mixed nuts","400 g"]]},
+ {group:"Veg",items:[["Onions","4"],["Red peppers","4"],["Carrots","1 pack"],["Celery","1 pack"],["Garlic","2 bulbs"],["Fresh ginger","1 piece"],["Spinach","200 g"],["Bananas","7"]]},
+ {group:"Chilled & freezer",items:[["Greek yoghurt","2 × 1 kg"],["Cottage cheese or skyr","1.4 kg"],["Whole milk","2 L"],["Eggs","12"],["Frozen berries","500 g"]]},
+ {group:"Cupboard",items:[["Rose harissa","1 jar"],["Tomato purée","1 tube"],["Stock cubes","chicken + beef"],["Spices","paprika, cumin, oregano, chilli"],["Olive oil, honey","as needed"]]}
+];
+
+/* ---------- storage: this device only ---------- */
+const KEY_S="ii.sessions.v1",KEY_SHOP="ii.shopping.v1";
+function load(key,fallback){try{const v=localStorage.getItem(key);return v?JSON.parse(v):fallback;}catch(e){return fallback;}}
+function save(key,val){try{localStorage.setItem(key,JSON.stringify(val));return true;}catch(e){return false;}}
+let sessions=load(KEY_S,[]),shopChecked=load(KEY_SHOP,{});
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const views={train:$("#view-train"),session:$("#view-session"),history:$("#view-history"),meals:$("#view-meals")};
+const tabs={train:$("#tab-train"),history:$("#tab-history"),meals:$("#tab-meals")};
+let current=null;
+function show(v){for(const k in views)views[k].hidden=true;views[v].hidden=false;
+  for(const k in tabs)tabs[k].setAttribute("aria-selected",String(k===v||(v==="session"&&k==="train")));}
+Object.keys(tabs).forEach(k=>tabs[k].addEventListener("click",()=>{
+  show(k);if(k==="train")renderTrain();if(k==="history")renderHistory();
+}));
+const today=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);};
+function fmtDate(iso){const d=new Date(iso+"T12:00:00");return d.toLocaleDateString("en-GB",{day:"numeric",month:"short"});}
+function daysAgo(iso){const d=Math.round((Date.now()-new Date(iso+"T12:00:00").getTime())/86400000);
+  return d<=0?"today":d===1?"yesterday":d+" days ago";}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function lastFor(key){return sessions.filter(s=>s.dayKey===key).sort((a,b)=>b.date<a.date?-1:1)[0];}
+
+/* ---------- train ---------- */
+function renderTrain(){
+  views.train.innerHTML=
+   '<div class="card"><h2 style="font-size:1rem">This week</h2>'+
+   '<p class="lede" style="margin-top:4px">60 minutes of lifting a day, warm-up on top. Tap a day to log it.</p></div>'+
+   PLAN.map(d=>{
+     const last=lastFor(d.key);
+     const chip=last?'<span class="chip done">'+esc(daysAgo(last.date))+'</span>':'<span class="chip">not logged</span>';
+     return '<button class="daybtn" data-day="'+d.key+'"><span class="idx">'+d.n+'</span>'+
+       '<span class="body"><strong>'+esc(d.name)+'</strong><span>'+esc(d.day)+' · '+esc(d.focus)+'</span></span>'+chip+'</button>';
+   }).join("")+
+   '<div class="note-bar">Cardio is one 30–40 min steady session a week, on a rest day. Core sits on the two upper days.</div>';
+  views.train.querySelectorAll("[data-day]").forEach(b=>b.addEventListener("click",()=>openSession(b.dataset.day)));
+}
+
+function openSession(key){
+  const d=PLAN.find(x=>x.key===key);current=d;
+  const last=lastFor(key),lastSets=(last&&last.sets)||{};
+  views.session.innerHTML=
+   '<div class="sessionhead"><div><h2 style="font-size:1.25rem">'+esc(d.name)+'</h2>'+
+   '<p class="lede">'+esc(d.day)+' · '+esc(d.focus)+'</p></div>'+
+   '<button class="back" id="back">Back</button></div>'+
+   (last?'<div class="note-bar">Last logged '+esc(daysAgo(last.date))+' ('+esc(fmtDate(last.date))+'). Those numbers sit on the right of each row.</div>':'')+
+   '<div class="card">'+d.ex.map(e=>{
+     const prev=lastSets[e.id]||[];
+     let rows='<div class="colhead"><span>Set</span><span>kg</span><span>Reps</span><span>Last</span></div><div class="sets">';
+     for(let i=0;i<e.s;i++){
+       const p=prev[i];
+       rows+='<div class="setrow"><span class="n">'+(i+1)+'</span>'+
+         '<input id="'+e.id+'-w-'+i+'" inputmode="decimal" placeholder="kg" aria-label="'+esc(e.n)+' set '+(i+1)+' weight">'+
+         '<input id="'+e.id+'-r-'+i+'" inputmode="numeric" placeholder="reps" aria-label="'+esc(e.n)+' set '+(i+1)+' reps">'+
+         '<span class="last">'+(p?esc(p.w)+" × "+esc(p.r):"—")+'</span></div>';
+     }
+     return '<div class="ex"><h3><span class="tag">'+esc(e.tag)+'</span>'+esc(e.n)+'</h3>'+
+       '<p class="target">'+e.s+' × '+esc(e.r)+' · rest '+esc(e.rest)+'</p>'+
+       '<p class="note">'+esc(e.note)+'</p>'+rows+'</div></div>';
+   }).join("")+'</div>'+
+   '<div class="save"><button class="btn" id="savebtn">Save session</button><p class="status" id="status"></p></div>';
+  $("#back").addEventListener("click",()=>{show("train");renderTrain();});
+  $("#savebtn").addEventListener("click",saveSession);
+  show("session");window.scrollTo(0,0);
+}
+
+function saveSession(){
+  if(!current)return;
+  const st=$("#status"),sets={};let count=0;
+  current.ex.forEach(e=>{
+    const arr=[];
+    for(let i=0;i<e.s;i++){
+      const w=($("#"+e.id+"-w-"+i)||{}).value||"",r=($("#"+e.id+"-r-"+i)||{}).value||"";
+      if(w.trim()||r.trim()){arr.push({w:w.trim(),r:r.trim()});count++;}
+    }
+    if(arr.length)sets[e.id]=arr;
+  });
+  if(!count){st.textContent="Nothing entered yet — add a weight or rep count first.";return;}
+  const date=today(),id=date+"__"+current.key;
+  const rec={id:id,date:date,dayKey:current.key,dayName:current.name,sets:sets,savedAt:new Date().toISOString()};
+  sessions=sessions.filter(s=>s.id!==id);sessions.push(rec);
+  sessions.sort((a,b)=>a.date<b.date?1:-1);
+  st.textContent=save(KEY_S,sessions)
+    ? "Saved on this device — "+count+" sets logged."
+    : "Couldn't write to storage. If you're in a private window, try a normal one.";
+}
+
+/* ---------- history ---------- */
+function renderHistory(){
+  const body=sessions.length
+   ? '<div class="card"><h2 style="font-size:1rem;margin-bottom:6px">Logged sessions</h2>'+
+     sessions.slice(0,60).map(s=>{
+       const first=Object.keys(s.sets||{})[0];
+       const line=first&&s.sets[first].length?s.sets[first].map(x=>x.w+"×"+x.r).join(", "):"";
+       return '<div class="histrow"><span><strong>'+esc(s.dayName||s.dayKey)+'</strong><br>'+
+         '<span class="sub">'+esc(line)+'</span></span><span class="d">'+esc(fmtDate(s.date))+'</span></div>';
+     }).join("")+'</div>'
+   : '<div class="card"><div class="empty"><strong>No sessions logged yet</strong>Log a day from the Train tab and it appears here, newest first.</div></div>';
+  views.history.innerHTML=body+
+   '<div class="note-bar">Double progression: hit the top of the rep range on every set, then add 2.5 kg upstairs or 5 kg downstairs.</div>'+
+   '<div class="card"><h2 style="font-size:1rem">Your data</h2>'+
+   '<p class="lede" style="margin-top:4px">Everything is stored on this device only. Export a backup now and then — and send me the file when you want the plan updated against your real numbers.</p>'+
+   '<div class="btnrow"><button class="btn ghost" id="export">Export JSON</button>'+
+   '<button class="btn ghost" id="importbtn">Import</button></div>'+
+   '<input type="file" id="importfile" accept="application/json,.json" hidden>'+
+   '<p class="status" id="datastatus"></p></div>';
+  $("#export").addEventListener("click",exportData);
+  $("#importbtn").addEventListener("click",()=>$("#importfile").click());
+  $("#importfile").addEventListener("change",importData);
+}
+function exportData(){
+  const blob=new Blob([JSON.stringify({app:"iron-icebox",exported:new Date().toISOString(),sessions:sessions,shopping:shopChecked},null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="iron-icebox-"+today()+".json";document.body.appendChild(a);a.click();
+  a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  $("#datastatus").textContent="Export started — check your downloads.";
+}
+function importData(e){
+  const f=e.target.files&&e.target.files[0];if(!f)return;
+  const rd=new FileReader();
+  rd.onload=()=>{
+    try{
+      const d=JSON.parse(rd.result);
+      if(!d||!Array.isArray(d.sessions))throw new Error("shape");
+      const byId={};sessions.concat(d.sessions).forEach(s=>{if(s&&s.id)byId[s.id]=s;});
+      sessions=Object.values(byId).sort((a,b)=>a.date<b.date?1:-1);
+      if(d.shopping&&typeof d.shopping==="object")shopChecked=d.shopping;
+      save(KEY_S,sessions);save(KEY_SHOP,shopChecked);
+      renderHistory();renderShop();
+      $("#datastatus").textContent="Imported — "+sessions.length+" sessions now stored.";
+    }catch(err){$("#datastatus").textContent="That file isn't an Iron & Icebox export.";}
+  };
+  rd.readAsText(f);e.target.value="";
+}
+
+/* ---------- meals ---------- */
+function renderMeals(){
+  views.meals.innerHTML=
+   '<div class="card"><h2 style="font-size:1rem">Two cooks a week</h2>'+
+   '<p class="lede" style="margin-top:4px">Nine portions per cook — lunch and dinner for four days, one spare to freeze.</p>'+
+   '<div class="macros"><div class="macro"><b>2,400</b><span>kcal / day</span></div>'+
+   '<div class="macro"><b>180 g</b><span>protein</span></div>'+
+   '<div class="macro"><b>100 g</b><span>dry carbs / meal</span></div></div></div>'+
+   MEALS.map(c=>'<div class="card"><h2 style="font-size:1rem">'+esc(c.day)+'</h2>'+
+     '<p class="lede" style="margin-bottom:10px">'+esc(c.time)+' · covers '+esc(c.covers)+'</p>'+
+     c.dishes.map(d=>'<details class="dish"><summary><span>'+esc(d.name)+'</span><span class="chip warm">'+esc(d.portions)+'</span></summary>'+
+       '<ul>'+d.ing.map(i=>'<li>'+esc(i)+'</li>').join("")+'</ul>'+
+       '<ol>'+d.steps.map(s=>'<li>'+esc(s)+'</li>').join("")+'</ol></details>').join("")+'</div>').join("")+
+   '<div class="card"><h2 style="font-size:1rem">Breakfast and snacks</h2>'+
+   '<ul style="margin:8px 0 0;padding-left:1.1rem;font-size:.86rem;color:var(--fg-dim)">'+
+   '<li>300 g Greek yoghurt, 50 g granola, frozen berries, 1 tbsp honey</li>'+
+   '<li>Banana + 30 g whey — after training on lifting days</li>'+
+   '<li>200 g cottage cheese or skyr + 30 g nuts</li></ul></div>'+
+   '<div class="card"><h2 style="font-size:1rem">Waitrose list</h2><div id="shop"></div>'+
+   '<div class="btnrow"><button class="btn ghost" id="clearshop">Clear ticks</button></div></div>'+
+   '<div class="note-bar">Cool everything within an hour, portion it straight away, eat within four days. Rice fresh on the night.</div>';
+  renderShop();
+  $("#clearshop").addEventListener("click",()=>{shopChecked={};save(KEY_SHOP,shopChecked);renderShop();});
+}
+function renderShop(){
+  const el=$("#shop");if(!el)return;
+  el.innerHTML=SHOPPING.map(g=>'<p class="shopgroup">'+esc(g.group)+'</p>'+g.items.map(function(it){
+    const nm=it[0],q=it[1],k=nm.replace(/[^a-z0-9]/gi,"").toLowerCase(),on=!!shopChecked[k];
+    return '<label class="shopitem'+(on?" on":"")+'" data-k="'+k+'"><input type="checkbox"'+(on?" checked":"")+'>'+
+      '<span class="nm">'+esc(nm)+'</span><span class="q">'+esc(q)+'</span></label>';
+  }).join("")).join("");
+  el.querySelectorAll(".shopitem input").forEach(inp=>inp.addEventListener("change",ev=>{
+    const k=ev.target.closest(".shopitem").dataset.k;
+    if(ev.target.checked)shopChecked[k]=true;else delete shopChecked[k];
+    save(KEY_SHOP,shopChecked);renderShop();
+  }));
+}
+
+/* ---------- boot ---------- */
+function setNet(){
+  const m=$("#hdr-meta");
+  m.innerHTML=navigator.onLine?"4-day upper/lower":'<span class="offline-dot"></span>offline — still logging';
+}
+window.addEventListener("online",setNet);window.addEventListener("offline",setNet);
+renderTrain();renderMeals();renderHistory();setNet();
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{navigator.serviceWorker.register("./sw.js").catch(()=>{});});
+}
+</script>
+</body>
+</html>
