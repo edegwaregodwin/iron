@@ -256,7 +256,7 @@ function renderTrain(){
      return '<button class="daybtn" data-day="'+d.key+'"><span class="idx">'+d.n+'</span>'+
        '<span class="body"><strong>'+esc(d.name)+'</strong><span>'+esc(d.day)+' · '+esc(d.focus)+'</span></span>'+chip+'</button>';
    }).join("")+
-   '<div class="note-bar">Cardio is one 30–40 min steady session a week, on a rest day. Core sits on the two upper days.</div>';
+   '<div class="note-bar">Cardio is one 30–40 min steady session a week, on a rest day. Core runs twice a week: cable crunch on Upper A, ab wheel on Lower A.</div>';
   views.train.querySelectorAll("[data-day]").forEach(b=>b.addEventListener("click",()=>openSession(b.dataset.day)));
 }
 
