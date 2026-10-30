@@ -47,7 +47,10 @@ caches everything. After that it opens and logs with the phone in airplane mode.
   the app does not lose them — the day shows an "unsaved" flag until you save, and
   reopening it picks up where you left off. Saving is what adds the session to your
   history. Unsaved drafts are dropped after three days.
-- **History** — every logged session, newest first, plus Export and Import.
+- **History** — every logged session, newest first, each showing its exercise and set
+  count and total load. Tap one to open it in full: every exercise, every set's weight
+  and reps against its target, and the session's total kg lifted. A session can be
+  deleted from there (two taps). Export and Import live at the bottom of the tab.
 - **Meals** — switch between Week 1 and Week 2. Each cook day has a minute-by-minute
   timeline and full recipes with per-portion calories, protein and cooked weight, plus
   reheating notes, swaps and troubleshooting.

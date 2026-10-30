@@ -1,5 +1,5 @@
 /* Iron & Icebox service worker — offline-first app shell. */
-const VERSION = 'ii-v6';
+const VERSION = 'ii-v7';
 const SHELL = [
   './',
   './index.html',

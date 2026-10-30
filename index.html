@@ -131,6 +131,21 @@ details li{margin-bottom:4px}
 .weekpick button{flex:1;background:none;border:0;border-radius:999px;padding:8px 10px;font-family:var(--font-display);font-weight:600;font-size:.82rem;color:var(--fg-dim);cursor:pointer}
 .weekpick button[aria-pressed="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .portionline{font-size:.76rem;color:var(--fg-faint);margin-top:8px}
+.histrow{cursor:pointer;background:none;border:0;border-bottom:1px solid var(--line);width:100%;text-align:left;font:inherit;color:inherit}
+.histrow:hover .nm2{color:var(--accent)}
+.histrow .chev{color:var(--fg-faint);font-size:1rem;flex:none;margin-left:4px}
+.logex{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
+.logex:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.logex h3{font-size:.9rem}
+.logex .tagline{font-size:.74rem;color:var(--fg-faint);margin-top:1px}
+.logsets{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.logset{background:var(--surface-2);border-radius:7px;padding:5px 9px;font-size:.84rem;font-variant-numeric:tabular-nums}
+.logset b{font-weight:600}
+.logset i{font-style:normal;color:var(--fg-faint);font-size:.72rem;margin-right:4px}
+.sumrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.sumrow .macro{flex:1 1 86px}
+.danger{background:none;border:1px solid var(--line);color:var(--fg-dim);border-radius:var(--radius);padding:11px;width:100%;font-family:var(--font-display);font-weight:600;font-size:.88rem;cursor:pointer}
+.danger.armed{border-color:var(--warm);color:var(--warm)}
 .qa{border-top:1px solid var(--line);padding:10px 0}
 .qa:first-of-type{border-top:0}
 .qa strong{font-family:var(--font-display);font-size:.88rem;display:block}
@@ -168,6 +183,7 @@ details li{margin-bottom:4px}
   <section id="view-history" hidden></section>
   <section id="view-meals" hidden></section>
   <section id="view-shop" hidden></section>
+  <section id="view-log" hidden></section>
 </div></main>
 
 <div id="timerbar" hidden>
@@ -190,11 +206,11 @@ let sessions=load(KEY_S,[]),shopChecked=load(KEY_SHOP,{}),drafts=load(KEY_DRAFT,
 
 /* ---------- helpers ---------- */
 const $=s=>document.querySelector(s);
-const views={train:$("#view-train"),session:$("#view-session"),history:$("#view-history"),meals:$("#view-meals"),shop:$("#view-shop")};
+const views={train:$("#view-train"),session:$("#view-session"),history:$("#view-history"),meals:$("#view-meals"),shop:$("#view-shop"),log:$("#view-log")};
 const tabs={train:$("#tab-train"),history:$("#tab-history"),meals:$("#tab-meals"),shop:$("#tab-shop")};
 let current=null,wk=0;
 function show(v){for(const k in views)views[k].hidden=true;views[v].hidden=false;
-  for(const k in tabs)tabs[k].setAttribute("aria-selected",String(k===v||(v==="session"&&k==="train")));}
+  for(const k in tabs)tabs[k].setAttribute("aria-selected",String(k===v||(v==="session"&&k==="train")||(v==="log"&&k==="history")));}
 Object.keys(tabs).forEach(k=>tabs[k].addEventListener("click",()=>{
   if(current&&!views.session.hidden){clearTimeout(dTimer);writeDraft();}
   show(k);if(k==="train")renderTrain();if(k==="history")renderHistory();if(k==="shop")renderShop();
@@ -373,11 +389,14 @@ function saveSession(){
 function renderHistory(){
   const body=sessions.length
    ? '<div class="card"><h2 style="margin-bottom:6px">Logged sessions</h2>'+
+     '<p class="lede" style="margin-bottom:4px">Tap one to see every set.</p>'+
      sessions.slice(0,60).map(s=>{
-       const first=Object.keys(s.sets||{})[0];
-       const line=first&&s.sets[first].length?s.sets[first].map(x=>x.w+"×"+x.r).join(", "):"";
-       return '<div class="histrow"><span><strong>'+esc(s.dayName||s.dayKey)+'</strong><br>'+
-         '<span class="sub">'+esc(line)+'</span></span><span class="d">'+esc(fmtDate(s.date))+'</span></div>';
+       const st=logStats(s);
+       return '<button class="histrow" data-id="'+esc(s.id)+'">'+
+         '<span style="flex:1;min-width:0"><strong class="nm2">'+esc(s.dayName||s.dayKey)+'</strong><br>'+
+         '<span class="sub">'+st.exCount+' exercise'+(st.exCount===1?"":"s")+" \u00b7 "+st.setCount+' set'+(st.setCount===1?"":"s")+
+         (st.tonnage?" \u00b7 "+st.tonnage.toLocaleString()+" kg total":"")+'</span></span>'+
+         '<span class="d">'+esc(fmtDate(s.date))+'</span><span class="chev">\u203a</span></button>';
      }).join("")+'</div>'
    : '<div class="card"><div class="empty"><strong>No sessions logged yet</strong>Log a day from the Train tab and it appears here, newest first.</div></div>';
   views.history.innerHTML=body+
@@ -388,6 +407,7 @@ function renderHistory(){
    '<button class="btn ghost" id="importbtn">Import</button></div>'+
    '<input type="file" id="importfile" accept="application/json,.json" hidden>'+
    '<p class="status" id="datastatus"></p></div>';
+  views.history.querySelectorAll("[data-id]").forEach(b=>b.addEventListener("click",()=>openLog(b.dataset.id)));
   $("#export").addEventListener("click",exportData);
   $("#importbtn").addEventListener("click",()=>$("#importfile").click());
   $("#importfile").addEventListener("change",importData);
@@ -415,6 +435,64 @@ function importData(e){
     }catch(err){$("#datastatus").textContent="That file isn't an Iron & Icebox export.";}
   };
   rd.readAsText(f);e.target.value="";
+}
+
+/* ---------- one logged session, in full ---------- */
+function logStats(s){
+  let setCount=0,exCount=0,tonnage=0;
+  Object.keys(s.sets||{}).forEach(k=>{
+    exCount++;
+    s.sets[k].forEach(x=>{
+      setCount++;
+      const w=parseFloat(x.w),r=parseInt(x.r,10);
+      if(!isNaN(w)&&!isNaN(r))tonnage+=w*r;
+    });
+  });
+  return {setCount:setCount,exCount:exCount,tonnage:Math.round(tonnage)};
+}
+function openLog(id){
+  const s=sessions.find(x=>x.id===id);
+  if(!s){show("history");renderHistory();return;}
+  const day=PLAN.find(d=>d.key===s.dayKey),st=logStats(s);
+  const order=day?day.ex.map(e=>e.id):Object.keys(s.sets||{});
+  const seen={};const rows=[];
+  order.concat(Object.keys(s.sets||{})).forEach(k=>{
+    if(seen[k]||!s.sets[k])return;seen[k]=true;
+    const meta=day?day.ex.find(e=>e.id===k):null;
+    rows.push('<div class="logex"><h3>'+esc(meta?meta.n:k)+'</h3>'+
+      (meta?'<p class="tagline">'+esc(meta.tag)+' \u00b7 target '+meta.s+' \u00d7 '+esc(meta.r)+'</p>':'')+
+      '<div class="logsets">'+s.sets[k].map((x,i)=>
+        '<span class="logset"><i>'+(i+1)+'</i><b>'+esc(x.w||"\u2013")+'</b> kg \u00d7 '+esc(x.r||"\u2013")+'</span>').join("")+
+      '</div></div>');
+  });
+  views.log.innerHTML=
+   '<div class="sessionhead"><div><h2 style="font-size:1.25rem">'+esc(s.dayName||s.dayKey)+'</h2>'+
+   '<p class="lede">'+esc(new Date(s.date+"T12:00:00").toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"}))+'</p></div>'+
+   '<button class="back" id="logback">Back</button></div>'+
+   '<div class="card"><div class="sumrow">'+
+   '<div class="macro"><b>'+st.exCount+'</b><span>exercises</span></div>'+
+   '<div class="macro"><b>'+st.setCount+'</b><span>sets</span></div>'+
+   (st.tonnage?'<div class="macro"><b>'+st.tonnage.toLocaleString()+'</b><span>kg lifted</span></div>':'')+
+   '</div></div>'+
+   '<div class="card">'+(rows.length?rows.join(""):'<div class="empty">Nothing recorded against this session.</div>')+'</div>'+
+   (st.tonnage?'<div class="note-bar">Total load is every set\u0027s weight times its reps added up. Useful week to week on the same day \u2014 it should trend up even when a single lift stalls.</div>':'')+
+   '<div class="card"><button class="danger" id="del" data-armed="0">Delete this session</button>'+
+   '<p class="status" id="delnote"></p></div>';
+  $("#logback").addEventListener("click",()=>{show("history");renderHistory();});
+  const del=$("#del");
+  del.addEventListener("click",()=>{
+    if(del.dataset.armed==="0"){
+      del.dataset.armed="1";del.classList.add("armed");
+      del.textContent="Tap again to delete";
+      $("#delnote").textContent="This cannot be undone.";
+      setTimeout(()=>{if(del.dataset.armed==="1"){del.dataset.armed="0";del.classList.remove("armed");
+        del.textContent="Delete this session";$("#delnote").textContent="";}},4000);
+      return;
+    }
+    sessions=sessions.filter(x=>x.id!==id);save(KEY_S,sessions);
+    show("history");renderHistory();
+  });
+  show("log");window.scrollTo(0,0);
 }
 
 /* ---------- meals ---------- */
