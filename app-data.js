@@ -40,106 +40,176 @@ const PLAN=[
    {id:"crunch",tag:"5",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips. Flexion, where Lower A's ab wheel resists extension — the two complement each other."}]}
 ];
 
-const TARGETS={kcal:"2,313",protein:"199 g",deficit:"434 kcal",rate:"0.39 kg"};
+/* Portions are given as cooked weight so you can check them on scales —
+   calories follow from that rather than the other way round. */
 
-const MEALS=[
- {day:"Sunday cook",time:"75 min",covers:"Mon, Tue, Wed + Thu lunch",yields:"9 portions",
-  kit:"Deep roasting tin that goes on the hob (or a large casserole), one big deep pan, scales, 9 lidded containers around 700 ml.",
-  timeline:[
-   ["0:00","Oven to 200°C fan. Dice 2 onions, slice 4 peppers, crush the garlic — both dishes' prep in one go."],
-   ["0:10","Big pan, high heat: brown the beef in two 500 g batches, 5 min each. Lift out, leave the fat in."],
-   ["0:20","Roasting tin on the hob: chorizo, one diced onion, two sliced peppers — 5 min. Garlic 30 s."],
-   ["0:26","Dry rice in, hot stock over it, chicken on top, foil sealed tight. Into the oven — 35 min."],
-   ["0:30","Back to the beef pan: the other onion and two peppers, 8 min in the beef fat."],
-   ["0:38","Garlic, cumin, paprika, chilli flakes, purée — 2 min. Beef back in with tomatoes, beans, stock cube, splash of water."],
-   ["0:42","Chilli simmers uncovered. Stir every 10 min."],
-   ["1:01","Foil off the traybake, 10 min more to crisp the chicken."],
-   ["1:11","Traybake out, rest 10 min. Chilli should be thick — season it now, not before."],
-   ["1:21","Fork the rice through. Both cooling uncovered, then portion within the hour."]],
-  dishes:[
-   {name:"Chicken, chorizo and rice traybake",portions:"4 portions",
-    macros:"723 kcal · 58 g protein · 29 g fat · 55 g carbs per portion",
-    self:"Complete meal — the rice is in it.",
-    ing:["750 g chicken thigh fillets (6–7 fillets)","100 g cooking chorizo, sliced into coins","240 g basmati rice, dry weight","560 ml hot chicken stock","2 red peppers, sliced","1 large onion, diced","4 garlic cloves, crushed","2 tsp smoked paprika, 1 tsp dried oregano","1 tbsp olive oil, salt and pepper"],
-    steps:["Oven to 200°C fan. Toss the chicken with the oil, paprika, oregano, salt and pepper.","Roasting tin on the hob: fry the chorizo, onion and peppers 5 min until the chorizo bleeds its fat. Garlic 30 s.","Stir in the dry rice, pour the hot stock over, lay the chicken on top. Cover tightly with foil — the seal is what cooks the rice.","35 min covered, then 10 min uncovered. Rest 10 min, fork through."],
-    reheat:"2 tbsp water in first, then 3 min in the microwave, stirred at halfway. The rice dries out without the water."},
-   {name:"Beef and black bean chilli",portions:"5 portions",
-    macros:"684 kcal · 56 g protein · 14 g fat · 78 g carbs per portion, with 60 g dry rice",
-    self:"Cook 60 g dry rice fresh on the night — 10 minutes.",
-    ing:["1 kg beef mince, 5% fat (two 500 g packs)","2 × 400 g tins chopped tomatoes","2 × 400 g tins black beans, drained","1 onion and 2 red peppers, diced","4 garlic cloves, 2 tbsp tomato purée","1 tbsp cumin, 2 tsp smoked paprika, 1–2 tsp chilli flakes","1 beef stock cube, 1 tbsp olive oil"],
-    steps:["Brown the mince in two batches on high heat — one batch steams instead of colouring.","Soften the onion and peppers 8 min in the fat, then garlic, spices and purée for 2 min.","Beef back in with the tomatoes, beans and crumbled cube, plus a splash of water.","Simmer uncovered 30–40 min until a spoon leaves a trail. Season at the end."],
-    reheat:"Splash of water, 3 min in the microwave. It thickens in the fridge, so it needs the water."}]},
- {day:"Wednesday cook",time:"60 min",covers:"Thu dinner, Fri, Sat, Sun",yields:"9 portions",
-  kit:"A casserole with a lid and one large pan, running side by side.",
-  timeline:[
-   ["0:00","Dice 2 onions, 2 carrots, 2 celery sticks. Grate the ginger, crush the garlic."],
-   ["0:06","Casserole: brown the chicken 4 min a side, two batches. Lift out."],
-   ["0:16","Second pan: onion, carrot and celery in oil — 10 min, and don't rush it."],
-   ["0:18","Casserole: soften its onion 6 min, then garlic, ginger and harissa 2 min."],
-   ["0:26","Chicken back in with tomatoes, chickpeas and stock. Lid on — 25 min."],
-   ["0:28","Bolognese pan: garlic and purée 2 min, then the turkey until no pink, about 6 min. Tip the rendered fat out."],
-   ["0:36","Milk in, let it cook off 3 min. Then tomatoes, oregano, bay and the crumbled cube."],
-   ["0:40","Bolognese simmers uncovered, 35 min."],
-   ["0:51","Stew lid off, 10 min more to thicken."],
-   ["1:01","Spinach and lemon through the stew, off the heat."],
-   ["1:15","Bolognese done — season, fish the bay leaf out. Cool, then portion."]],
-  dishes:[
-   {name:"Harissa chicken and chickpea stew",portions:"4 portions",
-    macros:"700 kcal · 61 g protein · 22 g fat · 58 g carbs per portion, with 50 g dry couscous",
-    self:"50 g couscous on the night: boiling water over it, covered 5 min, forked through.",
-    ing:["750 g chicken thigh fillets, halved","1 × 400 g tin chickpeas, drained","1 × 400 g tin chopped tomatoes","3 tbsp rose harissa (or plain harissa plus 1 tsp honey)","1 onion, 3 garlic cloves, 1 tbsp grated ginger","400 ml chicken stock","200 g spinach, juice of half a lemon","1 tbsp olive oil"],
-    steps:["Brown the chicken 4 min a side in the casserole. Set aside.","Soften the onion 6 min, then garlic, ginger and harissa for 2 min.","Chicken back in with tomatoes, chickpeas and stock. 25 min covered, 10 uncovered.","Wilt the spinach through at the end, then the lemon juice."],
-    reheat:"3 min in the microwave with a splash of water. Couscous made fresh alongside."},
-   {name:"Turkey bolognese",portions:"5 portions",
-    macros:"669 kcal · 52 g protein · 20 g fat · 66 g carbs per portion, with 75 g dry pasta",
-    self:"75 g dry pasta on the night.",
-    ing:["1 kg turkey mince, 8% fat (two 500 g packs)","2 × 400 g tins chopped tomatoes","2 tbsp tomato purée","1 onion, 2 carrots, 2 celery sticks, finely diced","3 garlic cloves, 1 tsp oregano, 1 bay leaf","1 chicken stock cube, 100 ml milk, 1 tbsp olive oil"],
-    steps:["Soften the onion, carrot and celery 10 min — this is where the flavour is.","Garlic and purée 2 min, then the turkey until no pink remains. Drain the rendered fat off.","Milk in and cooked off, then tomatoes, oregano, bay and the crumbled cube.","Simmer uncovered 35–40 min. Season at the end."],
-    reheat:"3 min in the microwave. Pasta fresh, 9–11 min."}]}
+const PORTION_NOTE="Portions are spec'd by cooked weight, not by eye. Weigh one the first time and you'll know what it looks like in your containers after that.";
+
+const TARGETS={
+ week1:{kcal:"2,061",protein:"171 g",deficit:"686 kcal",rate:"0.62 kg"},
+ week2:{kcal:"1,953",protein:"175 g",deficit:"794 kcal",rate:"0.72 kg"}
+};
+
+const DEFICIT_NOTE="Both weeks run a bigger deficit than the original plan — 0.6 to 0.7 kg a week rather than 0.4 — because the portions came down and nothing replaced those calories. Protein is held at about 2 g per kg, which is what protects muscle, so this is runnable. But it is at the brisk end. If your top sets start dropping for two sessions running, or you feel flat in the gym, add food back in this order: 50 g more dry rice, pasta or lentils per meal (+170 kcal), then two more eggs at breakfast (+143), then 150 g more yoghurt (+86).";
+
+const WEEKS=[
+{id:"w1",label:"Week 1",
+ note:"Four dishes, two per cook day — the week you already have, with the portions brought down. Same recipes, same shop. Splitting each dish further makes 24 portions against the 14 you eat, so ten go in the freezer. That is deliberate: it banks most of week 3 for you. If you would rather not fill the freezer, halve the traybake and the bolognese.",
+ cooks:[
+  {day:"Sunday cook",time:"75 min",covers:"Mon, Tue, Wed + Thu lunch",yields:"13 portions",
+   kit:"Deep roasting tin that goes on the hob (or a large casserole), one big deep pan, scales, containers around 700 ml.",
+   timeline:[
+    ["0:00","Oven to 200°C fan. Dice 2 onions, slice 4 peppers, crush the garlic — both dishes' prep in one go."],
+    ["0:10","Big pan, high heat: brown the beef in two 500 g batches, 5 min each. Lift out, leave the fat."],
+    ["0:20","Roasting tin on the hob: chorizo, one diced onion, two sliced peppers — 5 min. Garlic 30 s."],
+    ["0:26","Dry rice in, hot stock over it, chicken on top, foil sealed tight. Into the oven — 35 min."],
+    ["0:30","Back to the beef pan: the other onion and two peppers, 8 min in the beef fat."],
+    ["0:38","Garlic, cumin, paprika, chilli flakes, purée — 2 min. Beef back in with tomatoes, beans, stock cube, splash of water."],
+    ["0:42","Chilli simmers uncovered. Stir every 10 min."],
+    ["1:01","Foil off the traybake, 10 min more to crisp the chicken."],
+    ["1:11","Traybake out, rest 10 min. Chilli should be thick — season it now, not before."],
+    ["1:21","Fork the rice through. Both cooling uncovered, then portion within the hour."]],
+   dishes:[
+    {name:"Chicken, chorizo and rice traybake",portions:"6 portions",
+     macros:"482 kcal · 39 g protein · about 290 g cooked per portion",
+     self:"Complete meal — the rice is in it. Denser than the others, so the portion looks smaller.",
+     ing:["750 g chicken thigh fillets (6–7 fillets)","100 g cooking chorizo, sliced into coins","240 g basmati rice, dry weight","560 ml hot chicken stock","2 red peppers, sliced","1 large onion, diced","4 garlic cloves, crushed","2 tsp smoked paprika, 1 tsp dried oregano","1 tbsp olive oil, salt and pepper"],
+     steps:["Oven to 200°C fan. Toss the chicken with the oil, paprika, oregano, salt and pepper.","Roasting tin on the hob: fry the chorizo, onion and peppers 5 min until the chorizo bleeds its fat. Garlic 30 s.","Stir in the dry rice, pour the hot stock over, lay the chicken on top. Cover tightly with foil — the seal is what cooks the rice.","35 min covered, then 10 min uncovered. Rest 10 min, fork through, then divide into six."],
+     reheat:"2 tbsp water in first, then 3 min in the microwave, stirred at halfway. The rice dries out without the water."},
+    {name:"Beef and black bean chilli",portions:"7 portions",
+     macros:"514 kcal · 41 g protein · about 490 g cooked per portion, with 50 g dry rice",
+     self:"Cook 50 g dry rice fresh on the night — ten minutes.",
+     ing:["1 kg beef mince, 5% fat (two 500 g packs)","2 × 400 g tins chopped tomatoes","2 × 400 g tins black beans, drained","1 onion and 2 red peppers, diced","4 garlic cloves, 2 tbsp tomato purée","1 tbsp cumin, 2 tsp smoked paprika, 1–2 tsp chilli flakes","1 beef stock cube, 1 tbsp olive oil"],
+     steps:["Brown the mince in two batches on high heat — one batch steams instead of colouring.","Soften the onion and peppers 8 min in the fat, then garlic, spices and purée for 2 min.","Beef back in with the tomatoes, beans and crumbled cube, plus a splash of water.","Simmer uncovered 30–40 min until a spoon leaves a trail. Season at the end, then divide into seven."],
+     reheat:"Splash of water, 3 min in the microwave. It thickens in the fridge, so it needs the water."}]},
+  {day:"Wednesday cook",time:"60 min",covers:"Thu dinner, Fri, Sat, Sun",yields:"11 portions",
+   kit:"A casserole with a lid and one large pan, running side by side.",
+   timeline:[
+    ["0:00","Dice 2 onions, 2 carrots, 2 celery sticks. Grate the ginger, crush the garlic."],
+    ["0:06","Casserole: brown the chicken 4 min a side, two batches. Lift out."],
+    ["0:16","Second pan: onion, carrot and celery in oil — 10 min, and don't rush it."],
+    ["0:18","Casserole: soften its onion 6 min, then garlic, ginger and harissa 2 min."],
+    ["0:26","Chicken back in with tomatoes, chickpeas and stock. Lid on — 25 min."],
+    ["0:28","Bolognese pan: garlic and purée 2 min, then the turkey until no pink, about 6 min. Tip the rendered fat out."],
+    ["0:36","Milk in, let it cook off 3 min. Then tomatoes, oregano, bay and the crumbled cube."],
+    ["0:40","Bolognese simmers uncovered, 35 min."],
+    ["0:51","Stew lid off, 10 min more to thicken."],
+    ["1:01","Spinach and lemon through the stew, off the heat."],
+    ["1:15","Bolognese done — season, fish the bay leaf out. Cool, then portion."]],
+   dishes:[
+    {name:"Harissa chicken and chickpea stew",portions:"5 portions",
+     macros:"560 kcal · 49 g protein · about 395 g cooked per portion, with 40 g dry couscous",
+     self:"40 g couscous on the night: boiling water over it, covered 5 min, forked through.",
+     ing:["750 g chicken thigh fillets, halved","1 × 400 g tin chickpeas, drained","1 × 400 g tin chopped tomatoes","3 tbsp rose harissa (or plain harissa plus 1 tsp honey)","1 onion, 3 garlic cloves, 1 tbsp grated ginger","400 ml chicken stock","200 g spinach, juice of half a lemon","1 tbsp olive oil"],
+     steps:["Brown the chicken 4 min a side in the casserole. Set aside.","Soften the onion 6 min, then garlic, ginger and harissa for 2 min.","Chicken back in with tomatoes, chickpeas and stock. 25 min covered, 10 uncovered.","Wilt the spinach through at the end, then the lemon juice. Divide into five."],
+     reheat:"3 min in the microwave with a splash of water. Couscous made fresh alongside."},
+    {name:"Turkey bolognese",portions:"6 portions",
+     macros:"549 kcal · 43 g protein · about 475 g cooked per portion, with 60 g dry pasta",
+     self:"60 g dry pasta on the night.",
+     ing:["1 kg turkey mince, 8% fat (two 500 g packs)","2 × 400 g tins chopped tomatoes","2 tbsp tomato purée","1 onion, 2 carrots, 2 celery sticks, finely diced","3 garlic cloves, 1 tsp oregano, 1 bay leaf","1 chicken stock cube, 100 ml milk, 1 tbsp olive oil"],
+     steps:["Soften the onion, carrot and celery 10 min — this is where the flavour is.","Garlic and purée 2 min, then the turkey until no pink remains. Drain the rendered fat off.","Milk in and cooked off, then tomatoes, oregano, bay and the crumbled cube.","Simmer uncovered 35–40 min. Season at the end, then divide into six."],
+     reheat:"3 min in the microwave. Pasta fresh, 9–11 min."}]}]},
+
+{id:"w2",label:"Week 2",
+ note:"One dish per half of the week, seven portions each — half the cooking of week 1. You eat the same thing for about seven meals running, which is the trade for only making one pot. Both dishes are high-volume and low-density, so the portions are large plates for the calories. Freeze two of the seven on cook day and pull them out for the last two meals: that keeps everything inside the four-day fridge window.",
+ cooks:[
+  {day:"Sunday cook",time:"50 min",covers:"Sunday dinner through Wednesday",yields:"7 portions",
+   kit:"One large casserole or deep pan with a lid, and scales.",
+   timeline:[
+    ["0:00","Dice 2 onions, crush 4 garlic cloves, grate a thumb of ginger. Dice the chicken into 3 cm pieces."],
+    ["0:06","Casserole on medium-high with the oil: brown the chicken in two batches, 4 min each. Lift out."],
+    ["0:16","Onions into the fat, 7 min. Then garlic, ginger and all the dry spices — 90 seconds, until the kitchen smells of it."],
+    ["0:19","Rinsed lentils in, stirred through the spices for a minute so they toast slightly."],
+    ["0:21","Tomatoes and stock in, chicken back on top. Bring to a boil, then lid on and down to a simmer."],
+    ["0:25","25 minutes with the lid on. Stir at the halfway point — lentils sink and catch."],
+    ["0:50","Lid off, spinach through in handfuls until it collapses. Season, squeeze of lemon."],
+    ["0:55","Cool uncovered, then seven portions. Two straight into the freezer."]],
+   dishes:[
+    {name:"Chicken and red lentil dhal",portions:"7 portions",
+     macros:"466 kcal · 49 g protein · about 385 g cooked per portion",
+     self:"Complete meal — the lentils are the carb. No side needed.",
+     ing:["1 kg chicken thigh fillets, diced into 3 cm pieces","300 g red lentils, dry, rinsed","2 × 400 g tins chopped tomatoes","1.2 L chicken stock","2 onions, diced","4 garlic cloves, 1 tbsp grated ginger","2 tsp cumin, 2 tsp ground coriander, 1 tsp turmeric, 1 tsp garam masala","½–1 tsp chilli flakes","200 g spinach, juice of half a lemon","1 tbsp olive oil, salt"],
+     steps:["Brown the diced chicken in the oil in two batches, 4 min each. Set aside — it finishes in the pot.","Onions 7 min in the same fat. Garlic, ginger and all the dry spices for 90 seconds.","Rinsed lentils in, stirred through the spices for a minute.","Tomatoes, stock and the chicken. Boil, then lid on and simmer 25 min, stirring at halfway so the lentils don't catch.","Lid off, spinach through in handfuls. Season, lemon, and divide into seven."],
+     reheat:"Splash of water, 3 min in the microwave. Lentils drink it up in the fridge and it sets almost solid — that's normal, the water brings it back."},
+   ]},
+  {day:"Wednesday cook",time:"55 min",covers:"Thursday through Saturday or Sunday",yields:"7 portions",
+   kit:"One large casserole or deep pan with a lid.",
+   timeline:[
+    ["0:00","Dice 2 onions, crush 4 garlic, grate a thumb of ginger. Peel and cube the sweet potato into 3 cm chunks."],
+    ["0:08","Casserole on high: brown the beef in two 500 g batches, 5 min each. Lift out, leave the fat."],
+    ["0:18","Onions 7 min. Garlic, ginger and the chilli for 90 seconds."],
+    ["0:21","Peanut butter in, stirred until it loosens into the onions — a minute. Then the tomatoes, and scrape the bottom."],
+    ["0:24","Beef back in with the sweet potato, butter beans and stock. Boil, lid on, simmer."],
+    ["0:28","25 minutes. The sweet potato should give to a fork but still hold its shape."],
+    ["0:53","Spinach through, season generously — peanut and tomato both need salt."],
+    ["0:58","Cool uncovered, then seven portions. Two into the freezer."]],
+   dishes:[
+    {name:"Beef and sweet potato groundnut stew",portions:"7 portions",
+     macros:"477 kcal · 41 g protein · about 425 g cooked per portion",
+     self:"Complete meal — sweet potato and butter beans are the carb.",
+     ing:["1 kg beef mince, 5% fat (two 500 g packs)","600 g sweet potato, peeled and cubed","2 × 400 g tins butter beans, drained","2 × 400 g tins chopped tomatoes","80 g smooth peanut butter (no added sugar)","800 ml beef stock","2 onions, diced","4 garlic cloves, 1 tbsp grated ginger","1 scotch bonnet, deseeded, or 1 tsp chilli flakes","200 g spinach","1 tbsp olive oil, salt"],
+     steps:["Brown the beef in two batches on high heat. Lift out, leave the fat in the pot.","Onions 7 min, then garlic, ginger and chilli for 90 seconds.","Peanut butter in and stirred until it loosens, then the tomatoes — scrape the bottom of the pot.","Beef back in with the sweet potato, butter beans and stock. Lid on, simmer 25 min until the potato gives to a fork.","Spinach through, season generously, then divide into seven."],
+     reheat:"3 min in the microwave, stirred at halfway. The peanut thickens it in the fridge — a splash of water loosens it."},
+   ]}]}
 ];
 
 const BREAKFAST=[
- {name:"Yoghurt bowl",macros:"382 kcal · 34 g protein",
+ {name:"Breakfast",macros:"382 kcal · 34 g protein",
   what:"300 g 0% Greek yoghurt, 40 g granola, 80 g frozen berries. The berries thaw overnight in the fridge."},
- {name:"Overnight oats",macros:"481 kcal · 38 g protein",
-  what:"60 g porridge oats, 30 g whey, 200 ml semi-skimmed milk, 80 g frozen berries. Make three jars on a cook day. This is what the oats on the list are for — swap it for the yoghurt bowl whenever you want something that isn't cold."},
- {name:"Post-training",macros:"227 kcal · 25 g protein",
-  what:"Banana and 30 g whey in water. On lifting days have it after the session rather than mid-morning."},
- {name:"Afternoon",macros:"316 kcal · 26 g protein",
-  what:"200 g cottage cheese or skyr, 20 g nuts."}
+ {name:"Mid-morning, or straight after training",macros:"250 kcal · 14 g protein",
+  what:"Two boiled eggs and a banana. Boil a week's worth on a cook day — seven minutes, then straight into cold water, and they keep in the fridge in their shells."},
+ {name:"Afternoon",macros:"234 kcal · 24 g protein",
+  what:"200 g Greek yoghurt and 20 g nuts."},
+ {name:"Evening",macros:"143 kcal · 13 g protein",
+  what:"Two more boiled eggs. This is the one that holds the day's protein up now that there are no shakes — skip it and you lose 13 g."},
+ {name:"Overnight oats, if you want something warm",macros:"swap for breakfast",
+  what:"60 g porridge oats, 200 ml semi-skimmed milk, 80 g berries, and stir 100 g of the Greek yoghurt through it. Make three jars on a cook day. This is what the oats on the list are for."}
 ];
 
-const SHOPPING=[
- {group:"Meat",items:[["Chicken thigh fillets","1.5 kg"],["Beef mince 5%","2 × 500 g"],["Turkey mince 8%","2 × 500 g"],["Cooking chorizo","100 g"]]},
- {group:"Tins — all 400 g",items:[["Chopped tomatoes","5 tins"],["Black beans","2 tins"],["Chickpeas","1 tin"]]},
- {group:"Dry goods",items:[["Basmati rice","1 kg bag"],["Pasta","500 g"],["Couscous","500 g"],["Porridge oats","1 kg"],["Granola","500 g"],["Mixed nuts","200 g"]]},
- {group:"Veg",items:[["Onions","4"],["Red peppers","4"],["Carrots","1 pack"],["Celery","1 pack"],["Garlic","2 bulbs"],["Fresh ginger","1 piece"],["Spinach","200 g"],["Bananas","7"],["Lemon","1"]]},
- {group:"Chilled & freezer",items:[["0% Greek yoghurt","2 × 1 kg"],["Cottage cheese or skyr","1.4 kg"],["Semi-skimmed milk","2 L"],["Frozen berries","500 g"]]},
- {group:"Cupboard",items:[["Rose harissa","1 jar"],["Tomato purée","1 tube"],["Stock cubes","chicken + beef"],["Smoked paprika, cumin, oregano","if you're out"],["Chilli flakes, bay leaves","if you're out"],["Olive oil","as needed"]]}
-];
+const SHOPPING={
+ w1:[
+  {group:"Meat",items:[["Chicken thigh fillets","1.5 kg"],["Beef mince, 5%","2 × 500 g"],["Turkey mince, 8%","2 × 500 g"],["Cooking chorizo","100 g"]]},
+  {group:"Tins — all 400 g",items:[["Chopped tomatoes","5 tins"],["Black beans","2 tins"],["Chickpeas","1 tin"]]},
+  {group:"Dry goods",items:[["Basmati rice","1 kg bag"],["Pasta","500 g"],["Couscous","500 g"],["Porridge oats","1 kg"],["Granola","500 g"],["Mixed nuts","200 g"]]},
+  {group:"Veg",items:[["Onions","4"],["Red peppers","4"],["Carrots","1 pack"],["Celery","1 pack"],["Garlic","2 bulbs"],["Fresh ginger","1 piece"],["Spinach","200 g"],["Bananas","7"],["Lemon","1"]]},
+  {group:"Daily protein",items:[["Eggs","30 — four a day"],["0% Greek yoghurt","3.5 kg"]]},
+  {group:"Chilled & freezer",items:[["Semi-skimmed milk","2 L"],["Frozen berries","500 g"]]},
+  {group:"Cupboard",items:[["Rose harissa","1 jar"],["Tomato purée","1 tube"],["Stock cubes","chicken + beef"],["Smoked paprika, cumin, oregano","if you're out"],["Chilli flakes, bay leaves","if you're out"],["Olive oil","as needed"]]}
+ ],
+ w2:[
+  {group:"Meat",items:[["Chicken thigh fillets","1 kg"],["Beef mince, 5%","2 × 500 g"]]},
+  {group:"Tins — all 400 g",items:[["Chopped tomatoes","4 tins"],["Butter beans","2 tins"]]},
+  {group:"Dry goods",items:[["Red lentils","300 g"],["Smooth peanut butter","1 jar, no added sugar"],["Porridge oats","if you're out"],["Granola","500 g"],["Mixed nuts","200 g"]]},
+  {group:"Veg",items:[["Onions","4"],["Sweet potato","600 g"],["Garlic","2 bulbs"],["Fresh ginger","1 piece"],["Spinach","400 g"],["Scotch bonnet","1, or use chilli flakes"],["Bananas","7"],["Lemon","1"]]},
+  {group:"Daily protein",items:[["Eggs","30 — four a day"],["0% Greek yoghurt","3.5 kg"]]},
+  {group:"Chilled & freezer",items:[["Semi-skimmed milk","1 L"],["Frozen berries","500 g"]]},
+  {group:"Cupboard",items:[["Chicken and beef stock cubes","1 pack each"],["Cumin, ground coriander, turmeric, garam masala","if you're out"],["Chilli flakes","if you're out"],["Olive oil","as needed"]]}
+ ]
+};
 
 const SWAPS=[
- ["No rose harissa","Plain harissa, same 3 tbsp, plus 1 tsp honey. Or mix your own: 2 tbsp tomato purée, 2 tsp smoked paprika, 1 tsp cumin, 1 tsp chilli flakes, a crushed garlic clove, 1 tbsp oil, squeeze of lemon. Waitrose keeps Belazu rose harissa in world foods, not with the cooking sauces — worth a look there first."],
- ["Thigh to breast","Saves about 60 kcal and adds 4 g protein a portion, but breast dries out over a 40-minute cook. Add it in the last 15 minutes instead."],
- ["Beef 5% to 10%","About 90 kcal more a portion. Drain the pan properly after browning and the gap mostly closes."],
- ["Turkey 3% vs 8%","Buy the 8% in 500 g packs — it's thigh meat, so it holds up over a long simmer, and draining the fat after browning brings it close to the lean figure."],
- ["Rice pouches","One 250 g pouch is about 70 g dry. Fine, just dearer."],
- ["Meat-free chilli","Two extra tins of beans and 150 g red lentils in place of the beef. Protein falls to roughly 22 g a portion, so take an extra 30 g whey that day."]
+ ["Portion looks wrong","Weigh it once. The cooked weight is the honest measure — a 385 g dhal portion fills a container the traybake's 290 g doesn't, because the dhal is mostly water and lentils. Both are about the same calories."],
+ ["No rose harissa","Plain harissa, same 3 tbsp, plus 1 tsp honey. Or mix your own: 2 tbsp tomato purée, 2 tsp smoked paprika, 1 tsp cumin, 1 tsp chilli flakes, a crushed garlic clove, 1 tbsp oil, squeeze of lemon. Waitrose keeps Belazu rose harissa in world foods rather than with the cooking sauces."],
+ ["Sick of eggs","A tin of tuna is 26 g protein for 120 kcal and slots into either snack. Two a week is plenty of variety; more than that and the eggs are easier."],
+ ["Thigh to breast","Saves about 40 kcal and adds 3 g protein a portion, but breast dries out over a long cook. In the dhal add it in the last 12 minutes instead of browning it first."],
+ ["No scotch bonnet","1 tsp chilli flakes. The stew wants heat behind the peanut, not on top of it."],
+ ["Meat-free week 2","The dhal works with 2 extra tins of chickpeas in place of the chicken — about 28 g protein a portion instead of 49, so take two more eggs that day."]
 ];
 
 const TROUBLE=[
- ["Weight hasn't moved in three weeks","Cut the carb side by 25 g dry per meal before you touch protein or portion size. That's about 170 kcal off the day."],
- ["Starving by 9pm","Move the afternoon snack later, or shift 25 g of the dry carb from lunch to dinner. Same day's total, different distribution."],
- ["Chilli came out thin","Ten more minutes uncovered. It thickens again in the fridge regardless."],
- ["Traybake rice still crunchy","The stock wasn't boiling when it went in, or the foil wasn't sealed. Add 100 ml boiling water, re-cover, 10 min."],
- ["A cook day got away from you","Don't stretch a batch to six days. Rotisserie chicken, a rice pouch and a tin of beans is a 50 g protein meal in five minutes."]
+ ["Losing weight faster than 0.7 kg a week","Add food back before you lose strength, not after. 50 g more dry lentils, rice or pasta per meal is +170 kcal and the easiest lever."],
+ ["Top sets dropping two sessions running","That is the signal the deficit is too steep. Add the 50 g of carbs per meal and two more eggs at breakfast, and hold there for a fortnight."],
+ ["Starving by 9pm","Move the afternoon yoghurt later, or shift the evening eggs to just before bed. Same total, different timing."],
+ ["Same dish seven meals running is grim","That is the cost of one pot per half-week. Hot sauce, a squeeze of lemon, or a handful of fresh herbs on top changes it more than you'd think. Or go back to week 1's two-dish structure."],
+ ["Dhal set solid in the fridge","Normal — lentils keep drinking. A splash of water and a stir brings it back."],
+ ["Traybake rice still crunchy","The stock wasn't boiling when it went in, or the foil wasn't sealed. Add 100 ml boiling water, re-cover, 10 min."]
 ];
 
 const STORAGE=[
  "Cool uncovered within an hour of cooking, then lid it and fridge it. Warm food in a sealed box is what shortens its life.",
  "Portion into individual containers straight away rather than one big tub — it reheats better and you won't pick at it.",
- "Fridge at 4°C or below, eaten within four days. The Sunday batch finishes at Thursday lunch, the Wednesday batch by Sunday. That's why the cook days sit where they do.",
- "Each cook makes 9 portions and you eat 7 in that stretch, so two go in the freezer. After three weeks you've banked six — enough to skip a cook entirely.",
- "Freeze a portion on day two if you can see it won't get eaten, not on day five. All four dishes keep a month.",
+ "Fridge at 4°C or below, eaten within four days.",
+ "Week 2's Wednesday cook has to stretch to Sunday, which is five days. So freeze two of the seven portions on cook day and defrost them Saturday night — then nothing is ever more than four days old.",
+ "Week 1 makes ten more portions than you eat. Freeze them as you portion, labelled with the date, and week 3 is almost no cooking at all.",
  "Reheat until piping hot through, stirring halfway, once only. Rice is the one to respect: cool it fast, eat within 24 hours, which is why the chilli has none stirred into it."
 ];

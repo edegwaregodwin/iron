@@ -48,9 +48,11 @@ caches everything. After that it opens and logs with the phone in airplane mode.
   reopening it picks up where you left off. Saving is what adds the session to your
   history. Unsaved drafts are dropped after three days.
 - **History** — every logged session, newest first, plus Export and Import.
-- **Meals** — both cook days with a minute-by-minute timeline, full recipes with
-  per-portion calories and protein, reheating notes, swaps and troubleshooting.
-- **Shop** — the Waitrose list, remembering what you've ticked.
+- **Meals** — switch between Week 1 and Week 2. Each cook day has a minute-by-minute
+  timeline and full recipes with per-portion calories, protein and cooked weight, plus
+  reheating notes, swaps and troubleshooting.
+- **Shop** — the Waitrose list for whichever week is selected, remembering what you've
+  ticked. The two weeks' lists are tracked separately.
 
 ## Backups, and updating the plan
 

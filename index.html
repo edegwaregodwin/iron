@@ -127,6 +127,10 @@ details li{margin-bottom:4px}
 .macro b{display:block;font-family:var(--font-display);font-size:1.05rem;font-variant-numeric:tabular-nums}
 .macro span{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-faint)}
 .note-bar{font-size:.78rem;color:var(--fg-dim);background:var(--surface-2);border-radius:8px;padding:9px 11px}
+.weekpick{display:flex;gap:6px;background:var(--surface-2);padding:4px;border-radius:999px}
+.weekpick button{flex:1;background:none;border:0;border-radius:999px;padding:8px 10px;font-family:var(--font-display);font-weight:600;font-size:.82rem;color:var(--fg-dim);cursor:pointer}
+.weekpick button[aria-pressed="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.portionline{font-size:.76rem;color:var(--fg-faint);margin-top:8px}
 .qa{border-top:1px solid var(--line);padding:10px 0}
 .qa:first-of-type{border-top:0}
 .qa strong{font-family:var(--font-display);font-size:.88rem;display:block}
@@ -188,7 +192,7 @@ let sessions=load(KEY_S,[]),shopChecked=load(KEY_SHOP,{}),drafts=load(KEY_DRAFT,
 const $=s=>document.querySelector(s);
 const views={train:$("#view-train"),session:$("#view-session"),history:$("#view-history"),meals:$("#view-meals"),shop:$("#view-shop")};
 const tabs={train:$("#tab-train"),history:$("#tab-history"),meals:$("#tab-meals"),shop:$("#tab-shop")};
-let current=null;
+let current=null,wk=0;
 function show(v){for(const k in views)views[k].hidden=true;views[v].hidden=false;
   for(const k in tabs)tabs[k].setAttribute("aria-selected",String(k===v||(v==="session"&&k==="train")));}
 Object.keys(tabs).forEach(k=>tabs[k].addEventListener("click",()=>{
@@ -414,16 +418,28 @@ function importData(e){
 }
 
 /* ---------- meals ---------- */
+function weekPicker(onPick){
+  return '<div class="weekpick">'+WEEKS.map((w,i)=>
+    '<button data-wk="'+i+'" aria-pressed="'+(i===wk)+'">'+esc(w.label)+'</button>').join("")+'</div>';
+}
+function wirePicker(root,rerender){
+  root.querySelectorAll("[data-wk]").forEach(b=>b.addEventListener("click",()=>{
+    wk=parseInt(b.dataset.wk,10);rerender();
+  }));
+}
 function renderMeals(){
+  const w=WEEKS[wk],t=TARGETS[wk===0?"week1":"week2"];
   views.meals.innerHTML=
-   '<div class="card"><h2>Two cooks a week</h2>'+
-   '<p class="lede" style="margin-top:4px">Nine portions per cook. You eat seven in that stretch, so two go in the freezer — after three weeks you can skip a cook.</p>'+
-   '<div class="macros"><div class="macro"><b>'+esc(TARGETS.kcal)+'</b><span>kcal / day</span></div>'+
-   '<div class="macro"><b>'+esc(TARGETS.protein)+'</b><span>protein</span></div>'+
-   '<div class="macro"><b>−'+esc(TARGETS.deficit)+'</b><span>deficit</span></div>'+
-   '<div class="macro"><b>'+esc(TARGETS.rate)+'</b><span>per week</span></div></div></div>'+
-   MEALS.map((c,ci)=>'<div class="card"><h2>'+esc(c.day)+'</h2>'+
-     '<p class="lede">'+esc(c.time)+' · '+esc(c.yields)+' · covers '+esc(c.covers)+'</p>'+
+   weekPicker()+
+   '<div class="card"><h2>'+esc(w.label)+'</h2>'+
+   '<p class="lede" style="margin-top:4px">'+esc(w.note)+'</p>'+
+   '<div class="macros"><div class="macro"><b>'+esc(t.kcal)+'</b><span>kcal / day</span></div>'+
+   '<div class="macro"><b>'+esc(t.protein)+'</b><span>protein</span></div>'+
+   '<div class="macro"><b>\u2212'+esc(t.deficit)+'</b><span>deficit</span></div>'+
+   '<div class="macro"><b>'+esc(t.rate)+'</b><span>per week</span></div></div>'+
+   '<p class="portionline">'+esc(PORTION_NOTE)+'</p></div>'+
+   w.cooks.map(c=>'<div class="card"><h2>'+esc(c.day)+'</h2>'+
+     '<p class="lede">'+esc(c.time)+' \u00b7 '+esc(c.yields)+' \u00b7 covers '+esc(c.covers)+'</p>'+
      '<p class="note-bar" style="margin-top:10px">'+esc(c.kit)+'</p>'+
      '<details class="fold" style="margin-top:12px"><summary><span>Timeline</span><span class="chip">'+esc(c.time)+'</span></summary>'+
      '<div class="tl" style="margin-top:8px">'+c.timeline.map(r=>'<div class="tlrow"><span class="t">'+esc(r[0])+'</span><span>'+esc(r[1])+'</span></div>').join("")+'</div></details>'+
@@ -433,39 +449,49 @@ function renderMeals(){
        '<h4>Ingredients</h4><ul>'+d.ing.map(i=>'<li>'+esc(i)+'</li>').join("")+'</ul>'+
        '<h4>Method</h4><ol>'+d.steps.map(s=>'<li>'+esc(s)+'</li>').join("")+'</ol>'+
        '<p class="reheat"><strong>Reheat:</strong> '+esc(d.reheat)+'</p></details>').join("")+'</div>').join("")+
-   '<div class="card"><h2>Breakfast and snacks</h2>'+
-   '<p class="lede" style="margin-top:4px">No cooking. Same every day, so there is nothing to decide before work.</p>'+
+   '<div class="card"><h2>Every day, either week</h2>'+
+   '<p class="lede" style="margin-top:4px">No cooking and no shakes. Four eggs and 500 g of yoghurt a day is what carries the protein.</p>'+
    BREAKFAST.map(b=>'<div class="qa"><strong>'+esc(b.name)+'</strong>'+
      '<p class="macros-line" style="margin:2px 0 3px">'+esc(b.macros)+'</p>'+
      '<span>'+esc(b.what)+'</span></div>').join("")+'</div>'+
+   '<div class="card"><h2>About the deficit</h2><p class="lede" style="margin-top:4px">'+esc(DEFICIT_NOTE)+'</p></div>'+
    '<div class="card"><h2>Storage and reheating</h2><ul style="margin:8px 0 0;padding-left:1.1rem;font-size:.85rem;color:var(--fg-dim)">'+
    STORAGE.map(s=>'<li style="margin-bottom:6px">'+esc(s)+'</li>').join("")+'</ul></div>'+
    '<div class="card"><h2>Swaps</h2>'+SWAPS.map(s=>'<div class="qa"><strong>'+esc(s[0])+'</strong><span>'+esc(s[1])+'</span></div>').join("")+'</div>'+
    '<div class="card"><h2>When it goes wrong</h2>'+TROUBLE.map(s=>'<div class="qa"><strong>'+esc(s[0])+'</strong><span>'+esc(s[1])+'</span></div>').join("")+'</div>';
+  wirePicker(views.meals,renderMeals);
 }
 
 /* ---------- shop ---------- */
+function shopList(){return SHOPPING[WEEKS[wk].id];}
 function renderShop(){
-  const done=Object.keys(shopChecked).length;
-  views.shop.innerHTML='<div class="card"><h2>Waitrose list</h2>'+
-   '<p class="lede" style="margin-top:4px">One shop covers both cook days. '+(done?done+' ticked off.':'Nothing ticked yet.')+'</p>'+
+  const done=shopList().reduce((n,g)=>n+g.items.filter(it=>shopChecked[key4(it[0])]).length,0);
+  const total=shopList().reduce((n,g)=>n+g.items.length,0);
+  views.shop.innerHTML=weekPicker()+
+   '<div class="card"><h2>Waitrose list \u2014 '+esc(WEEKS[wk].label)+'</h2>'+
+   '<p class="lede" style="margin-top:4px">One shop covers both cook days. '+done+' of '+total+' ticked off.</p>'+
    '<div id="shoplist" style="margin-top:10px"></div>'+
    '<div class="btnrow"><button class="btn ghost" id="clearshop">Clear ticks</button></div></div>'+
-   '<div class="note-bar">Whey protein is not a Waitrose strong point — order it online and keep a tub at home.</div>';
+   '<div class="note-bar">Both weeks need the same four eggs and 500 g of yoghurt a day \u2014 that is 30 eggs and 3.5 kg of yoghurt, and it is where your protein comes from now.</div>';
   paintShop();
-  $("#clearshop").addEventListener("click",()=>{shopChecked={};save(KEY_SHOP,shopChecked);renderShop();});
+  wirePicker(views.shop,renderShop);
+  $("#clearshop").addEventListener("click",()=>{
+    shopList().forEach(g=>g.items.forEach(it=>{delete shopChecked[key4(it[0])];}));
+    save(KEY_SHOP,shopChecked);renderShop();
+  });
 }
+function key4(nm){return WEEKS[wk].id+"_"+nm.replace(/[^a-z0-9]/gi,"").toLowerCase();}
 function paintShop(){
   const el=$("#shoplist");if(!el)return;
-  el.innerHTML=SHOPPING.map(g=>'<p class="shopgroup">'+esc(g.group)+'</p>'+g.items.map(function(it){
-    const nm=it[0],q=it[1],k=nm.replace(/[^a-z0-9]/gi,"").toLowerCase(),on=!!shopChecked[k];
+  el.innerHTML=shopList().map(g=>'<p class="shopgroup">'+esc(g.group)+'</p>'+g.items.map(function(it){
+    const nm=it[0],q=it[1],k=key4(nm),on=!!shopChecked[k];
     return '<label class="shopitem'+(on?" on":"")+'" data-k="'+k+'"><input type="checkbox"'+(on?" checked":"")+'>'+
       '<span class="nm">'+esc(nm)+'</span><span class="q">'+esc(q)+'</span></label>';
   }).join("")).join("");
   el.querySelectorAll(".shopitem input").forEach(inp=>inp.addEventListener("change",ev=>{
     const k=ev.target.closest(".shopitem").dataset.k;
     if(ev.target.checked)shopChecked[k]=true;else delete shopChecked[k];
-    save(KEY_SHOP,shopChecked);paintShop();
+    save(KEY_SHOP,shopChecked);renderShop();
   }));
 }
 
