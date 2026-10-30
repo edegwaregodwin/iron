@@ -7,7 +7,8 @@ Works with no signal once installed. All data stays on the phone.
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The whole app |
+| `index.html` | The app shell, rendering and rest timer |
+| `app-data.js` | The plan itself — exercises, recipes, shopping list |
 | `sw.js` | Service worker — the thing that makes it work offline |
 | `manifest.webmanifest` | Name, icons, standalone display |
 | `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, `apple-touch-icon.png` | Home-screen icons |
@@ -38,10 +39,13 @@ caches everything. After that it opens and logs with the phone in airplane mode.
 ## Using it
 
 - **Train** — tap a day, enter kg and reps per set, Save. Last session's numbers sit
-  on the right of each row so you know what to beat.
+  on the right of each row so you know what to beat. Each exercise has a **rest timer
+  button** preset to its prescribed rest; it beeps and vibrates when time is up, and
+  `+30s` extends it.
 - **History** — every logged session, newest first, plus Export and Import.
-- **Meals** — both cook days with full recipes, and a Waitrose list that remembers
-  what you've ticked.
+- **Meals** — both cook days with a minute-by-minute timeline, full recipes with
+  per-portion calories and protein, reheating notes, swaps and troubleshooting.
+- **Shop** — the Waitrose list, remembering what you've ticked.
 
 ## Backups, and updating the plan
 
@@ -53,7 +57,9 @@ actual numbers and adjust the programme against them. Import puts a backup back.
 
 ## When the plan changes
 
-Ask me for an updated `index.html`, then on GitHub: open `index.html` → pencil icon →
-select all → paste the new version → commit. Bump `VERSION` in `sw.js` (e.g. `ii-v1`
-to `ii-v2`) in the same way, or the old cached copy keeps serving. Your logged data
-is untouched by this.
+Almost every change is to `app-data.js` alone — the exercises, recipes and shopping
+list all live there, separate from the app code. On GitHub: open `app-data.js` →
+pencil icon → edit → commit. Then bump `VERSION` in `sw.js` (`ii-v2` to `ii-v3`) the
+same way, or the old cached copy keeps serving. Your logged data is untouched by this.
+
+Easier still: ask me, and I'll push it.

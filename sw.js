@@ -1,9 +1,10 @@
 /* Iron & Icebox service worker — offline-first app shell. */
-const VERSION = 'ii-v1';
+const VERSION = 'ii-v2';
 const SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
+  './app-data.js',
   './icon-192.png',
   './icon-512.png',
   './icon-maskable-512.png',
