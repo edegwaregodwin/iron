@@ -1,7 +1,7 @@
 /* Iron & Icebox — plan data. Edit here; index.html renders it. */
 const PLAN=[
  {key:"upperA",n:1,name:"Upper A",day:"Monday",focus:"Horizontal push, vertical pull",
-  blurb:"Heaviest pressing day. Bench is the lift to push on; everything after it is volume for chest, back and arms.",
+  blurb:"Heaviest pressing day. Bench is the lift to push on; everything after it is volume for chest, back and arms. No core here — both core sessions sit on the leg days.",
   ex:[
    {id:"bench",tag:"1",n:"Barbell bench press",s:4,r:"6–8",rest:"2–3 min",rs:150,note:"Main strength lift. Add weight before reps."},
    {id:"csrow",tag:"2",n:"Chest-supported row",s:4,r:"8–10",rest:"2 min",rs:120,note:"Chest on the pad kills momentum — pull to the lower ribs."},
@@ -9,7 +9,7 @@ const PLAN=[
    {id:"latraise",tag:"4A",n:"Cable lateral raise",s:3,r:"12–15",rest:"45 s",rs:45,note:"One arm at a time, cable behind you."},
    {id:"ezcurl",tag:"4B",n:"EZ-bar curl",s:3,r:"10–12",rest:"45 s",rs:45,note:"Elbows pinned to your sides."},
    {id:"ohtri",tag:"4C",n:"Overhead cable triceps extension",s:3,r:"12–15",rest:"45 s",rs:45,note:"Rope, full stretch overhead."},
-   {id:"crunch",tag:"5",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips."}]},
+   {id:"pulldown",tag:"5",n:"Lat pulldown, wide grip",s:3,r:"10–12",rest:"60 s",rs:60,note:"Lean back about 15°, drive the elbows down rather than back. This is your second vertical pull of the week — pull-ups on Upper B are the other."}]},
  {key:"lowerA",n:2,name:"Lower A",day:"Tuesday",focus:"Squat",
   blurb:"Squat-led. Quads take the bulk of the work, with a machine curl and lunges covering the back of the leg, and core at the end.",
   ex:[
@@ -20,7 +20,7 @@ const PLAN=[
    {id:"standcalf",tag:"4B",n:"Standing calf raise",s:3,r:"10–15",rest:"45 s",rs:45,note:"2-second pause at the bottom of every rep."},
    {id:"abwheel",tag:"5",n:"Core — ab wheel or long-lever plank",s:2,r:"8–12 or 30 s",rest:"45 s",rs:45,note:"Ribs down, no sagging through the lower back. Last thing you do — your trunk is already warm from squatting."}]},
  {key:"upperB",n:3,name:"Upper B",day:"Thursday",focus:"Vertical push, horizontal pull",
-  blurb:"Shoulder-led pressing and heavier vertical pulling. Same muscles as Day 1, different angles and rep ranges. Seven exercises — the shortest of the two upper days to get through.",
+  blurb:"Shoulder-led pressing and heavier vertical pulling. Same muscles as Day 1, different angles and rep ranges. ",
   ex:[
    {id:"ohp",tag:"1",n:"Seated shoulder press",s:4,r:"6–8",rest:"2–3 min",rs:150,note:"Backrest upright, around 80–85° — more reclined turns it into a chest press. Barbell or dumbbells. Standing overhead press works too if you'd rather have the core demand."},
    {id:"pullup",tag:"2",n:"Pull-up, weighted if you can",s:3,r:"6–10",rest:"2 min",rs:120,note:"Neutral-grip pulldowns if 6 clean reps is a stretch."},
@@ -30,13 +30,14 @@ const PLAN=[
    {id:"pushdown",tag:"4C",n:"Rope pushdown or dips",s:3,r:"10–12",rest:"45 s",rs:45,note:"Dips if your shoulders are happy, pushdowns if not."},
    {id:"facepull",tag:"4D",n:"Face pull",s:3,r:"15–20",rest:"45 s",rs:45,note:"The only rear-delt work in the week. Light, controlled."}]},
  {key:"lowerB",n:4,name:"Lower B",day:"Friday",focus:"Single-leg and posterior chain",
-  blurb:"No barbell lift off the floor. Split squats are the hard work; weighted back extensions and two curl variations cover the hamstrings and lower back.",
+  blurb:"No barbell lift off the floor. Split squats are the hard work; weighted back extensions and two curl variations cover the hamstrings and lower back, with core at the end.",
   ex:[
    {id:"bulgarian",tag:"1",n:"Bulgarian split squat",s:4,r:"8–10 / leg",rest:"2–3 min",rs:150,note:"Upright for quads, leaned forward for glutes."},
    {id:"backext",tag:"2",n:"45° back extension, weighted",s:3,r:"10–12",rest:"2 min",rs:120,note:"Plate at the chest. Squeeze the glutes at the top, don't hyperextend."},
    {id:"lyingcurl",tag:"3",n:"Lying leg curl",s:4,r:"10–12",rest:"60 s",rs:60,note:"Different hip angle to Day 2's seated curl."},
    {id:"legext",tag:"4A",n:"Leg extension",s:3,r:"12–15",rest:"45 s",rs:45,note:"Last set as a drop set once a fortnight."},
-   {id:"seatedcalf",tag:"4B",n:"Seated calf raise",s:3,r:"12–15",rest:"45 s",rs:45,note:"Soleus work — standing covers the other half."}]}
+   {id:"seatedcalf",tag:"4B",n:"Seated calf raise",s:3,r:"12–15",rest:"45 s",rs:45,note:"Soleus work — standing covers the other half."},
+   {id:"crunch",tag:"5",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips. Flexion, where Lower A's ab wheel resists extension — the two complement each other."}]}
 ];
 
 const TARGETS={kcal:"2,313",protein:"199 g",deficit:"434 kcal",rate:"0.39 kg"};

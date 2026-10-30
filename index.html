@@ -179,10 +179,10 @@ details li{margin-bottom:4px}
 <script src="./app-data.js"></script>
 <script>
 /* ---------- storage: this device only ---------- */
-const KEY_S="ii.sessions.v1",KEY_SHOP="ii.shopping.v1";
+const KEY_S="ii.sessions.v1",KEY_SHOP="ii.shopping.v1",KEY_DRAFT="ii.draft.v1";
 function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch(e){return fb;}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
-let sessions=load(KEY_S,[]),shopChecked=load(KEY_SHOP,{});
+let sessions=load(KEY_S,[]),shopChecked=load(KEY_SHOP,{}),drafts=load(KEY_DRAFT,{});
 
 /* ---------- helpers ---------- */
 const $=s=>document.querySelector(s);
@@ -192,8 +192,13 @@ let current=null;
 function show(v){for(const k in views)views[k].hidden=true;views[v].hidden=false;
   for(const k in tabs)tabs[k].setAttribute("aria-selected",String(k===v||(v==="session"&&k==="train")));}
 Object.keys(tabs).forEach(k=>tabs[k].addEventListener("click",()=>{
+  if(current&&!views.session.hidden){clearTimeout(dTimer);writeDraft();}
   show(k);if(k==="train")renderTrain();if(k==="history")renderHistory();if(k==="shop")renderShop();
 }));
+window.addEventListener("pagehide",()=>{if(current&&!views.session.hidden){clearTimeout(dTimer);writeDraft();}});
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden&&current&&!views.session.hidden){clearTimeout(dTimer);writeDraft();}
+});
 const today=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);};
 function fmtDate(iso){return new Date(iso+"T12:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"});}
 function daysAgo(iso){const d=Math.round((Date.now()-new Date(iso+"T12:00:00").getTime())/86400000);
@@ -201,6 +206,41 @@ function daysAgo(iso){const d=Math.round((Date.now()-new Date(iso+"T12:00:00").g
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 function lastFor(key){return sessions.filter(s=>s.dayKey===key).sort((a,b)=>b.date<a.date?-1:1)[0];}
 function mmss(sec){const m=Math.floor(Math.abs(sec)/60),s=Math.abs(sec)%60;return (sec<0?"-":"")+m+":"+String(s).padStart(2,"0");}
+
+/* ---------- unsaved drafts ---------- */
+function draftKey(dayKey){return today()+"__"+dayKey;}
+function collectSets(d){
+  const sets={};let count=0;
+  d.ex.forEach(e=>{
+    const arr=[];let any=false;
+    for(let i=0;i<e.s;i++){
+      const w=(($("#"+e.id+"-w-"+i))||{}).value||"",r=(($("#"+e.id+"-r-"+i))||{}).value||"";
+      arr.push({w:w.trim(),r:r.trim()});
+      if(w.trim()||r.trim()){any=true;count++;}
+    }
+    if(any)sets[e.id]=arr;
+  });
+  return {sets:sets,count:count};
+}
+let dTimer=null,committed=false;
+function queueDraft(){committed=false;clearTimeout(dTimer);dTimer=setTimeout(writeDraft,400);}
+function writeDraft(){
+  if(!current||committed)return;
+  const k=draftKey(current.key),got=collectSets(current);
+  if(got.count)drafts[k]={sets:got.sets,at:new Date().toISOString()};else delete drafts[k];
+  save(KEY_DRAFT,drafts);
+  const n=$("#draftnote");
+  if(n)n.textContent=got.count?"Kept as you type — "+got.count+" set"+(got.count===1?"":"s")+" entered, not yet in your history.":"";
+}
+function dropDraft(dayKey){delete drafts[draftKey(dayKey)];save(KEY_DRAFT,drafts);}
+function pruneDrafts(){
+  const cut=Date.now()-3*86400000;let changed=false;
+  Object.keys(drafts).forEach(k=>{
+    const at=drafts[k]&&drafts[k].at?new Date(drafts[k].at).getTime():0;
+    if(at<cut){delete drafts[k];changed=true;}
+  });
+  if(changed)save(KEY_DRAFT,drafts);
+}
 
 /* ---------- rest timer ---------- */
 const bar=$("#timerbar");
@@ -251,18 +291,21 @@ function renderTrain(){
    '<div class="card"><h2>This week</h2>'+
    '<p class="lede" style="margin-top:4px">60 minutes of lifting a day, warm-up on top. Tap a day to log it.</p></div>'+
    PLAN.map(d=>{
-     const last=lastFor(d.key);
-     const chip=last?'<span class="chip done">'+esc(daysAgo(last.date))+'</span>':'<span class="chip">not logged</span>';
+     const last=lastFor(d.key),dr=drafts[draftKey(d.key)];
+     const chip=dr?'<span class="chip warm">unsaved</span>'
+       :last?'<span class="chip done">'+esc(daysAgo(last.date))+'</span>':'<span class="chip">not logged</span>';
      return '<button class="daybtn" data-day="'+d.key+'"><span class="idx">'+d.n+'</span>'+
        '<span class="body"><strong>'+esc(d.name)+'</strong><span>'+esc(d.day)+' · '+esc(d.focus)+'</span></span>'+chip+'</button>';
    }).join("")+
-   '<div class="note-bar">Cardio is one 30–40 min steady session a week, on a rest day. Core runs twice a week: cable crunch on Upper A, ab wheel on Lower A.</div>';
+   '<div class="note-bar">Cardio is one 30–40 min steady session a week, on a rest day. Core runs twice a week, both on the leg days: ab wheel on Lower A, cable crunch on Lower B.</div>';
   views.train.querySelectorAll("[data-day]").forEach(b=>b.addEventListener("click",()=>openSession(b.dataset.day)));
 }
 
 function openSession(key){
   const d=PLAN.find(x=>x.key===key);current=d;
   const last=lastFor(key),lastSets=(last&&last.sets)||{};
+  const dr=drafts[draftKey(key)],drSets=(dr&&dr.sets)||{};
+  committed=false;
   views.session.innerHTML=
    '<div class="sessionhead"><div><h2 style="font-size:1.25rem">'+esc(d.name)+'</h2>'+
    '<p class="lede">'+esc(d.day)+' · '+esc(d.focus)+'</p></div>'+
@@ -274,9 +317,10 @@ function openSession(key){
      let rows='<div class="colhead"><span>Set</span><span>kg</span><span>Reps</span><span>Last</span></div><div class="sets">';
      for(let i=0;i<e.s;i++){
        const p=prev[i];
+       const dv=(drSets[e.id]||[])[i]||{w:"",r:""};
        rows+='<div class="setrow"><span class="n">'+(i+1)+'</span>'+
-         '<input id="'+e.id+'-w-'+i+'" inputmode="decimal" placeholder="kg" aria-label="'+esc(e.n)+' set '+(i+1)+' weight">'+
-         '<input id="'+e.id+'-r-'+i+'" inputmode="numeric" placeholder="reps" aria-label="'+esc(e.n)+' set '+(i+1)+' reps">'+
+         '<input id="'+e.id+'-w-'+i+'" value="'+esc(dv.w||"")+'" inputmode="decimal" placeholder="kg" aria-label="'+esc(e.n)+' set '+(i+1)+' weight">'+
+         '<input id="'+e.id+'-r-'+i+'" value="'+esc(dv.r||"")+'" inputmode="numeric" placeholder="reps" aria-label="'+esc(e.n)+' set '+(i+1)+' reps">'+
          '<span class="last">'+(p?esc(p.w)+" × "+esc(p.r):"—")+'</span></div>';
      }
      return '<div class="ex"><h3><span class="tag">'+esc(e.tag)+'</span>'+esc(e.n)+'</h3>'+
@@ -284,33 +328,41 @@ function openSession(key){
        '<p class="note">'+esc(e.note)+'</p>'+rows+'</div>'+
        '<button class="restbtn" data-rs="'+e.rs+'" data-ex="'+esc(e.n)+'">Start '+esc(e.rest)+' rest</button></div>';
    }).join("")+'</div>'+
-   '<div class="save"><button class="btn" id="savebtn">Save session</button><p class="status" id="status"></p></div>';
-  $("#back").addEventListener("click",()=>{show("train");renderTrain();});
+   '<div class="save"><p class="status" id="draftnote" style="margin:0 0 8px"></p>'+
+   '<button class="btn" id="savebtn">Save session</button><p class="status" id="status"></p></div>';
+  $("#back").addEventListener("click",()=>{clearTimeout(dTimer);writeDraft();show("train");renderTrain();});
   $("#savebtn").addEventListener("click",saveSession);
   views.session.querySelectorAll(".restbtn").forEach(b=>b.addEventListener("click",()=>
     startRest(parseInt(b.dataset.rs,10),b.dataset.ex)));
+  views.session.querySelectorAll(".setrow input").forEach(i=>{
+    i.addEventListener("input",queueDraft);i.addEventListener("change",queueDraft);
+  });
+  if(dr){const n=$("#draftnote");const c=collectSets(d).count;
+    if(n)n.textContent="Picked up where you left off — "+c+" set"+(c===1?"":"s")+" entered, not yet in your history.";}
   show("session");window.scrollTo(0,0);
 }
 
 function saveSession(){
   if(!current)return;
-  const st=$("#status"),sets={};let count=0;
-  current.ex.forEach(e=>{
-    const arr=[];
-    for(let i=0;i<e.s;i++){
-      const w=($("#"+e.id+"-w-"+i)||{}).value||"",r=($("#"+e.id+"-r-"+i)||{}).value||"";
-      if(w.trim()||r.trim()){arr.push({w:w.trim(),r:r.trim()});count++;}
-    }
-    if(arr.length)sets[e.id]=arr;
+  const st=$("#status"),got=collectSets(current);
+  if(!got.count){st.textContent="Nothing entered yet — add a weight or rep count first.";return;}
+  // strip the empty trailing sets a draft keeps as placeholders
+  const sets={};
+  Object.keys(got.sets).forEach(k=>{
+    const kept=got.sets[k].filter(x=>x.w||x.r);
+    if(kept.length)sets[k]=kept;
   });
-  if(!count){st.textContent="Nothing entered yet — add a weight or rep count first.";return;}
   const date=today(),id=date+"__"+current.key;
   sessions=sessions.filter(s=>s.id!==id);
   sessions.push({id:id,date:date,dayKey:current.key,dayName:current.name,sets:sets,savedAt:new Date().toISOString()});
   sessions.sort((a,b)=>a.date<b.date?1:-1);
-  st.textContent=save(KEY_S,sessions)
-    ? "Saved on this device — "+count+" sets logged."
-    : "Couldn't write to storage. If you're in a private window, try a normal one.";
+  if(save(KEY_S,sessions)){
+    clearTimeout(dTimer);committed=true;dropDraft(current.key);
+    const n=$("#draftnote");if(n)n.textContent="";
+    st.textContent="Saved to your history — "+got.count+" sets logged.";
+  }else{
+    st.textContent="Couldn't write to storage. If you're in a private window, try a normal one.";
+  }
 }
 
 /* ---------- history ---------- */
@@ -422,6 +474,7 @@ function setNet(){
   $("#hdr-meta").innerHTML=navigator.onLine?"4-day upper/lower":'<span class="offline-dot"></span>offline — still logging';
 }
 window.addEventListener("online",setNet);window.addEventListener("offline",setNet);
+pruneDrafts();
 renderTrain();renderMeals();renderHistory();renderShop();setNet();
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{navigator.serviceWorker.register("./sw.js").catch(()=>{});});

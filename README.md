@@ -42,6 +42,11 @@ caches everything. After that it opens and logs with the phone in airplane mode.
   on the right of each row so you know what to beat. Each exercise has a **rest timer
   button** preset to its prescribed rest; it beeps and vibrates when time is up, and
   `+30s` extends it.
+
+  Entries are **kept as you type**, so leaving the session, switching tabs or closing
+  the app does not lose them — the day shows an "unsaved" flag until you save, and
+  reopening it picks up where you left off. Saving is what adds the session to your
+  history. Unsaved drafts are dropped after three days.
 - **History** — every logged session, newest first, plus Export and Import.
 - **Meals** — both cook days with a minute-by-minute timeline, full recipes with
   per-portion calories and protein, reheating notes, swaps and troubleshooting.
