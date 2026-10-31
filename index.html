@@ -391,8 +391,6 @@ function warmupBlock(d){
 /* ---------- train ---------- */
 function renderTrain(){
   views.train.innerHTML=
-   '<div class="card"><h2>This week</h2>'+
-   '<p class="lede" style="margin-top:4px">60 minutes of lifting a day, warm-up on top. Tap a day to log it.</p></div>'+
    PLAN.map(d=>{
      const last=lastFor(d.key),dr=drafts[draftKey(d.key)];
      const chip=dr?'<span class="chip warm">unsaved</span>'
@@ -400,7 +398,7 @@ function renderTrain(){
      return '<button class="daybtn" data-day="'+d.key+'"><span class="idx">'+d.n+'</span>'+
        '<span class="body"><strong>'+esc(d.name)+'</strong><span>'+esc(d.day)+' · '+esc(d.focus)+'</span></span>'+chip+'</button>';
    }).join("")+
-   '<div class="note-bar">Cardio is one 30–40 min steady session a week, on a rest day. Core runs twice a week, both on the leg days: ab wheel on Lower A, cable crunch on Lower B.</div>';
+   '';
   views.train.querySelectorAll("[data-day]").forEach(b=>b.addEventListener("click",()=>openSession(b.dataset.day)));
 }
 
@@ -413,9 +411,9 @@ function openSession(key){
    '<div class="sessionhead"><div><h2 style="font-size:1.25rem">'+esc(d.name)+'</h2>'+
    '<p class="lede">'+esc(d.day)+' · '+esc(d.focus)+'</p></div>'+
    '<button class="back" id="back">Back</button></div>'+
-   '<div class="note-bar">'+esc(d.blurb)+'</div>'+
+   (d.blurb?'<div class="note-bar">'+esc(d.blurb)+'</div>':'')+
    warmupBlock(d)+
-   (last?'<div class="note-bar">Last logged '+esc(daysAgo(last.date))+' ('+esc(fmtDate(last.date))+'). Those numbers sit on the right of each row.</div>':'')+
+   (last?'<div class="note-bar">Last logged '+esc(daysAgo(last.date))+', '+esc(fmtDate(last.date))+'.</div>':'')+
    '<div class="card">'+d.ex.map(e=>{
      const prev=lastSets[e.id]||[];
      let rows='<div class="colhead"><span>Set</span><span>kg</span><span>Reps</span><span>Last</span></div><div class="sets">';
@@ -473,7 +471,6 @@ function saveSession(){
 function renderHistory(){
   const body=sessions.length
    ? '<div class="card"><h2 style="margin-bottom:6px">Logged sessions</h2>'+
-     '<p class="lede" style="margin-bottom:4px">Tap one to see every set.</p>'+
      sessions.slice(0,60).map(s=>{
        const st=logStats(s);
        return '<button class="histrow" data-id="'+esc(s.id)+'">'+
@@ -484,9 +481,8 @@ function renderHistory(){
      }).join("")+'</div>'
    : '<div class="card"><div class="empty"><strong>No sessions logged yet</strong>Log a day from the Train tab and it appears here, newest first.</div></div>';
   views.history.innerHTML=body+
-   '<div class="note-bar">Double progression: hit the top of the rep range on every set, then add 2.5 kg upstairs or 5 kg downstairs.</div>'+
    '<div class="card"><h2>Your data</h2>'+
-   '<p class="lede" style="margin-top:4px">Stored on this device only. Export a backup now and then — and send me the file when you want the programme adjusted against your real numbers.</p>'+
+   '<p class="lede" style="margin-top:4px">Stored on this device only.</p>'+
    '<div class="btnrow"><button class="btn ghost" id="export">Export JSON</button>'+
    '<button class="btn ghost" id="importbtn">Import</button></div>'+
    '<input type="file" id="importfile" accept="application/json,.json" hidden>'+
@@ -559,7 +555,6 @@ function openLog(id){
    (st.tonnage?'<div class="macro"><b>'+st.tonnage.toLocaleString()+'</b><span>kg lifted</span></div>':'')+
    '</div></div>'+
    '<div class="card">'+(rows.length?rows.join(""):'<div class="empty">Nothing recorded against this session.</div>')+'</div>'+
-   (st.tonnage?'<div class="note-bar">Total load is every set\u0027s weight times its reps added up. Useful week to week on the same day \u2014 it should trend up even when a single lift stalls.</div>':'')+
    '<div class="card"><button class="danger" id="del" data-armed="0">Delete this session</button>'+
    '<p class="status" id="delnote"></p></div>';
   $("#logback").addEventListener("click",()=>{show("history");renderHistory();});
@@ -599,7 +594,7 @@ function renderMeals(){
    '<div class="macro"><b>'+esc(t.protein)+'</b><span>g protein</span></div>'+
    '<div class="macro"><b>\u2212'+esc(t.deficit)+'</b><span>kcal deficit</span></div>'+
    '<div class="macro"><b>'+esc(t.rate)+'</b><span>kg / week</span></div></div>'+
-   '<p class="portionline">'+esc(PORTION_NOTE)+'</p></div>'+
+   (PORTION_NOTE?'<p class="portionline">'+esc(PORTION_NOTE)+'</p>':'')+'</div>'+
    w.cooks.map(c=>'<div class="card"><h2>'+esc(c.day)+'</h2>'+
      '<p class="lede">'+esc(c.time)+' \u00b7 '+esc(c.yields)+' \u00b7 covers '+esc(c.covers)+'</p>'+
      '<p class="note-bar" style="margin-top:10px">'+esc(c.kit)+'</p>'+
@@ -612,11 +607,10 @@ function renderMeals(){
        '<h4>Method</h4><ol>'+d.steps.map(s=>'<li>'+esc(s)+'</li>').join("")+'</ol>'+
        '<p class="reheat"><strong>Reheat:</strong> '+esc(d.reheat)+'</p></details>').join("")+'</div>').join("")+
    '<div class="card"><h2>Every day, either week</h2>'+
-   '<p class="lede" style="margin-top:4px">No cooking and no shakes. Four eggs and 500 g of yoghurt a day is what carries the protein.</p>'+
+   '<p class="lede" style="margin-top:4px">Four eggs and 500 g of yoghurt a day.</p>'+
    BREAKFAST.map(b=>'<div class="qa"><strong>'+esc(b.name)+'</strong>'+
      '<p class="macros-line" style="margin:2px 0 3px">'+esc(b.macros)+'</p>'+
      '<span>'+esc(b.what)+'</span></div>').join("")+'</div>'+
-   '<div class="card"><h2>About the deficit</h2><p class="lede" style="margin-top:4px">'+esc(DEFICIT_NOTE)+'</p></div>'+
    '<div class="card"><h2>Storage and reheating</h2><ul style="margin:8px 0 0;padding-left:1.1rem;font-size:.85rem;color:var(--ink-dim)">'+
    STORAGE.map(s=>'<li style="margin-bottom:6px">'+esc(s)+'</li>').join("")+'</ul></div>'+
    '<div class="card"><h2>Swaps</h2>'+SWAPS.map(s=>'<div class="qa"><strong>'+esc(s[0])+'</strong><span>'+esc(s[1])+'</span></div>').join("")+'</div>'+
@@ -631,10 +625,10 @@ function renderShop(){
   const total=shopList().reduce((n,g)=>n+g.items.length,0);
   views.shop.innerHTML=weekPicker()+
    '<div class="card"><h2>Waitrose list \u2014 '+esc(WEEKS[wk].label)+'</h2>'+
-   '<p class="lede" style="margin-top:4px">One shop covers both cook days. '+done+' of '+total+' ticked off.</p>'+
+   '<p class="lede" style="margin-top:4px">'+done+' of '+total+' ticked off.</p>'+
    '<div id="shoplist" style="margin-top:10px"></div>'+
    '<div class="btnrow"><button class="btn ghost" id="clearshop">Clear ticks</button></div></div>'+
-   '<div class="note-bar">Both weeks need the same four eggs and 500 g of yoghurt a day \u2014 that is 30 eggs and 3.5 kg of yoghurt, and it is where your protein comes from now.</div>';
+   '';
   paintShop();
   wirePicker(views.shop,renderShop);
   $("#clearshop").addEventListener("click",()=>{

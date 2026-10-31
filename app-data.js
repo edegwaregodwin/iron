@@ -1,7 +1,7 @@
 /* Iron & Icebox — plan data. Edit here; index.html renders it. */
 const PLAN=[
  {key:"upperA",warmup:{general:"5 min on the rower, easy pace \u2014 just enough to raise your temperature.",drills:["20 band pull-aparts","10 scapular push-ups","10 arm circles each way"]},n:1,name:"Upper A",day:"Monday",focus:"Horizontal push, vertical pull",
-  blurb:"Heaviest pressing day. Bench is the lift to push on; everything after it is volume for chest, back and arms. No core here — both core sessions sit on the leg days.",
+  blurb:"",
   ex:[
    {id:"bench",tag:"1",n:"Barbell bench press",s:4,r:"6–8",rest:"2–3 min",rs:150,note:"Main strength lift. Add weight before reps."},
    {id:"csrow",tag:"2",n:"Chest-supported row",s:4,r:"8–10",rest:"2 min",rs:120,note:"Chest on the pad kills momentum — pull to the lower ribs."},
@@ -9,52 +9,52 @@ const PLAN=[
    {id:"latraise",tag:"4A",n:"Cable lateral raise",s:3,r:"12–15",rest:"45 s",rs:45,note:"One arm at a time, cable behind you."},
    {id:"ezcurl",tag:"4B",n:"EZ-bar curl",s:3,r:"10–12",rest:"45 s",rs:45,note:"Elbows pinned to your sides."},
    {id:"ohtri",tag:"4C",n:"Overhead cable triceps extension",s:3,r:"12–15",rest:"45 s",rs:45,note:"Rope, full stretch overhead."},
-   {id:"pulldown",tag:"5",n:"Lat pulldown, wide grip",s:3,r:"10–12",rest:"60 s",rs:60,note:"Lean back about 15°, drive the elbows down rather than back. This is your second vertical pull of the week — pull-ups on Upper B are the other."}]},
+   {id:"pulldown",tag:"5",n:"Lat pulldown, wide grip",s:3,r:"10–12",rest:"60 s",rs:60,note:"Lean back about 15°, drive the elbows down rather than back."}]},
  {key:"lowerA",warmup:{general:"5 min on the bike, easy pace.",drills:["10 bodyweight squats, slow and deep","10 leg swings each side","20 glute bridges","10 ankle rocks each side"]},n:2,name:"Lower A",day:"Tuesday",focus:"Squat",
-  blurb:"Squat-led. Quads take the bulk of the work, with a machine curl and lunges covering the back of the leg, and core at the end.",
+  blurb:"",
   ex:[
    {id:"squat",tag:"1",n:"Back squat",s:4,r:"5–8",rest:"3 min",rs:180,note:"Below parallel if your hips allow. Belt optional on the top set."},
-   {id:"legpress",tag:"2",n:"Leg press",s:3,r:"10–12",rest:"2 min",rs:120,note:"Feet mid-platform, knees track over toes."},
-   {id:"lunge",tag:"3",n:"Walking lunge",s:2,r:"10–12 / leg",rest:"60 s",rs:60,note:"Dumbbells at your sides. Long strides."},
-   {id:"seatedcurl",tag:"4A",n:"Seated leg curl",s:3,r:"12–15",rest:"45 s",rs:45,note:"More stretch than lying — that's the point."},
+   {id:"legpress",tag:"2",n:"Leg press",s:3,r:"10–12",rest:"2 min",rs:120,note:"Feet low and shoulder-width. High feet shift it to the glutes."},
+   {id:"lunge",tag:"3",n:"Walking lunge",s:2,r:"10–12 / leg",rest:"60 s",rs:60,note:"Short strides, upright torso. Long strides load the glutes."},
+   {id:"seatedcurl",tag:"4A",n:"Seated leg curl",s:3,r:"12–15",rest:"45 s",rs:45,note:"More stretch than lying."},
    {id:"standcalf",tag:"4B",n:"Standing calf raise",s:3,r:"10–15",rest:"45 s",rs:45,note:"2-second pause at the bottom of every rep."},
-   {id:"abwheel",tag:"5",n:"Core — ab wheel or long-lever plank",s:2,r:"8–12 or 30 s",rest:"45 s",rs:45,note:"Ribs down, no sagging through the lower back. Last thing you do — your trunk is already warm from squatting."}]},
+   {id:"abwheel",tag:"5",n:"Core — ab wheel or long-lever plank",s:2,r:"8–12 or 30 s",rest:"45 s",rs:45,note:"Ribs down, no sagging."}]},
  {key:"upperB",warmup:{general:"5 min on the rower, easy pace.",drills:["20 band pull-aparts","10 wall slides","10 shoulder dislocates with a band or broomstick"]},n:3,name:"Upper B",day:"Thursday",focus:"Vertical push, horizontal pull",
-  blurb:"Shoulder-led pressing and heavier vertical pulling. Same muscles as Day 1, different angles and rep ranges. ",
+  blurb:"",
   ex:[
-   {id:"ohp",tag:"1",n:"Seated shoulder press",s:4,r:"6–8",rest:"2–3 min",rs:150,note:"Backrest upright, around 80–85° — more reclined turns it into a chest press. Barbell or dumbbells. Standing overhead press works too if you'd rather have the core demand."},
+   {id:"ohp",tag:"1",n:"Seated shoulder press",s:4,r:"6–8",rest:"2–3 min",rs:150,note:"Backrest at 80–85°. More reclined turns it into a chest press."},
    {id:"pullup",tag:"2",n:"Pull-up, weighted if you can",s:3,r:"6–10",rest:"2 min",rs:120,note:"Neutral-grip pulldowns if 6 clean reps is a stretch."},
    {id:"cablerow",tag:"3",n:"Seated cable row",s:3,r:"10–12",rest:"60 s",rs:60,note:"Pause a second with the handle at your stomach."},
    {id:"dbraise",tag:"4A",n:"Dumbbell lateral raise",s:3,r:"15–20",rest:"60 s",rs:60,note:"Light. Lead with the elbow, stop at shoulder height."},
    {id:"inclinecurl",tag:"4B",n:"Incline dumbbell curl",s:3,r:"10–12",rest:"45 s",rs:45,note:"Bench at 45°, arms hanging behind you."},
    {id:"pushdown",tag:"4C",n:"Rope pushdown or dips",s:3,r:"10–12",rest:"45 s",rs:45,note:"Dips if your shoulders are happy, pushdowns if not."},
-   {id:"facepull",tag:"4D",n:"Face pull",s:3,r:"15–20",rest:"45 s",rs:45,note:"The only rear-delt work in the week. Light, controlled."}]},
+   {id:"facepull",tag:"4D",n:"Face pull",s:3,r:"15–20",rest:"45 s",rs:45,note:"Light and controlled."}]},
  {key:"lowerB",warmup:{general:"5 min on the bike, easy pace.",drills:["10 walking lunges","10 leg swings each side","10 hip-flexor rocks each side","20 bodyweight calf raises"]},n:4,name:"Lower B",day:"Friday",focus:"Single-leg and posterior chain",
-  blurb:"No barbell lift off the floor. Split squats are the hard work; weighted back extensions and two curl variations cover the hamstrings and lower back, with core at the end.",
+  blurb:"",
   ex:[
-   {id:"bulgarian",tag:"1",n:"Bulgarian split squat",s:4,r:"8–10 / leg",rest:"2–3 min",rs:150,note:"Upright for quads, leaned forward for glutes."},
-   {id:"backext",tag:"2",n:"45° back extension, weighted",s:3,r:"10–12",rest:"2 min",rs:120,note:"Plate at the chest. Squeeze the glutes at the top, don't hyperextend."},
+   {id:"bulgarian",tag:"1",n:"Bulgarian split squat",s:3,r:"8–10 / leg",rest:"2–3 min",rs:150,note:"Torso upright and vertical throughout. Leaning forward shifts it to the glutes."},
+   {id:"backext",tag:"2",n:"45° back extension, weighted",s:3,r:"10–12",rest:"2 min",rs:120,note:"Plate at the chest. Stop level — don't drive past it."},
    {id:"lyingcurl",tag:"3",n:"Lying leg curl",s:4,r:"10–12",rest:"60 s",rs:60,note:"Different hip angle to Day 2's seated curl."},
-   {id:"legext",tag:"4A",n:"Leg extension",s:3,r:"12–15",rest:"45 s",rs:45,note:"Last set as a drop set once a fortnight."},
-   {id:"seatedcalf",tag:"4B",n:"Seated calf raise",s:3,r:"12–15",rest:"45 s",rs:45,note:"Soleus work — standing covers the other half."},
-   {id:"crunch",tag:"5",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips. Flexion, where Lower A's ab wheel resists extension — the two complement each other."}]}
+   {id:"legext",tag:"4A",n:"Leg extension",s:4,r:"12–15",rest:"45 s",rs:45,note:"Last set as a drop set once a fortnight."},
+   {id:"seatedcalf",tag:"4B",n:"Seated calf raise",s:3,r:"12–15",rest:"45 s",rs:45,note:"Soleus. Standing covers the other half."},
+   {id:"crunch",tag:"5",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips."}]}
 ];
 
 /* Portions are given as cooked weight so you can check them on scales —
    calories follow from that rather than the other way round. */
 
-const PORTION_NOTE="Portions are spec'd by cooked weight, not by eye. Weigh one the first time and you'll know what it looks like in your containers after that.";
+const PORTION_NOTE="";
 
 const TARGETS={
  week1:{kcal:"2,397",protein:"198",deficit:"350",rate:"0.32"},
  week2:{kcal:"1,953",protein:"175",deficit:"795",rate:"0.72"}
 };
 
-const DEFICIT_NOTE="The two weeks run at different speeds, because week 1 was already cooked at the larger portions. Week 1 is 2,397 kcal against a maintenance of about 2,750 — a 350 deficit, roughly 0.3 kg a week, which is gentle. Week 2's smaller portions take it to 1,953 and a 795 deficit, about 0.7 kg, which is brisk. Across the fortnight that averages 0.5 kg a week, a sensible rate. If you would rather they matched, even them out: add 50 g of dry lentils per portion to week 2, or cook week 1 in the smaller portions next time round. And if your top sets drop for two sessions running, or you feel flat, add food back in this order: 50 g more dry rice, pasta or lentils per meal (+170 kcal), then two more eggs at breakfast (+143), then 150 g more yoghurt (+86)."
+const DEFICIT_NOTE="";
 
 const WEEKS=[
 {id:"w1",label:"Week 1",
- note:"Four dishes, two per cook day — left exactly as you cooked it, so the portion counts here match what is in your fridge. These are the larger portions, about 694 kcal each, which makes this a gentler week than week 2. The smaller portions start with week 2.",
+ note:"Four dishes, two per cook day. Larger portions, about 694 kcal each.",
  cooks:[
   {day:"Sunday cook",time:"75 min",covers:"Mon, Tue, Wed + Thu lunch",yields:"9 portions",
    kit:"Deep roasting tin that goes on the hob (or a large casserole), one big deep pan, scales, containers around 700 ml.",
@@ -111,7 +111,7 @@ const WEEKS=[
      reheat:"3 min in the microwave. Pasta fresh, 9–11 min."}]}]},
 
 {id:"w2",label:"Week 2",
- note:"One dish per half of the week, seven portions each — half the cooking of week 1. You eat the same thing for about seven meals running, which is the trade for only making one pot. Both dishes are high-volume and low-density, so the portions are large plates for the calories. Freeze two of the seven on cook day and pull them out for the last two meals: that keeps everything inside the four-day fridge window.",
+ note:"One dish per half-week, seven portions each. Freeze two on cook day for the last two meals.",
  cooks:[
   {day:"Sunday cook",time:"50 min",covers:"Sunday dinner through Wednesday",yields:"7 portions",
    kit:"One large casserole or deep pan with a lid, and scales.",
@@ -188,39 +188,34 @@ const SHOPPING={
 };
 
 const SWAPS=[
- ["Portion looks wrong","Weigh it once. The cooked weight is the honest measure — a 385 g dhal portion fills a container the traybake's 290 g doesn't, because the dhal is mostly water and lentils. Both are about the same calories."],
- ["No rose harissa","Plain harissa, same 3 tbsp, plus 1 tsp honey. Or mix your own: 2 tbsp tomato purée, 2 tsp smoked paprika, 1 tsp cumin, 1 tsp chilli flakes, a crushed garlic clove, 1 tbsp oil, squeeze of lemon. Waitrose keeps Belazu rose harissa in world foods rather than with the cooking sauces."],
- ["Sick of eggs","A tin of tuna is 26 g protein for 120 kcal and slots into either snack. Two a week is plenty of variety; more than that and the eggs are easier."],
- ["Thigh to breast","Saves about 40 kcal and adds 3 g protein a portion, but breast dries out over a long cook. In the dhal add it in the last 12 minutes instead of browning it first."],
- ["No scotch bonnet","1 tsp chilli flakes. The stew wants heat behind the peanut, not on top of it."],
- ["Meat-free week 2","The dhal works with 2 extra tins of chickpeas in place of the chicken — about 28 g protein a portion instead of 49, so take two more eggs that day."]
+ ["No rose harissa","Plain harissa, same 3 tbsp, plus 1 tsp honey. Waitrose keeps it in world foods, not with the cooking sauces."],
+ ["Sick of eggs","A tin of tuna is 26 g protein for 120 kcal and slots into either snack."],
+ ["No scotch bonnet","1 tsp chilli flakes."],
+ ["Thigh to breast","Add it in the last 12 minutes rather than browning it first."],
+ ["Meat-free dhal","Two tins of chickpeas in place of the chicken. 28 g protein a portion, so take two extra eggs."]
 ];
 
 const TROUBLE=[
- ["Losing weight faster than 0.7 kg a week","Add food back before you lose strength, not after. 50 g more dry lentils, rice or pasta per meal is +170 kcal and the easiest lever."],
- ["Top sets dropping two sessions running","That is the signal the deficit is too steep. Add the 50 g of carbs per meal and two more eggs at breakfast, and hold there for a fortnight."],
- ["Starving by 9pm","Move the afternoon yoghurt later, or shift the evening eggs to just before bed. Same total, different timing."],
- ["Same dish seven meals running is grim","That is the cost of one pot per half-week. Hot sauce, a squeeze of lemon, or a handful of fresh herbs on top changes it more than you'd think. Or go back to week 1's two-dish structure."],
- ["Dhal set solid in the fridge","Normal — lentils keep drinking. A splash of water and a stir brings it back."],
- ["Traybake rice still crunchy","The stock wasn't boiling when it went in, or the foil wasn't sealed. Add 100 ml boiling water, re-cover, 10 min."]
+ ["Losing more than 0.7 kg a week","Add 50 g dry rice, pasta or lentils per meal."],
+ ["Top sets down two sessions running","Add the 50 g of carbs, plus two more eggs at breakfast."],
+ ["Dhal set solid in the fridge","Splash of water, stir."],
+ ["Traybake rice crunchy","Stock wasn't boiling or the foil wasn't sealed. 100 ml boiling water, re-cover, 10 min."]
 ];
 
 const STORAGE=[
- "Cool uncovered within an hour of cooking, then lid it and fridge it. Warm food in a sealed box is what shortens its life.",
- "Portion into individual containers straight away rather than one big tub — it reheats better and you won't pick at it.",
- "Fridge at 4°C or below, eaten within four days.",
- "Week 2's Wednesday cook has to stretch to Sunday, which is five days. So freeze two of the seven portions on cook day and defrost them Saturday night — then nothing is ever more than four days old.",
- "Week 1 makes 18 portions against the 14 you eat, so four go in the freezer. Label them with the date.",
- "Reheat until piping hot through, stirring halfway, once only. Rice is the one to respect: cool it fast, eat within 24 hours, which is why the chilli has none stirred into it."
+ "Cool uncovered within an hour, then lid and fridge.",
+ "Portion into individual containers straight away.",
+ "Fridge at 4\u00b0C or below, eaten within four days.",
+ "Week 2's Wednesday cook has to reach Sunday \u2014 freeze two portions on cook day, defrost Saturday night.",
+ "Reheat piping hot through, stirring halfway, once only.",
+ "Rice: cool fast, eat within 24 hours."
 ];
 
-/* Ramp-up percentages for the first lift of each session. The warm-up block
-   works these out from the heaviest set you logged on that lift last time. */
 const RAMP=[
  {pct:0,reps:"8\u201310",label:"Empty bar, or the lightest setting"},
  {pct:0.5,reps:"5",label:"Half your top weight"},
  {pct:0.7,reps:"3",label:"Seventy per cent"},
  {pct:0.85,reps:"1\u20132",label:"Eighty-five per cent"}
 ];
-const RAMP_NOTE="Ramp-ups are not working sets. Rest only as long as it takes to change the plates, and stop one rep before anything feels like effort.";
-const RAMP_NOHIST="No history on this lift yet. Work up in three or four jumps to the weight you expect to manage for the bottom of the rep range, taking 5, 3 and 1 reps on the way. Once you have logged a session this block fills in the actual numbers.";
+const RAMP_NOTE="Not working sets \u2014 rest only as long as the plate change takes.";
+const RAMP_NOHIST="No history yet \u2014 work up in three or four jumps, 5, 3 and 1 reps. Numbers appear here once you log a session.";
