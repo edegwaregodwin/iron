@@ -153,18 +153,35 @@ const WEEKS=[
    ]}]}
 ];
 
-const BREAKFAST=[
- {name:"Breakfast",macros:"382 kcal · 34 g protein",
-  what:"300 g 0% Greek yoghurt, 40 g granola, 80 g frozen berries. The berries thaw overnight in the fridge."},
- {name:"Mid-morning, or straight after training",macros:"250 kcal · 14 g protein",
-  what:"Two boiled eggs and a banana. Boil a week's worth on a cook day — seven minutes, then straight into cold water, and they keep in the fridge in their shells."},
- {name:"Afternoon",macros:"234 kcal · 24 g protein",
-  what:"200 g Greek yoghurt and 20 g nuts."},
- {name:"Evening",macros:"143 kcal · 13 g protein",
-  what:"Two more boiled eggs. This is the one that holds the day's protein up now that there are no shakes — skip it and you lose 13 g."},
- {name:"Overnight oats, if you want something warm",macros:"swap for breakfast",
-  what:"60 g porridge oats, 200 ml semi-skimmed milk, 80 g berries, and stir 100 g of the Greek yoghurt through it. Make three jars on a cook day. This is what the oats on the list are for."}
+const FIXED=[
+ {name:"Breakfast",macros:"382 kcal \u00b7 34 g protein",what:"300 g 0% Greek yoghurt, 40 g granola, 80 g frozen berries."},
+ {name:"Afternoon",macros:"234 kcal \u00b7 24 g protein",what:"200 g Greek yoghurt, 20 g nuts."}
 ];
+
+/* Two protein slots a day \u2014 mid-morning and evening. Any of these fills either;
+   they are within 70 kcal of each other and all land 13\u201330 g of protein. */
+const SNACKS=[
+ ["Tin of tuna in spring water, drained","120 kcal","26 g"],
+ ["50 g biltong","145 kcal","26 g"],
+ ["150 g cooked king prawns","110 kcal","30 g"],
+ ["100 g roast chicken slices","110 kcal","24 g"],
+ ["80 g smoked salmon","145 kcal","20 g"],
+ ["200 g Greek yoghurt","114 kcal","20 g"],
+ ["150 g edamame, steamed from frozen","180 kcal","17 g"],
+ ["2 boiled eggs","143 kcal","13 g"]
+];
+const SNACK_NOTE="Swap freely. Add a banana to the mid-morning one on training days.";
+
+const ROTATION=[
+ ["Mon","2 boiled eggs","200 g Greek yoghurt"],
+ ["Tue","Tin of tuna","2 boiled eggs"],
+ ["Wed","50 g biltong","150 g edamame"],
+ ["Thu","100 g chicken slices","200 g Greek yoghurt"],
+ ["Fri","2 boiled eggs","Tin of tuna"],
+ ["Sat","150 g king prawns","2 boiled eggs"],
+ ["Sun","80 g smoked salmon","150 g edamame"]
+];
+const ROTATION_NOTE="Eight eggs a week on this rotation, not twenty-eight. Averages 994 kcal and 99 g protein a day across the fixed slots and the two snacks.";
 
 const SHOPPING={
  w1:[
@@ -172,7 +189,7 @@ const SHOPPING={
   {group:"Tins — all 400 g",items:[["Chopped tomatoes","5 tins"],["Black beans","2 tins"],["Chickpeas","1 tin"]]},
   {group:"Dry goods",items:[["Basmati rice","1 kg bag"],["Pasta","500 g"],["Couscous","500 g"],["Porridge oats","1 kg"],["Granola","500 g"],["Mixed nuts","200 g"]]},
   {group:"Veg",items:[["Onions","4"],["Red peppers","4"],["Carrots","1 pack"],["Celery","1 pack"],["Garlic","2 bulbs"],["Fresh ginger","1 piece"],["Spinach","200 g"],["Bananas","7"],["Lemon","1"]]},
-  {group:"Daily protein",items:[["Eggs","30 — four a day"],["0% Greek yoghurt","3.5 kg"]]},
+  {group:"Daily protein",items:[["0% Greek yoghurt","4 kg"],["Eggs","1 box of 12"],["Tuna in spring water","2 tins"],["Biltong","50 g pack"],["Roast chicken slices","100 g pack"],["Cooked king prawns","150 g pack"],["Smoked salmon","80 g pack"],["Edamame, frozen","300 g"]]},
   {group:"Chilled & freezer",items:[["Semi-skimmed milk","2 L"],["Frozen berries","500 g"]]},
   {group:"Cupboard",items:[["Rose harissa","1 jar"],["Tomato purée","1 tube"],["Stock cubes","chicken + beef"],["Smoked paprika, cumin, oregano","if you're out"],["Chilli flakes, bay leaves","if you're out"],["Olive oil","as needed"]]}
  ],
@@ -181,7 +198,7 @@ const SHOPPING={
   {group:"Tins — all 400 g",items:[["Chopped tomatoes","4 tins"],["Butter beans","2 tins"]]},
   {group:"Dry goods",items:[["Red lentils","300 g"],["Smooth peanut butter","1 jar, no added sugar"],["Porridge oats","if you're out"],["Granola","500 g"],["Mixed nuts","200 g"]]},
   {group:"Veg",items:[["Onions","4"],["Sweet potato","600 g"],["Garlic","2 bulbs"],["Fresh ginger","1 piece"],["Spinach","400 g"],["Scotch bonnet","1, or use chilli flakes"],["Bananas","7"],["Lemon","1"]]},
-  {group:"Daily protein",items:[["Eggs","30 — four a day"],["0% Greek yoghurt","3.5 kg"]]},
+  {group:"Daily protein",items:[["0% Greek yoghurt","4 kg"],["Eggs","1 box of 12"],["Tuna in spring water","2 tins"],["Biltong","50 g pack"],["Roast chicken slices","100 g pack"],["Cooked king prawns","150 g pack"],["Smoked salmon","80 g pack"],["Edamame, frozen","300 g"]]},
   {group:"Chilled & freezer",items:[["Semi-skimmed milk","1 L"],["Frozen berries","500 g"]]},
   {group:"Cupboard",items:[["Chicken and beef stock cubes","1 pack each"],["Cumin, ground coriander, turmeric, garam masala","if you're out"],["Chilli flakes","if you're out"],["Olive oil","as needed"]]}
  ]

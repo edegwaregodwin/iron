@@ -198,6 +198,18 @@ details li{margin-bottom:4px}
 .weekpick button{flex:1;background:var(--card-2);border:1px solid var(--edge);border-radius:2px;padding:8px 10px;font-family:var(--font-display);font-weight:600;font-size:.8rem;color:var(--ink-dim);cursor:pointer}
 .weekpick button[aria-pressed="true"]{background:var(--card);color:var(--margin-rule);border-color:var(--margin-rule)}
 .portionline{font-size:.76rem;color:var(--ink-faint);margin-top:8px}
+.snackrow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:baseline;
+  padding:7px 0;border-bottom:1px dotted var(--rule);font-size:.86rem}
+.snackrow:last-child{border-bottom:0}
+.snackrow .k{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-faint)}
+.snackrow .p{font-family:var(--font-mono);font-size:.8rem;color:var(--accent);min-width:3.4ch;text-align:right}
+.rotrow{display:grid;grid-template-columns:2.4rem 1fr 1fr;gap:8px;align-items:baseline;
+  padding:7px 0;border-bottom:1px dotted var(--rule);font-size:.83rem}
+.rotrow:last-child{border-bottom:0}
+.rotrow .d{font-family:var(--font-mono);font-weight:600;color:var(--margin-rule)}
+.rothead{font-family:var(--font-mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint)}
+/* ruled paper belongs in the logbook, not on the reference pages */
+#view-history .card,#view-log .card,#view-meals .card,#view-shop .card{background-image:none}
 .qa{border-top:1px dashed var(--rule);padding:10px 0}
 .qa:first-of-type{border-top:0}
 .qa strong{font-family:var(--font-display);font-size:.88rem;display:block}
@@ -606,11 +618,21 @@ function renderMeals(){
        '<h4>Ingredients</h4><ul>'+d.ing.map(i=>'<li>'+esc(i)+'</li>').join("")+'</ul>'+
        '<h4>Method</h4><ol>'+d.steps.map(s=>'<li>'+esc(s)+'</li>').join("")+'</ol>'+
        '<p class="reheat"><strong>Reheat:</strong> '+esc(d.reheat)+'</p></details>').join("")+'</div>').join("")+
-   '<div class="card"><h2>Every day, either week</h2>'+
-   '<p class="lede" style="margin-top:4px">Four eggs and 500 g of yoghurt a day.</p>'+
-   BREAKFAST.map(b=>'<div class="qa"><strong>'+esc(b.name)+'</strong>'+
+   '<div class="card"><h2>Every day</h2>'+
+   FIXED.map(b=>'<div class="qa"><strong>'+esc(b.name)+'</strong>'+
      '<p class="macros-line" style="margin:2px 0 3px">'+esc(b.macros)+'</p>'+
      '<span>'+esc(b.what)+'</span></div>').join("")+'</div>'+
+   '<div class="card"><h2>Protein snacks</h2>'+
+   '<p class="lede" style="margin-top:4px">'+esc(SNACK_NOTE)+'</p>'+
+   '<div style="margin-top:8px">'+SNACKS.map(s=>
+     '<div class="snackrow"><span class="nm">'+esc(s[0])+'</span>'+
+     '<span class="k">'+esc(s[1])+'</span><span class="p">'+esc(s[2])+'</span></div>').join("")+'</div></div>'+
+   '<div class="card"><h2>A week of it</h2>'+
+   '<div style="margin-top:8px">'+
+   '<div class="rotrow rothead"><span>Day</span><span>Mid-morning</span><span>Evening</span></div>'+
+   ROTATION.map(r=>'<div class="rotrow"><span class="d">'+esc(r[0])+'</span>'+
+     '<span>'+esc(r[1])+'</span><span>'+esc(r[2])+'</span></div>').join("")+'</div>'+
+   '<p class="portionline">'+esc(ROTATION_NOTE)+'</p></div>'+
    '<div class="card"><h2>Storage and reheating</h2><ul style="margin:8px 0 0;padding-left:1.1rem;font-size:.85rem;color:var(--ink-dim)">'+
    STORAGE.map(s=>'<li style="margin-bottom:6px">'+esc(s)+'</li>').join("")+'</ul></div>'+
    '<div class="card"><h2>Swaps</h2>'+SWAPS.map(s=>'<div class="qa"><strong>'+esc(s[0])+'</strong><span>'+esc(s[1])+'</span></div>').join("")+'</div>'+
