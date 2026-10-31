@@ -198,11 +198,12 @@ details li{margin-bottom:4px}
 .weekpick button{flex:1;background:var(--card-2);border:1px solid var(--edge);border-radius:2px;padding:8px 10px;font-family:var(--font-display);font-weight:600;font-size:.8rem;color:var(--ink-dim);cursor:pointer}
 .weekpick button[aria-pressed="true"]{background:var(--card);color:var(--margin-rule);border-color:var(--margin-rule)}
 .portionline{font-size:.76rem;color:var(--ink-faint);margin-top:8px}
-.snackrow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:baseline;
-  padding:7px 0;border-bottom:1px dotted var(--rule);font-size:.86rem}
+.snackrow{display:grid;grid-template-columns:6.2rem 1fr;gap:10px;align-items:baseline;
+  padding:6px 0;border-bottom:1px dotted var(--rule);font-size:.86rem}
 .snackrow:last-child{border-bottom:0}
 .snackrow .k{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-faint)}
-.snackrow .p{font-family:var(--font-mono);font-size:.8rem;color:var(--accent);min-width:3.4ch;text-align:right}
+.snackrow .nm{font-family:var(--font-mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-faint)}
+.snackrow .p{font-size:.86rem;color:var(--ink)}
 .rotrow{display:grid;grid-template-columns:2.4rem 1fr 1fr;gap:8px;align-items:baseline;
   padding:7px 0;border-bottom:1px dotted var(--rule);font-size:.83rem}
 .rotrow:last-child{border-bottom:0}
@@ -624,15 +625,13 @@ function renderMeals(){
      '<span>'+esc(b.what)+'</span></div>').join("")+'</div>'+
    '<div class="card"><h2>Protein snacks</h2>'+
    '<p class="lede" style="margin-top:4px">'+esc(SNACK_NOTE)+'</p>'+
-   '<div style="margin-top:8px">'+SNACKS.map(s=>
-     '<div class="snackrow"><span class="nm">'+esc(s[0])+'</span>'+
-     '<span class="k">'+esc(s[1])+'</span><span class="p">'+esc(s[2])+'</span></div>').join("")+'</div></div>'+
-   '<div class="card"><h2>A week of it</h2>'+
-   '<div style="margin-top:8px">'+
-   '<div class="rotrow rothead"><span>Day</span><span>Mid-morning</span><span>Evening</span></div>'+
-   ROTATION.map(r=>'<div class="rotrow"><span class="d">'+esc(r[0])+'</span>'+
-     '<span>'+esc(r[1])+'</span><span>'+esc(r[2])+'</span></div>').join("")+'</div>'+
-   '<p class="portionline">'+esc(ROTATION_NOTE)+'</p></div>'+
+   '<div style="margin-top:10px">'+SNACK_SETS.map(s=>
+     '<div class="qa"><strong>'+esc(s.label)+'</strong>'+
+     '<p class="macros-line" style="margin:2px 0 4px">'+esc(s.macros)+' a day</p>'+
+     '<div class="snackrow"><span class="nm">Mid-morning</span><span class="p">'+esc(s.a)+'</span></div>'+
+     '<div class="snackrow"><span class="nm">Evening</span><span class="p">'+esc(s.b)+'</span></div>'+
+     '<p class="portionline" style="margin-top:5px">Buy: '+esc(s.buy)+'</p></div>').join("")+'</div>'+
+   '<p class="portionline">'+esc(SNACK_SWAPS)+'</p></div>'+
    '<div class="card"><h2>Storage and reheating</h2><ul style="margin:8px 0 0;padding-left:1.1rem;font-size:.85rem;color:var(--ink-dim)">'+
    STORAGE.map(s=>'<li style="margin-bottom:6px">'+esc(s)+'</li>').join("")+'</ul></div>'+
    '<div class="card"><h2>Swaps</h2>'+SWAPS.map(s=>'<div class="qa"><strong>'+esc(s[0])+'</strong><span>'+esc(s[1])+'</span></div>').join("")+'</div>'+

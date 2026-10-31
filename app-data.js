@@ -14,8 +14,8 @@ const PLAN=[
   blurb:"",
   ex:[
    {id:"squat",tag:"1",n:"Back squat",s:4,r:"5–8",rest:"3 min",rs:180,note:"Below parallel if your hips allow. Belt optional on the top set."},
-   {id:"legpress",tag:"2",n:"Leg press",s:3,r:"10–12",rest:"2 min",rs:120,note:"Feet low and shoulder-width. High feet shift it to the glutes."},
-   {id:"lunge",tag:"3",n:"Walking lunge",s:2,r:"10–12 / leg",rest:"60 s",rs:60,note:"Short strides, upright torso. Long strides load the glutes."},
+   {id:"legpress",tag:"2",n:"Leg press",s:3,r:"10–12",rest:"2 min",rs:120,note:"Feet mid-platform, knees track over toes."},
+   {id:"lunge",tag:"3",n:"Walking lunge",s:2,r:"10–12 / leg",rest:"60 s",rs:60,note:"Dumbbells at your sides. Long strides."},
    {id:"seatedcurl",tag:"4A",n:"Seated leg curl",s:3,r:"12–15",rest:"45 s",rs:45,note:"More stretch than lying."},
    {id:"standcalf",tag:"4B",n:"Standing calf raise",s:3,r:"10–15",rest:"45 s",rs:45,note:"2-second pause at the bottom of every rep."},
    {id:"abwheel",tag:"5",n:"Core — ab wheel or long-lever plank",s:2,r:"8–12 or 30 s",rest:"45 s",rs:45,note:"Ribs down, no sagging."}]},
@@ -32,10 +32,10 @@ const PLAN=[
  {key:"lowerB",warmup:{general:"5 min on the bike, easy pace.",drills:["10 walking lunges","10 leg swings each side","10 hip-flexor rocks each side","20 bodyweight calf raises"]},n:4,name:"Lower B",day:"Friday",focus:"Single-leg and posterior chain",
   blurb:"",
   ex:[
-   {id:"bulgarian",tag:"1",n:"Bulgarian split squat",s:3,r:"8–10 / leg",rest:"2–3 min",rs:150,note:"Torso upright and vertical throughout. Leaning forward shifts it to the glutes."},
-   {id:"backext",tag:"2",n:"45° back extension, weighted",s:3,r:"10–12",rest:"2 min",rs:120,note:"Plate at the chest. Stop level — don't drive past it."},
+   {id:"bulgarian",tag:"1",n:"Bulgarian split squat",s:3,r:"8–10 / leg",rest:"2–3 min",rs:150,note:"Upright for quads, leaned forward for glutes."},
+   {id:"backext",tag:"2",n:"45° back extension, weighted",s:3,r:"10–12",rest:"2 min",rs:120,note:"Plate at the chest. Squeeze the glutes at the top, don't hyperextend."},
    {id:"lyingcurl",tag:"3",n:"Lying leg curl",s:4,r:"10–12",rest:"60 s",rs:60,note:"Different hip angle to Day 2's seated curl."},
-   {id:"legext",tag:"4A",n:"Leg extension",s:4,r:"12–15",rest:"45 s",rs:45,note:"Last set as a drop set once a fortnight."},
+   {id:"legext",tag:"4A",n:"Leg extension",s:3,r:"12–15",rest:"45 s",rs:45,note:"Last set as a drop set once a fortnight."},
    {id:"seatedcalf",tag:"4B",n:"Seated calf raise",s:3,r:"12–15",rest:"45 s",rs:45,note:"Soleus. Standing covers the other half."},
    {id:"crunch",tag:"5",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips."}]}
 ];
@@ -50,7 +50,6 @@ const TARGETS={
  week2:{kcal:"1,953",protein:"175",deficit:"795",rate:"0.72"}
 };
 
-const DEFICIT_NOTE="";
 
 const WEEKS=[
 {id:"w1",label:"Week 1",
@@ -158,30 +157,18 @@ const FIXED=[
  {name:"Afternoon",macros:"234 kcal \u00b7 24 g protein",what:"200 g Greek yoghurt, 20 g nuts."}
 ];
 
-/* Two protein slots a day \u2014 mid-morning and evening. Any of these fills either;
-   they are within 70 kcal of each other and all land 13\u201330 g of protein. */
-const SNACKS=[
- ["Tin of tuna in spring water, drained","120 kcal","26 g"],
- ["50 g biltong","145 kcal","26 g"],
- ["150 g cooked king prawns","110 kcal","30 g"],
- ["100 g roast chicken slices","110 kcal","24 g"],
- ["80 g smoked salmon","145 kcal","20 g"],
- ["200 g Greek yoghurt","114 kcal","20 g"],
- ["150 g edamame, steamed from frozen","180 kcal","17 g"],
- ["2 boiled eggs","143 kcal","13 g"]
+/* Two protein slots a day, mid-morning and evening. Pick one set for the
+   week and eat it through \u2014 two things to buy, not eight. */
+const SNACK_SETS=[
+ {label:"Set A",a:"2 boiled eggs",b:"Tin of tuna in spring water",macros:"263 kcal \u00b7 39 g protein",
+  buy:"14 eggs, 7 tins of tuna"},
+ {label:"Set B",a:"100 g roast chicken slices",b:"200 g Greek yoghurt",macros:"224 kcal \u00b7 44 g protein",
+  buy:"700 g chicken slices, 1.4 kg extra yoghurt"},
+ {label:"Set C",a:"150 g edamame, from frozen",b:"Tin of tuna in spring water",macros:"300 kcal \u00b7 43 g protein",
+  buy:"1 kg frozen edamame, 7 tins of tuna"}
 ];
-const SNACK_NOTE="Swap freely. Add a banana to the mid-morning one on training days.";
-
-const ROTATION=[
- ["Mon","2 boiled eggs","200 g Greek yoghurt"],
- ["Tue","Tin of tuna","2 boiled eggs"],
- ["Wed","50 g biltong","150 g edamame"],
- ["Thu","100 g chicken slices","200 g Greek yoghurt"],
- ["Fri","2 boiled eggs","Tin of tuna"],
- ["Sat","150 g king prawns","2 boiled eggs"],
- ["Sun","80 g smoked salmon","150 g edamame"]
-];
-const ROTATION_NOTE="Eight eggs a week on this rotation, not twenty-eight. Averages 994 kcal and 99 g protein a day across the fixed slots and the two snacks.";
+const SNACK_NOTE="One set a week, rotated. Add a banana to the mid-morning one on training days.";
+const SNACK_SWAPS="For a change in either slot: 50 g biltong (145 kcal, 26 g), 150 g king prawns (110, 30), 80 g smoked salmon (145, 20).";
 
 const SHOPPING={
  w1:[
@@ -189,7 +176,7 @@ const SHOPPING={
   {group:"Tins — all 400 g",items:[["Chopped tomatoes","5 tins"],["Black beans","2 tins"],["Chickpeas","1 tin"]]},
   {group:"Dry goods",items:[["Basmati rice","1 kg bag"],["Pasta","500 g"],["Couscous","500 g"],["Porridge oats","1 kg"],["Granola","500 g"],["Mixed nuts","200 g"]]},
   {group:"Veg",items:[["Onions","4"],["Red peppers","4"],["Carrots","1 pack"],["Celery","1 pack"],["Garlic","2 bulbs"],["Fresh ginger","1 piece"],["Spinach","200 g"],["Bananas","7"],["Lemon","1"]]},
-  {group:"Daily protein",items:[["0% Greek yoghurt","4 kg"],["Eggs","1 box of 12"],["Tuna in spring water","2 tins"],["Biltong","50 g pack"],["Roast chicken slices","100 g pack"],["Cooked king prawns","150 g pack"],["Smoked salmon","80 g pack"],["Edamame, frozen","300 g"]]},
+  {group:"Daily protein",items:[["0% Greek yoghurt","3.5 kg"],["This week's snack set","see Meals — two items"]]},
   {group:"Chilled & freezer",items:[["Semi-skimmed milk","2 L"],["Frozen berries","500 g"]]},
   {group:"Cupboard",items:[["Rose harissa","1 jar"],["Tomato purée","1 tube"],["Stock cubes","chicken + beef"],["Smoked paprika, cumin, oregano","if you're out"],["Chilli flakes, bay leaves","if you're out"],["Olive oil","as needed"]]}
  ],
@@ -198,7 +185,7 @@ const SHOPPING={
   {group:"Tins — all 400 g",items:[["Chopped tomatoes","4 tins"],["Butter beans","2 tins"]]},
   {group:"Dry goods",items:[["Red lentils","300 g"],["Smooth peanut butter","1 jar, no added sugar"],["Porridge oats","if you're out"],["Granola","500 g"],["Mixed nuts","200 g"]]},
   {group:"Veg",items:[["Onions","4"],["Sweet potato","600 g"],["Garlic","2 bulbs"],["Fresh ginger","1 piece"],["Spinach","400 g"],["Scotch bonnet","1, or use chilli flakes"],["Bananas","7"],["Lemon","1"]]},
-  {group:"Daily protein",items:[["0% Greek yoghurt","4 kg"],["Eggs","1 box of 12"],["Tuna in spring water","2 tins"],["Biltong","50 g pack"],["Roast chicken slices","100 g pack"],["Cooked king prawns","150 g pack"],["Smoked salmon","80 g pack"],["Edamame, frozen","300 g"]]},
+  {group:"Daily protein",items:[["0% Greek yoghurt","3.5 kg"],["This week's snack set","see Meals — two items"]]},
   {group:"Chilled & freezer",items:[["Semi-skimmed milk","1 L"],["Frozen berries","500 g"]]},
   {group:"Cupboard",items:[["Chicken and beef stock cubes","1 pack each"],["Cumin, ground coriander, turmeric, garam masala","if you're out"],["Chilli flakes","if you're out"],["Olive oil","as needed"]]}
  ]
