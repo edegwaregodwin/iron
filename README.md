@@ -1,13 +1,14 @@
-# Iron & Icebox — offline PWA
+# Logged — offline PWA
 
-Your 4-day upper/lower log and two-cook meal plan, as a real installable app.
+A lab-notebook for your 4-day upper/lower split and two-cook meal plan, as a real
+installable app.
 Works with no signal once installed. All data stays on the phone.
 
 ## Files
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The app shell, rendering and rest timer |
+| `index.html` | The app shell, styling, rendering, rest timer |
 | `app-data.js` | The plan itself — exercises, recipes, shopping list |
 | `sw.js` | Service worker — the thing that makes it work offline |
 | `manifest.webmanifest` | Name, icons, standalone display |
@@ -38,7 +39,9 @@ caches everything. After that it opens and logs with the phone in airplane mode.
 
 ## Using it
 
-- **Train** — tap a day, enter kg and reps per set, Save. Last session's numbers sit
+- **Train** — tap a day and the warm-up is at the top: the general bit, the mobility
+  drills for that day, and ramp-up sets worked out from the heaviest weight you logged
+  on that lift last time (bar, 50%, 70%, 85%). Below it, enter kg and reps per set, Save. Last session's numbers sit
   on the right of each row so you know what to beat. Each exercise has a **rest timer
   button** preset to its prescribed rest; it beeps and vibrates when time is up, and
   `+30s` extends it.
@@ -69,7 +72,7 @@ actual numbers and adjust the programme against them. Import puts a backup back.
 
 Almost every change is to `app-data.js` alone — the exercises, recipes and shopping
 list all live there, separate from the app code. On GitHub: open `app-data.js` →
-pencil icon → edit → commit. Then bump `VERSION` in `sw.js` (`ii-v2` to `ii-v3`) the
+pencil icon → edit → commit. Then bump `VERSION` in `sw.js` (e.g. `logged-v8` to `logged-v9`) the
 same way, or the old cached copy keeps serving. Your logged data is untouched by this.
 
 Easier still: ask me, and I'll push it.

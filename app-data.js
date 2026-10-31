@@ -1,6 +1,6 @@
 /* Iron & Icebox — plan data. Edit here; index.html renders it. */
 const PLAN=[
- {key:"upperA",n:1,name:"Upper A",day:"Monday",focus:"Horizontal push, vertical pull",
+ {key:"upperA",warmup:{general:"5 min on the rower, easy pace \u2014 just enough to raise your temperature.",drills:["20 band pull-aparts","10 scapular push-ups","10 arm circles each way"]},n:1,name:"Upper A",day:"Monday",focus:"Horizontal push, vertical pull",
   blurb:"Heaviest pressing day. Bench is the lift to push on; everything after it is volume for chest, back and arms. No core here — both core sessions sit on the leg days.",
   ex:[
    {id:"bench",tag:"1",n:"Barbell bench press",s:4,r:"6–8",rest:"2–3 min",rs:150,note:"Main strength lift. Add weight before reps."},
@@ -10,7 +10,7 @@ const PLAN=[
    {id:"ezcurl",tag:"4B",n:"EZ-bar curl",s:3,r:"10–12",rest:"45 s",rs:45,note:"Elbows pinned to your sides."},
    {id:"ohtri",tag:"4C",n:"Overhead cable triceps extension",s:3,r:"12–15",rest:"45 s",rs:45,note:"Rope, full stretch overhead."},
    {id:"pulldown",tag:"5",n:"Lat pulldown, wide grip",s:3,r:"10–12",rest:"60 s",rs:60,note:"Lean back about 15°, drive the elbows down rather than back. This is your second vertical pull of the week — pull-ups on Upper B are the other."}]},
- {key:"lowerA",n:2,name:"Lower A",day:"Tuesday",focus:"Squat",
+ {key:"lowerA",warmup:{general:"5 min on the bike, easy pace.",drills:["10 bodyweight squats, slow and deep","10 leg swings each side","20 glute bridges","10 ankle rocks each side"]},n:2,name:"Lower A",day:"Tuesday",focus:"Squat",
   blurb:"Squat-led. Quads take the bulk of the work, with a machine curl and lunges covering the back of the leg, and core at the end.",
   ex:[
    {id:"squat",tag:"1",n:"Back squat",s:4,r:"5–8",rest:"3 min",rs:180,note:"Below parallel if your hips allow. Belt optional on the top set."},
@@ -19,7 +19,7 @@ const PLAN=[
    {id:"seatedcurl",tag:"4A",n:"Seated leg curl",s:3,r:"12–15",rest:"45 s",rs:45,note:"More stretch than lying — that's the point."},
    {id:"standcalf",tag:"4B",n:"Standing calf raise",s:3,r:"10–15",rest:"45 s",rs:45,note:"2-second pause at the bottom of every rep."},
    {id:"abwheel",tag:"5",n:"Core — ab wheel or long-lever plank",s:2,r:"8–12 or 30 s",rest:"45 s",rs:45,note:"Ribs down, no sagging through the lower back. Last thing you do — your trunk is already warm from squatting."}]},
- {key:"upperB",n:3,name:"Upper B",day:"Thursday",focus:"Vertical push, horizontal pull",
+ {key:"upperB",warmup:{general:"5 min on the rower, easy pace.",drills:["20 band pull-aparts","10 wall slides","10 shoulder dislocates with a band or broomstick"]},n:3,name:"Upper B",day:"Thursday",focus:"Vertical push, horizontal pull",
   blurb:"Shoulder-led pressing and heavier vertical pulling. Same muscles as Day 1, different angles and rep ranges. ",
   ex:[
    {id:"ohp",tag:"1",n:"Seated shoulder press",s:4,r:"6–8",rest:"2–3 min",rs:150,note:"Backrest upright, around 80–85° — more reclined turns it into a chest press. Barbell or dumbbells. Standing overhead press works too if you'd rather have the core demand."},
@@ -29,7 +29,7 @@ const PLAN=[
    {id:"inclinecurl",tag:"4B",n:"Incline dumbbell curl",s:3,r:"10–12",rest:"45 s",rs:45,note:"Bench at 45°, arms hanging behind you."},
    {id:"pushdown",tag:"4C",n:"Rope pushdown or dips",s:3,r:"10–12",rest:"45 s",rs:45,note:"Dips if your shoulders are happy, pushdowns if not."},
    {id:"facepull",tag:"4D",n:"Face pull",s:3,r:"15–20",rest:"45 s",rs:45,note:"The only rear-delt work in the week. Light, controlled."}]},
- {key:"lowerB",n:4,name:"Lower B",day:"Friday",focus:"Single-leg and posterior chain",
+ {key:"lowerB",warmup:{general:"5 min on the bike, easy pace.",drills:["10 walking lunges","10 leg swings each side","10 hip-flexor rocks each side","20 bodyweight calf raises"]},n:4,name:"Lower B",day:"Friday",focus:"Single-leg and posterior chain",
   blurb:"No barbell lift off the floor. Split squats are the hard work; weighted back extensions and two curl variations cover the hamstrings and lower back, with core at the end.",
   ex:[
    {id:"bulgarian",tag:"1",n:"Bulgarian split squat",s:4,r:"8–10 / leg",rest:"2–3 min",rs:150,note:"Upright for quads, leaned forward for glutes."},
@@ -46,8 +46,8 @@ const PLAN=[
 const PORTION_NOTE="Portions are spec'd by cooked weight, not by eye. Weigh one the first time and you'll know what it looks like in your containers after that.";
 
 const TARGETS={
- week1:{kcal:"2,397",protein:"198 g",deficit:"350 kcal",rate:"0.32 kg"},
- week2:{kcal:"1,953",protein:"175 g",deficit:"795 kcal",rate:"0.72 kg"}
+ week1:{kcal:"2,397",protein:"198",deficit:"350",rate:"0.32"},
+ week2:{kcal:"1,953",protein:"175",deficit:"795",rate:"0.72"}
 };
 
 const DEFICIT_NOTE="The two weeks run at different speeds, because week 1 was already cooked at the larger portions. Week 1 is 2,397 kcal against a maintenance of about 2,750 — a 350 deficit, roughly 0.3 kg a week, which is gentle. Week 2's smaller portions take it to 1,953 and a 795 deficit, about 0.7 kg, which is brisk. Across the fortnight that averages 0.5 kg a week, a sensible rate. If you would rather they matched, even them out: add 50 g of dry lentils per portion to week 2, or cook week 1 in the smaller portions next time round. And if your top sets drop for two sessions running, or you feel flat, add food back in this order: 50 g more dry rice, pasta or lentils per meal (+170 kcal), then two more eggs at breakfast (+143), then 150 g more yoghurt (+86)."
@@ -213,3 +213,14 @@ const STORAGE=[
  "Week 1 makes 18 portions against the 14 you eat, so four go in the freezer. Label them with the date.",
  "Reheat until piping hot through, stirring halfway, once only. Rice is the one to respect: cool it fast, eat within 24 hours, which is why the chilli has none stirred into it."
 ];
+
+/* Ramp-up percentages for the first lift of each session. The warm-up block
+   works these out from the heaviest set you logged on that lift last time. */
+const RAMP=[
+ {pct:0,reps:"8\u201310",label:"Empty bar, or the lightest setting"},
+ {pct:0.5,reps:"5",label:"Half your top weight"},
+ {pct:0.7,reps:"3",label:"Seventy per cent"},
+ {pct:0.85,reps:"1\u20132",label:"Eighty-five per cent"}
+];
+const RAMP_NOTE="Ramp-ups are not working sets. Rest only as long as it takes to change the plates, and stop one rep before anything feels like effort.";
+const RAMP_NOHIST="No history on this lift yet. Work up in three or four jumps to the weight you expect to manage for the bottom of the rep range, taking 5, 3 and 1 reps on the way. Once you have logged a session this block fills in the actual numbers.";
