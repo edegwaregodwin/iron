@@ -36,7 +36,7 @@ const PLAN=[
    {id:"backext",tag:"2",n:"45° back extension, weighted",s:3,r:"10–12",rest:"2 min",rs:120,note:"Plate at the chest. Squeeze the glutes at the top, don't hyperextend."},
    {id:"lyingcurl",tag:"3",n:"Lying leg curl",s:4,r:"10–12",rest:"60 s",rs:60,note:"Different hip angle to Day 2's seated curl."},
    {id:"legext",tag:"4A",n:"Leg extension",s:3,r:"12–15",rest:"45 s",rs:45,note:"Last set as a drop set once a fortnight."},
-   {id:"seatedcalf",tag:"4B",n:"Seated calf raise",s:3,r:"12–15",rest:"45 s",rs:45,note:"Soleus. Standing covers the other half."},
+   {id:"seatedcalf",tag:"4B",n:"Seated calf raise, dumbbell on knees",s:3,r:"12–15",rest:"45 s",rs:45,note:"Sit on a bench, balls of feet on a plate or step, one heavy dumbbell stood upright on your knees. Knees at 90° is what makes it the soleus. Leg press with a soft knee works too."},
    {id:"crunch",tag:"5",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips."}]}
 ];
 
