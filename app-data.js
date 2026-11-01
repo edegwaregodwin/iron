@@ -47,7 +47,7 @@ const PORTION_NOTE="";
 
 const TARGETS={
  week1:{kcal:"2,397",protein:"198",deficit:"350",rate:"0.32"},
- week2:{kcal:"1,953",protein:"175",deficit:"795",rate:"0.72"}
+ week2:{kcal:"2,042",protein:"182",deficit:"705",rate:"0.64"}
 };
 
 
@@ -112,44 +112,41 @@ const WEEKS=[
 {id:"w2",label:"Week 2",
  note:"One dish per half-week, seven portions each. Freeze two on cook day for the last two meals.",
  cooks:[
-  {day:"Sunday cook",time:"50 min",covers:"Sunday dinner through Wednesday",yields:"7 portions",
-   kit:"One large casserole or deep pan with a lid, and scales.",
+  {day:"Sunday cook",time:"60 min",covers:"Sunday dinner through Wednesday",yields:"7 portions",
+   kit:"One big pot with a tight lid, and a blender.",
    timeline:[
-    ["0:00","Dice 2 onions, crush 4 garlic cloves, grate a thumb of ginger. Dice the chicken into 3 cm pieces."],
-    ["0:06","Casserole on medium-high with the oil: brown the chicken in two batches, 4 min each. Lift out."],
-    ["0:16","Onions into the fat, 7 min. Then garlic, ginger and all the dry spices — 90 seconds, until the kitchen smells of it."],
-    ["0:19","Rinsed lentils in, stirred through the spices for a minute so they toast slightly."],
-    ["0:21","Tomatoes and stock in, chicken back on top. Bring to a boil, then lid on and down to a simmer."],
-    ["0:25","25 minutes with the lid on. Stir at the halfway point — lentils sink and catch."],
-    ["0:50","Lid off, spinach through in handfuls until it collapses. Season, squeeze of lemon."],
-    ["0:55","Cool uncovered, then seven portions. Two straight into the freezer."]],
+    ["0:00","Blend 2 red peppers, 1 tin tomatoes, 1 onion and the scotch bonnet until smooth. Dice the chicken; slice the remaining pepper and onion."],
+    ["0:08","Pot on medium-high with the oil: brown the chicken in two batches, 4 min each. Lift out."],
+    ["0:18","Sliced onion and pepper, 5 min. Tomato pur\u00e9e in and fried 3 min until it darkens."],
+    ["0:26","Blended base in. Boil hard and uncovered for 10 min \u2014 this is the step that decides whether it tastes cooked or raw."],
+    ["0:36","Curry powder, thyme, bay and the stock cube. Rinsed rice in, stirred to coat."],
+    ["0:39","Hot stock in, chicken back on top. Lid on tight, lowest heat, 22 min. Do not stir."],
+    ["1:01","Off the heat, lid on, 10 min. Then fork through."],
+    ["1:11","Cool uncovered, seven portions, two to the freezer."]],
    dishes:[
-    {name:"Chicken and red lentil dhal",portions:"7 portions",
-     macros:"466 kcal · 49 g protein · about 385 g cooked per portion",
-     self:"Complete meal — the lentils are the carb. No side needed.",
-     ing:["1 kg chicken thigh fillets, diced into 3 cm pieces","300 g red lentils, dry, rinsed","2 × 400 g tins chopped tomatoes","1.2 L chicken stock","2 onions, diced","4 garlic cloves, 1 tbsp grated ginger","2 tsp cumin, 2 tsp ground coriander, 1 tsp turmeric, 1 tsp garam masala","½–1 tsp chilli flakes","200 g spinach, juice of half a lemon","1 tbsp olive oil, salt"],
-     steps:["Brown the diced chicken in the oil in two batches, 4 min each. Set aside — it finishes in the pot.","Onions 7 min in the same fat. Garlic, ginger and all the dry spices for 90 seconds.","Rinsed lentils in, stirred through the spices for a minute.","Tomatoes, stock and the chicken. Boil, then lid on and simmer 25 min, stirring at halfway so the lentils don't catch.","Lid off, spinach through in handfuls. Season, lemon, and divide into seven."],
-     reheat:"Splash of water, 3 min in the microwave. Lentils drink it up in the fridge and it sets almost solid — that's normal, the water brings it back."},
-   ]},
-  {day:"Wednesday cook",time:"55 min",covers:"Thursday through Saturday or Sunday",yields:"7 portions",
-   kit:"One large casserole or deep pan with a lid.",
+    {name:"Jollof rice with chicken",portions:"7 portions",
+     macros:"515 kcal \u00b7 41 g protein \u00b7 about 400 g cooked per portion",
+     self:"Complete meal. No side.",
+     ing:["1 kg chicken thigh fillets, diced","350 g long-grain rice, dry, rinsed","3 red peppers","1 \u00d7 400 g tin chopped tomatoes","2 onions","1 scotch bonnet, deseeded for less heat","3 tbsp tomato pur\u00e9e","2 tsp curry powder, 1 tsp dried thyme, 2 bay leaves","1 chicken stock cube, 700 ml hot stock","2 tbsp oil, salt"],
+     steps:["Blend 2 peppers, the tomatoes, 1 onion and the scotch bonnet smooth.","Brown the diced chicken in two batches. Lift out.","Slice the remaining onion and pepper, soften 5 min, then fry the pur\u00e9e 3 min until it darkens.","Blended base in, boil hard uncovered 10 min until it thickens and loses the raw smell.","Spices and stock cube, then the rinsed rice, stirred to coat. Hot stock in, chicken on top.","Tight lid, lowest heat, 22 min, no stirring. Rest 10 min off the heat, then fork through."],
+     reheat:"2 tbsp water, 3 min in the microwave, stirred at halfway."}]},
+  {day:"Wednesday cook",time:"45 min",covers:"Thursday through Sunday",yields:"7 portions",
+   kit:"One large deep pan.",
    timeline:[
-    ["0:00","Dice 2 onions, crush 4 garlic, grate a thumb of ginger. Peel and cube the sweet potato into 3 cm chunks."],
-    ["0:08","Casserole on high: brown the beef in two 500 g batches, 5 min each. Lift out, leave the fat."],
-    ["0:18","Onions 7 min. Garlic, ginger and the chilli for 90 seconds."],
-    ["0:21","Peanut butter in, stirred until it loosens into the onions — a minute. Then the tomatoes, and scrape the bottom."],
-    ["0:24","Beef back in with the sweet potato, butter beans and stock. Boil, lid on, simmer."],
-    ["0:28","25 minutes. The sweet potato should give to a fork but still hold its shape."],
-    ["0:53","Spinach through, season generously — peanut and tomato both need salt."],
-    ["0:58","Cool uncovered, then seven portions. Two into the freezer."]],
+    ["0:00","Dice 2 onions and 3 peppers. Blitz or crush the peanuts, then mix the suya spice: peanuts, paprika, cayenne, ginger, garlic and onion powder, crumbled stock cube."],
+    ["0:08","Pan on high: brown the beef in two 500 g batches, 5 min each. Lift out, leave the fat."],
+    ["0:18","Onions and peppers, 6 min."],
+    ["0:24","Tomato pur\u00e9e 2 min, then two thirds of the suya mix for 1 min \u2014 it will smell roasted."],
+    ["0:27","Tomatoes in, beef back, splash of water. Simmer uncovered 12 min."],
+    ["0:39","Spinach through. Off the heat, stir in the last third of the suya mix \u2014 that is what keeps it tasting fresh rather than cooked flat."],
+    ["0:42","Cool uncovered, seven portions, two to the freezer."]],
    dishes:[
-    {name:"Beef and sweet potato groundnut stew",portions:"7 portions",
-     macros:"477 kcal · 41 g protein · about 425 g cooked per portion",
-     self:"Complete meal — sweet potato and butter beans are the carb.",
-     ing:["1 kg beef mince, 5% fat (two 500 g packs)","600 g sweet potato, peeled and cubed","2 × 400 g tins butter beans, drained","2 × 400 g tins chopped tomatoes","80 g smooth peanut butter (no added sugar)","800 ml beef stock","2 onions, diced","4 garlic cloves, 1 tbsp grated ginger","1 scotch bonnet, deseeded, or 1 tsp chilli flakes","200 g spinach","1 tbsp olive oil, salt"],
-     steps:["Brown the beef in two batches on high heat. Lift out, leave the fat in the pot.","Onions 7 min, then garlic, ginger and chilli for 90 seconds.","Peanut butter in and stirred until it loosens, then the tomatoes — scrape the bottom of the pot.","Beef back in with the sweet potato, butter beans and stock. Lid on, simmer 25 min until the potato gives to a fork.","Spinach through, season generously, then divide into seven."],
-     reheat:"3 min in the microwave, stirred at halfway. The peanut thickens it in the fridge — a splash of water loosens it."},
-   ]}]}
+    {name:"Suya beef and pepper stew",portions:"7 portions",
+     macros:"543 kcal \u00b7 40 g protein \u00b7 about 505 g cooked per portion, with 60 g dry rice",
+     self:"60 g dry rice on the night.",
+     ing:["1 kg beef mince, 5% fat (two 500 g packs)","3 red peppers, diced","2 onions, diced","2 \u00d7 400 g tins chopped tomatoes","2 tbsp tomato pur\u00e9e","200 g spinach","1 tbsp oil, salt","Suya spice: 60 g roasted peanuts, blitzed; 2 tsp smoked paprika; 1\u20132 tsp cayenne; 1 tsp ground ginger; 1 tsp garlic powder; 1 tsp onion powder; 1 beef stock cube"],
+     steps:["Mix the suya spice in a bowl first \u2014 it goes in twice.","Brown the beef in two batches on high heat. Lift out.","Onions and peppers 6 min in the fat.","Pur\u00e9e 2 min, then two thirds of the suya mix for 1 min.","Tomatoes and the beef back in with a splash of water. Simmer uncovered 12 min.","Spinach through, then the last third of the suya mix off the heat. Season and divide into seven."],
+     reheat:"Splash of water, 3 min in the microwave."}]}]}
 ];
 
 const FIXED=[
@@ -181,28 +178,28 @@ const SHOPPING={
   {group:"Cupboard",items:[["Rose harissa","1 jar"],["Tomato purée","1 tube"],["Stock cubes","chicken + beef"],["Smoked paprika, cumin, oregano","if you're out"],["Chilli flakes, bay leaves","if you're out"],["Olive oil","as needed"]]}
  ],
  w2:[
-  {group:"Meat",items:[["Chicken thigh fillets","1 kg"],["Beef mince, 5%","2 × 500 g"]]},
-  {group:"Tins — all 400 g",items:[["Chopped tomatoes","4 tins"],["Butter beans","2 tins"]]},
-  {group:"Dry goods",items:[["Red lentils","300 g"],["Smooth peanut butter","1 jar, no added sugar"],["Porridge oats","if you're out"],["Granola","500 g"],["Mixed nuts","200 g"]]},
-  {group:"Veg",items:[["Onions","4"],["Sweet potato","600 g"],["Garlic","2 bulbs"],["Fresh ginger","1 piece"],["Spinach","400 g"],["Scotch bonnet","1, or use chilli flakes"],["Bananas","7"],["Lemon","1"]]},
-  {group:"Daily protein",items:[["0% Greek yoghurt","3.5 kg"],["This week's snack set","see Meals — two items"]]},
-  {group:"Chilled & freezer",items:[["Semi-skimmed milk","1 L"],["Frozen berries","500 g"]]},
-  {group:"Cupboard",items:[["Chicken and beef stock cubes","1 pack each"],["Cumin, ground coriander, turmeric, garam masala","if you're out"],["Chilli flakes","if you're out"],["Olive oil","as needed"]]}
+  {group:"Meat",items:[["Chicken thigh fillets","1 kg"],["Beef mince, 5%","2 \u00d7 500 g"]]},
+  {group:"Tins",items:[["Chopped tomatoes, 400 g","3 tins"]]},
+  {group:"Dry goods",items:[["Long-grain rice","1 kg bag"],["Roasted peanuts","60 g"],["Granola","500 g"],["Mixed nuts","200 g"]]},
+  {group:"Veg",items:[["Onions","5"],["Red peppers","6"],["Scotch bonnet","1\u20132"],["Garlic","1 bulb"],["Fresh ginger","1 piece"],["Spinach","200 g"],["Bananas","7"]]},
+  {group:"Daily protein",items:[["0% Greek yoghurt","3.5 kg"],["This week\u0027s snack set","see Meals \u2014 two items"]]},
+  {group:"Freezer",items:[["Frozen berries","500 g"]]},
+  {group:"Cupboard",items:[["Tomato pur\u00e9e","1 tube"],["Chicken and beef stock cubes","1 pack each"],["Curry powder, dried thyme, bay leaves","if you\u0027re out"],["Smoked paprika, cayenne, ground ginger","if you\u0027re out"],["Garlic powder, onion powder","if you\u0027re out"],["Oil","as needed"]]}
  ]
 };
 
 const SWAPS=[
  ["No rose harissa","Plain harissa, same 3 tbsp, plus 1 tsp honey. Waitrose keeps it in world foods, not with the cooking sauces."],
  ["Sick of eggs","A tin of tuna is 26 g protein for 120 kcal and slots into either snack."],
- ["No scotch bonnet","1 tsp chilli flakes."],
+ ["No roasted peanuts","2 tbsp smooth peanut butter stirred in with the tomatoes."],
  ["Thigh to breast","Add it in the last 12 minutes rather than browning it first."],
- ["Meat-free dhal","Two tins of chickpeas in place of the chicken. 28 g protein a portion, so take two extra eggs."]
+ ["No scotch bonnet for the jollof","1 tsp chilli flakes, or leave it out \u2014 the dish works without the heat."]
 ];
 
 const TROUBLE=[
  ["Losing more than 0.7 kg a week","Add 50 g dry rice, pasta or lentils per meal."],
  ["Top sets down two sessions running","Add the 50 g of carbs, plus two more eggs at breakfast."],
- ["Dhal set solid in the fridge","Splash of water, stir."],
+ ["Jollof dried out","2 tbsp water before reheating, lid on."],
  ["Traybake rice crunchy","Stock wasn't boiling or the foil wasn't sealed. 100 ml boiling water, re-cover, 10 min."]
 ];
 
