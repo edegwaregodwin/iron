@@ -552,7 +552,9 @@ function openLog(id){
   order.concat(Object.keys(s.sets||{})).forEach(k=>{
     if(seen[k]||!s.sets[k])return;seen[k]=true;
     const meta=day?day.ex.find(e=>e.id===k):null;
-    rows.push('<div class="logex"><h3>'+esc(meta?meta.n:k)+'</h3>'+
+    const label=meta?meta.n:(RETIRED[k]||k);
+    rows.push('<div class="logex"><h3>'+esc(label)+'</h3>'+
+      (meta?'':'<p class="tagline">no longer in the plan</p>')+
       (meta?'<p class="tagline">'+esc(meta.tag)+' \u00b7 target '+meta.s+' \u00d7 '+esc(meta.r)+'</p>':'')+
       '<div class="logsets">'+s.sets[k].map((x,i)=>
         '<span class="logset"><i>'+(i+1)+'</i><b>'+esc(x.w||"\u2013")+'</b> kg \u00d7 '+esc(x.r||"\u2013")+'</span>').join("")+

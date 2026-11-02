@@ -7,7 +7,7 @@ const PLAN=[
    {id:"csrow",tag:"2",n:"Chest-supported row",s:4,r:"8–10",rest:"2 min",rs:120,note:"Chest on the pad kills momentum — pull to the lower ribs."},
    {id:"inclinedb",tag:"3",n:"Incline dumbbell press",s:3,r:"10–12",rest:"60 s",rs:60,note:"30° bench. Stretch at the bottom, don't bounce."},
    {id:"latraise",tag:"4A",n:"Cable lateral raise",s:3,r:"12–15",rest:"45 s",rs:45,note:"One arm at a time, cable behind you."},
-   {id:"ezcurl",tag:"4B",n:"EZ-bar curl",s:3,r:"10–12",rest:"45 s",rs:45,note:"Elbows pinned to your sides."},
+   {id:"machinecurl",tag:"4B",n:"Machine arm curl",s:3,r:"10–12",rest:"45 s",rs:45,note:"Upper arms flat on the pad the whole set. Three seconds lowering."},
    {id:"ohtri",tag:"4C",n:"Overhead cable triceps extension",s:3,r:"12–15",rest:"45 s",rs:45,note:"Rope, full stretch overhead."},
    {id:"pulldown",tag:"5",n:"Lat pulldown, wide grip",s:3,r:"10–12",rest:"60 s",rs:60,note:"Lean back about 15°, drive the elbows down rather than back."}]},
  {key:"lowerA",warmup:{general:"5 min on the bike, easy pace.",drills:["10 bodyweight squats, slow and deep","10 leg swings each side","20 glute bridges","10 ankle rocks each side"]},n:2,name:"Lower A",day:"Tuesday",focus:"Squat",
@@ -221,3 +221,7 @@ const RAMP=[
 ];
 const RAMP_NOTE="Not working sets \u2014 rest only as long as the plate change takes.";
 const RAMP_NOHIST="No history yet \u2014 work up in three or four jumps, 5, 3 and 1 reps. Numbers appear here once you log a session.";
+
+/* Exercises that have been replaced. Past sessions still carry their ids,
+   so History keeps showing a readable name instead of the raw key. */
+const RETIRED={ezcurl:"EZ-bar curl"};
