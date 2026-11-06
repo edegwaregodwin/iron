@@ -24,7 +24,7 @@ const PLAN=[
   ex:[
    {id:"ohp",tag:"1",n:"Seated shoulder press",s:4,r:"6–8",rest:"2–3 min",rs:150,note:"Backrest at 80–85°. More reclined turns it into a chest press."},
    {id:"pullup",tag:"2",n:"Pull-up, weighted if you can",s:3,r:"6–10",rest:"2 min",rs:120,note:"Neutral-grip pulldowns if 6 clean reps is a stretch."},
-   {id:"cablerow",tag:"3",n:"Seated cable row",s:3,r:"10–12",rest:"60 s",rs:60,note:"Pause a second with the handle at your stomach."},
+   {id:"cablerow",tag:"3",n:"Seated cable row",s:3,r:"10–12",rest:"60 s",rs:60,note:"Neutral grip on the V-handle, palms facing each other. Elbows tight to your sides, pull to the lower stomach, pause a second there."},
    {id:"dbraise",tag:"4A",n:"Dumbbell lateral raise",s:3,r:"15–20",rest:"60 s",rs:60,note:"Light. Lead with the elbow, stop at shoulder height."},
    {id:"inclinecurl",tag:"4B",n:"Incline dumbbell curl",s:3,r:"10–12",rest:"45 s",rs:45,note:"Bench at 45°, arms hanging behind you."},
    {id:"pushdown",tag:"4C",n:"Rope pushdown or dips",s:3,r:"10–12",rest:"45 s",rs:45,note:"Dips if your shoulders are happy, pushdowns if not."},
