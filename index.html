@@ -265,10 +265,10 @@ details li{margin-bottom:4px}
 <script src="./app-data.js"></script>
 <script>
 /* ---------- storage: this device only ---------- */
-const KEY_S="ii.sessions.v1",KEY_SHOP="ii.shopping.v1",KEY_DRAFT="ii.draft.v1",KEY_PICK="ii.picked.v1";
+const KEY_S="ii.sessions.v1",KEY_SHOP="ii.shopping.v1",KEY_DRAFT="ii.draft.v1",KEY_PICK="ii.picked.v1",KEY_EXP="ii.lastexport.v1";
 function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch(e){return fb;}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
-let sessions=load(KEY_S,[]),shopChecked=load(KEY_SHOP,{}),drafts=load(KEY_DRAFT,{}),picked=load(KEY_PICK,{});
+let sessions=load(KEY_S,[]),shopChecked=load(KEY_SHOP,{}),drafts=load(KEY_DRAFT,{}),picked=load(KEY_PICK,{}),lastExport=load(KEY_EXP,null);
 
 /* ---------- helpers ---------- */
 const $=s=>document.querySelector(s);
@@ -483,6 +483,34 @@ function saveSession(){
   }
 }
 
+/* ---------- backup state ---------- */
+function backupState(){
+  if(!sessions.length)return null;
+  if(!lastExport)return {never:true,count:sessions.length,days:null};
+  const t=new Date(lastExport).getTime();
+  if(isNaN(t))return {never:true,count:sessions.length,days:null};
+  const days=Math.floor((Date.now()-t)/86400000);
+  const count=sessions.filter(s=>new Date(s.savedAt||s.date+"T12:00:00").getTime()>t).length;
+  return {never:false,count:count,days:days};
+}
+function backupBanner(){
+  const b=backupState();
+  if(!b)return "";
+  const due=b.never||b.days>=14||b.count>=8;
+  if(!due){
+    return '<p class="portionline" style="margin:0 0 2px">Last exported '+
+      (b.days===0?"today":b.days===1?"yesterday":b.days+" days ago")+
+      (b.count?", "+b.count+" session"+(b.count===1?"":"s")+" since":"")+'.</p>';
+  }
+  const why=b.never
+    ? "Never exported \u2014 "+b.count+" session"+(b.count===1?"":"s")+" on this phone only."
+    : "Not exported in "+b.days+" days"+(b.count?", "+b.count+" session"+(b.count===1?"":"s")+" since":"")+".";
+  return '<div class="note-bar" style="border-left-color:var(--warm);color:var(--ink)">'+
+    '<strong>'+esc(why)+'</strong><br>'+
+    'There is no other copy. Export the file and keep it somewhere off the phone.'+
+    '<button class="btn ghost" id="bannerexport" style="margin-top:9px">Export JSON</button></div>';
+}
+
 /* ---------- history ---------- */
 function renderHistory(){
   const body=sessions.length
@@ -496,7 +524,7 @@ function renderHistory(){
          '<span class="d">'+esc(fmtDate(s.date))+'</span><span class="chev">\u203a</span></button>';
      }).join("")+'</div>'
    : '<div class="card"><div class="empty"><strong>No sessions logged yet</strong>Log a day from the Train tab and it appears here, newest first.</div></div>';
-  views.history.innerHTML=body+
+  views.history.innerHTML=backupBanner()+body+
    '<div class="card"><h2>Your data</h2>'+
    '<p class="lede" style="margin-top:4px">Stored on this device only.</p>'+
    '<div class="btnrow"><button class="btn ghost" id="export">Export JSON</button>'+
@@ -505,6 +533,7 @@ function renderHistory(){
    '<p class="status" id="datastatus"></p></div>';
   views.history.querySelectorAll("[data-id]").forEach(b=>b.addEventListener("click",()=>openLog(b.dataset.id)));
   $("#export").addEventListener("click",exportData);
+  const be=$("#bannerexport");if(be)be.addEventListener("click",exportData);
   $("#importbtn").addEventListener("click",()=>$("#importfile").click());
   $("#importfile").addEventListener("change",importData);
 }
@@ -513,7 +542,10 @@ function exportData(){
   const url=URL.createObjectURL(blob),a=document.createElement("a");
   a.href=url;a.download="iron-icebox-"+today()+".json";document.body.appendChild(a);a.click();
   a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
-  $("#datastatus").textContent="Export started — check your downloads.";
+  lastExport=new Date().toISOString();save(KEY_EXP,lastExport);
+  const st=$("#datastatus");
+  if(st)st.textContent="Export started — check your downloads.";
+  renderHistory();
 }
 function importData(e){
   const f=e.target.files&&e.target.files[0];if(!f)return;

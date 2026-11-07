@@ -51,7 +51,9 @@ caches everything. After that it opens and logs with the phone in airplane mode.
   reopening it picks up where you left off. Saving is what adds the session to your
   history. Unsaved drafts are dropped after three days.
 - **History** — every logged session, newest first, each showing its exercise and set
-  count and total load. Tap one to open it in full: every exercise, every set's weight
+  count and total load. The top of the tab tracks your last export: a quiet line when
+  it is recent, a warning when it has been two weeks or eight sessions, with an export
+  button in it. Tap one to open it in full: every exercise, every set's weight
   and reps against its target, and the session's total kg lifted. A session can be
   deleted from there (two taps). Export and Import live at the bottom of the tab.
 - **Meals** — ten meals, five portions each, protein-heavy and light on carbs. Each
