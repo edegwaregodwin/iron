@@ -54,11 +54,12 @@ caches everything. After that it opens and logs with the phone in airplane mode.
   count and total load. Tap one to open it in full: every exercise, every set's weight
   and reps against its target, and the session's total kg lifted. A session can be
   deleted from there (two taps). Export and Import live at the bottom of the tab.
-- **Meals** — switch between Week 1 and Week 2. Each cook day has a minute-by-minute
-  timeline and full recipes with per-portion calories, protein and cooked weight, plus
-  reheating notes, swaps and troubleshooting.
-- **Shop** — the Waitrose list for whichever week is selected, remembering what you've
-  ticked. The two weeks' lists are tracked separately.
+- **Meals** — ten meals, five portions each, protein-heavy and light on carbs. Each
+  one carries its macros, its ingredients as tickable checkboxes, and concise steps.
+  Tap **pick** on the ones you are cooking and they gather on the Shop tab.
+- **Shop** — the ingredients of whatever you have picked, grouped by meal, plus the
+  staples you need whatever you cook. Ticks are shared with the Meals tab, so ticking
+  in either place shows in both.
 
 ## Backups, and updating the plan
 

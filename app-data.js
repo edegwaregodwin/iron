@@ -40,179 +40,183 @@ const PLAN=[
    {id:"crunch",tag:"5",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips."}]}
 ];
 
-/* Portions are given as cooked weight so you can check them on scales —
-   calories follow from that rather than the other way round. */
+/* Ten meals. Each makes 5 portions, protein-heavy and light on carbs.
+   Pick the ones you're cooking; their ingredients gather on the Shop tab. */
 
-const PORTION_NOTE="";
+const TARGETS={kcal:"2,058",protein:"214",deficit:"689",rate:"0.63"};
 
-const TARGETS={
- week1:{kcal:"2,397",protein:"198",deficit:"350",rate:"0.32"},
- week2:{kcal:"2,042",protein:"182",deficit:"705",rate:"0.64"}
-};
+const MEALS=[
+{id:"suya",name:"Suya beef and pepper stew",time:"45 min",portions:"5 portions",
+ macros:"503 kcal · 51 g protein · 20 g carbs",
+ ing:["1 kg beef mince, 5% fat","3 red peppers","2 onions","2 × 400 g tins chopped tomatoes",
+  "2 tbsp tomato purée","80 g roasted peanuts","200 g spinach","1 tbsp oil",
+  "Suya spice: 2 tsp smoked paprika, 1–2 tsp cayenne, 1 tsp ground ginger, 1 tsp garlic powder, 1 tsp onion powder, 1 beef stock cube"],
+ steps:["Pulse the peanuts to a coarse powder. Mix with the paprika, cayenne, ginger, garlic powder, onion powder and crumbled stock cube.",
+  "Large pan, high heat, 1 tbsp oil.",
+  "Half the beef in. 3 minutes untouched, then break it up, 2 minutes more. Out with a slotted spoon. Repeat with the rest.",
+  "Heat to medium. Onions and peppers in with a pinch of salt, 6 minutes.",
+  "Tomato purée in, 2 minutes. Then two thirds of the suya mix, 1 minute.",
+  "Tomatoes and the beef back in with 100 ml water. Bring to a bubble, heat to low, uncovered, 12 minutes.",
+  "Spinach in a handful at a time. Off the heat, stir in the last third of the suya mix. Season, divide into five."],
+ reheat:"Splash of water, 3 min in the microwave."},
 
+{id:"shawarma",name:"Chicken shawarma traybake",time:"40 min",portions:"5 portions",
+ macros:"538 kcal · 63 g protein · 15 g carbs",
+ ing:["1.1 kg chicken thigh fillets","3 red peppers","2 onions","2 courgettes","2 tbsp oil",
+  "300 g 0% Greek yoghurt","2 garlic cloves","Juice of 1 lemon",
+  "Spice mix: 2 tsp cumin, 2 tsp coriander, 1 tsp paprika, 1 tsp turmeric, ½ tsp cinnamon, 1 tsp salt"],
+ steps:["Oven to 220°C fan.",
+  "Chicken in a bowl with 1 tbsp oil and the whole spice mix. Rub in by hand.",
+  "Peppers, onions and courgettes cut into thick wedges, tossed with the remaining oil and a pinch of salt. Spread over two baking trays.",
+  "Chicken on top of the veg, spaced out, not touching.",
+  "25 minutes. Turn the chicken, 8 minutes more.",
+  "Mix the yoghurt with the crushed garlic and lemon juice. Divide the tray into five, with the sauce on the side."],
+ reheat:"Air fryer 6 min at 180°C, or 3 min in the microwave. Sauce cold from the fridge."},
 
-const WEEKS=[
-{id:"w1",label:"Week 1",
- note:"Four dishes, two per cook day. Larger portions, about 694 kcal each.",
- cooks:[
-  {day:"Sunday cook",time:"75 min",covers:"Mon, Tue, Wed + Thu lunch",yields:"9 portions",
-   kit:"Deep roasting tin that goes on the hob (or a large casserole), one big deep pan, scales, containers around 700 ml.",
-   timeline:[
-    ["0:00","Oven to 200°C fan. Dice 2 onions, slice 4 peppers, crush the garlic — both dishes' prep in one go."],
-    ["0:10","Big pan, high heat: brown the beef in two 500 g batches, 5 min each. Lift out, leave the fat."],
-    ["0:20","Roasting tin on the hob: chorizo, one diced onion, two sliced peppers — 5 min. Garlic 30 s."],
-    ["0:26","Dry rice in, hot stock over it, chicken on top, foil sealed tight. Into the oven — 35 min."],
-    ["0:30","Back to the beef pan: the other onion and two peppers, 8 min in the beef fat."],
-    ["0:38","Garlic, cumin, paprika, chilli flakes, purée — 2 min. Beef back in with tomatoes, beans, stock cube, splash of water."],
-    ["0:42","Chilli simmers uncovered. Stir every 10 min."],
-    ["1:01","Foil off the traybake, 10 min more to crisp the chicken."],
-    ["1:11","Traybake out, rest 10 min. Chilli should be thick — season it now, not before."],
-    ["1:21","Fork the rice through. Both cooling uncovered, then portion within the hour."]],
-   dishes:[
-    {name:"Chicken, chorizo and rice traybake",portions:"4 portions",
-     macros:"723 kcal · 58 g protein · about 435 g cooked per portion",
-     self:"Complete meal — the rice is in it. Denser than the others, so the portion looks smaller.",
-     ing:["750 g chicken thigh fillets (6–7 fillets)","100 g cooking chorizo, sliced into coins","240 g basmati rice, dry weight","560 ml hot chicken stock","2 red peppers, sliced","1 large onion, diced","4 garlic cloves, crushed","2 tsp smoked paprika, 1 tsp dried oregano","1 tbsp olive oil, salt and pepper"],
-     steps:["Oven to 200°C fan. Chicken in a bowl with 1 tbsp oil, the paprika, oregano, 1 tsp salt and pepper. Rub in by hand.","Roasting tin on the hob, medium heat. Chorizo in, no oil. 4 minutes.","Onion and peppers in with a pinch of salt. 5 minutes, stirring. Garlic, 30 seconds.","Dry rice in, stirred 1 minute. Hot stock over it. Spread flat, chicken on top in one layer.","Foil on tight, crimped to the rim. 35 minutes in the oven.","Foil off, 10 minutes. Rest 10 minutes, fork through, divide into four."],
-     reheat:"2 tbsp water in first, then 3 min in the microwave, stirred at halfway. The rice dries out without the water."},
-    {name:"Beef and black bean chilli",portions:"5 portions",
-     macros:"684 kcal · 56 g protein · about 630 g cooked per portion, with 60 g dry rice",
-     self:"Cook 60 g dry rice fresh on the night — ten minutes.",
-     ing:["1 kg beef mince, 5% fat (two 500 g packs)","2 × 400 g tins chopped tomatoes","2 × 400 g tins black beans, drained","1 onion and 2 red peppers, diced","4 garlic cloves, 2 tbsp tomato purée","1 tbsp cumin, 2 tsp smoked paprika, 1–2 tsp chilli flakes","1 beef stock cube, 1 tbsp olive oil"],
-     steps:["Big pan, high heat, 1 tbsp oil.","Half the mince in. 3 minutes untouched, then break it up, 2 minutes more. Out with a slotted spoon. Repeat with the rest.","Heat to medium. Onion and peppers in with a pinch of salt. 8 minutes, stirring every 2 and scraping the base.","Garlic, cumin, paprika, chilli flakes and purée in. Stir constantly, 2 minutes.","Mince back in with the tomatoes, drained beans, crumbled stock cube and 100 ml water. Bring to a bubble.","Heat to low. Uncovered, 30–40 minutes, stirring every 10. Season, divide into five."],
-     reheat:"Splash of water, 3 min in the microwave. It thickens in the fridge, so it needs the water."}]},
-  {day:"Wednesday cook",time:"60 min",covers:"Thu dinner, Fri, Sat, Sun",yields:"9 portions",
-   kit:"A casserole with a lid and one large pan, running side by side.",
-   timeline:[
-    ["0:00","Dice 2 onions, 2 carrots, 2 celery sticks. Grate the ginger, crush the garlic."],
-    ["0:06","Casserole: brown the chicken 4 min a side, two batches. Lift out."],
-    ["0:16","Second pan: onion, carrot and celery in oil — 10 min, and don't rush it."],
-    ["0:18","Casserole: soften its onion 6 min, then garlic, ginger and harissa 2 min."],
-    ["0:26","Chicken back in with tomatoes, chickpeas and stock. Lid on — 25 min."],
-    ["0:28","Bolognese pan: garlic and purée 2 min, then the turkey until no pink, about 6 min. Tip the rendered fat out."],
-    ["0:36","Milk in, let it cook off 3 min. Then tomatoes, oregano, bay and the crumbled cube."],
-    ["0:40","Bolognese simmers uncovered, 35 min."],
-    ["0:51","Stew lid off, 10 min more to thicken."],
-    ["1:01","Spinach and lemon through the stew, off the heat."],
-    ["1:15","Bolognese done — season, fish the bay leaf out. Cool, then portion."]],
-   dishes:[
-    {name:"Harissa chicken and chickpea stew",portions:"4 portions",
-     macros:"700 kcal · 61 g protein · about 495 g cooked per portion, with 50 g dry couscous",
-     self:"50 g couscous on the night: boiling water over it, covered 5 min, forked through.",
-     ing:["750 g chicken thigh fillets, halved","1 × 400 g tin chickpeas, drained","1 × 400 g tin chopped tomatoes","3 tbsp rose harissa (or plain harissa plus 1 tsp honey)","1 onion, 3 garlic cloves, 1 tbsp grated ginger","400 ml chicken stock","200 g spinach, juice of half a lemon","1 tbsp olive oil"],
-     steps:["Pat the chicken dry and salt it. Casserole on medium-high, 1 tbsp oil.","Half the chicken in, one layer. 4 minutes a side, untouched. Out. Repeat with the rest.","Heat to medium. Onion in with a pinch of salt, 6 minutes. Garlic, ginger and harissa, 2 minutes.","Chicken back in with its juices, then the tomatoes, drained chickpeas and stock. Bring to a bubble, lid on, heat to low, 25 minutes.","Lid off, 10 minutes.","Off the heat. Spinach in a handful at a time. Lemon juice, salt. Divide into four."],
-     reheat:"3 min in the microwave with a splash of water. Couscous made fresh alongside."},
-    {name:"Turkey bolognese",portions:"5 portions",
-     macros:"669 kcal · 52 g protein · about 570 g cooked per portion, with 75 g dry pasta",
-     self:"75 g dry pasta on the night.",
-     ing:["1 kg turkey mince, 8% fat (two 500 g packs)","2 × 400 g tins chopped tomatoes","2 tbsp tomato purée","1 onion, 2 carrots, 2 celery sticks, finely diced","3 garlic cloves, 1 tsp oregano, 1 bay leaf","1 chicken stock cube, 100 ml milk, 1 tbsp olive oil"],
-     steps:["Dice the onion, carrot and celery pea-sized.","Large deep pan, medium heat, 1 tbsp oil.","Onion, carrot and celery in with a good pinch of salt. 10 minutes, stirring every 2 minutes. Turn the heat down if it starts colouring.","Garlic and tomato purée in. Stir constantly, 2 minutes.","Heat to medium-high. Turkey in, broken up with a wooden spoon, 6 minutes. Tilt the pan and spoon off the fat.","Milk in. Bubble 3 minutes, until the pan is nearly dry.","Tomatoes, oregano, bay leaf and crumbled stock cube. Bring to a bubble, heat to low.","Uncovered, 35–40 minutes, stirring every 10. Remove the bay, season, divide into five."],
-     reheat:"3 min in the microwave. Pasta fresh, 9–11 min."}]}]},
+{id:"tacos",name:"Turkey taco filling",time:"30 min",portions:"5 portions",
+ macros:"460 kcal · 54 g protein · 13 g carbs",
+ ing:["1 kg turkey mince, 5% fat","2 red peppers","2 onions","1 × 400 g tin chopped tomatoes",
+  "2 tbsp tomato purée","150 g mature cheddar, grated","2 baby gem lettuces, for cups",
+  "1 tbsp oil","2 garlic cloves",
+  "Spice mix: 1 tbsp cumin, 2 tsp paprika, 1 tsp oregano, ½–1 tsp cayenne, 1 tsp salt"],
+ steps:["Large pan, high heat, 1 tbsp oil.",
+  "Turkey in, broken up with a wooden spoon. 6 minutes, until no pink is left.",
+  "Heat to medium. Onions and peppers in with a pinch of salt, 6 minutes.",
+  "Garlic, the spice mix and the tomato purée in. Stir constantly, 2 minutes.",
+  "Tomatoes and 100 ml water in. Bring to a bubble, heat to low, uncovered, 10 minutes.",
+  "Season and divide into five. Keep the lettuce and cheese separate; build the cups when you eat."],
+ reheat:"3 min in the microwave. Spoon into cold lettuce cups, cheese on top."},
 
-{id:"w2",label:"Week 2",
- note:"One dish per half-week, seven portions each. Freeze two on cook day for the last two meals.",
- cooks:[
-  {day:"Sunday cook",time:"70 min",covers:"Sunday dinner through Wednesday",yields:"7 portions",
-   kit:"One big pot with a tight lid, a blender and the air fryer.",
-   timeline:[
-    ["0:00","Chicken into a pot with 1 halved onion, the stock cube, thyme, 1 tsp of the curry powder, the bay leaves and 900 ml water. Bring to the boil."],
-    ["0:05","While it comes up: blend 2 red peppers, the tin of tomatoes, 1 onion and the scotch bonnet until smooth. Slice the last pepper and onion."],
-    ["0:18","Chicken out \u2014 thighs need 15\u201318 min. Strain the liquid and keep it. That is your stock, and it is the whole reason for boiling first."],
-    ["0:20","Pot back on with the oil: sliced onion and pepper 5 min. Tomato pur\u00e9e in and fried 3 min until it darkens."],
-    ["0:28","Blended base in. Boil hard and uncovered for 10 min \u2014 this is the step that decides whether it tastes cooked or raw."],
-    ["0:38","Remaining curry powder in, then the rinsed rice, stirred to coat. 700 ml of the reserved chicken stock in. Lid on tight, lowest heat, 22 min. Do not stir."],
-    ["0:45","Air fryer to 200\u00b0C. Chicken in for 12\u201315 min, turned once, until the edges catch."],
-    ["1:00","Rice off the heat, lid still on, 10 min."],
-    ["1:10","Fork the rice through, chicken on top or diced through it. Cool uncovered, seven portions, two to the freezer."]],
-   dishes:[
-    {name:"Jollof rice with chicken",portions:"7 portions",
-     macros:"515 kcal \u00b7 41 g protein \u00b7 about 400 g cooked per portion",
-     self:"Complete meal. No side. The chicken is boiled first and air fried while the rice cooks \u2014 the strained boiling liquid is the stock.",
-     ing:["1 kg chicken thigh fillets, left whole for the air fryer","350 g long-grain rice, dry, rinsed","3 red peppers","1 \u00d7 400 g tin chopped tomatoes","3 onions (one goes in the boil)","1 scotch bonnet, deseeded for less heat","3 tbsp tomato pur\u00e9e","2 tsp curry powder, 1 tsp dried thyme, 2 bay leaves","1 chicken stock cube","2 tbsp oil, salt"],
-     steps:["Chicken into a pot with 1 halved onion, the stock cube, thyme, 1 tsp of the curry powder, the bay leaves and 900 ml cold water. Bring to the boil, then down to a simmer, 15–18 minutes.","Meanwhile blend 2 peppers, the tin of tomatoes, 1 onion and the scotch bonnet smooth. Slice the last pepper and onion.","Chicken out. Pour the liquid through a sieve and keep 700 ml. Wipe the pot.","Pot on medium, 2 tbsp oil. Sliced onion and pepper in with a pinch of salt, 5 minutes. Purée in, 3 minutes, stirring.","Blended base in. Heat to high, boil hard and uncovered 10 minutes, stirring now and then.","Remaining curry powder, then the rinsed rice, stirred 1 minute.","The 700 ml of stock in. Lid on tight, lowest heat, 22 minutes. Don't lift the lid, don't stir.","Air fryer to 200°C. Chicken in 12–15 minutes, turned once.","Off the heat, lid on, 10 minutes. Fork through, chicken on top. Seven portions."],
-     reheat:"2 tbsp water, 3 min in the microwave. The chicken softens in the fridge whatever you do \u2014 6 min in the air fryer at 180\u00b0C brings it back better than the microwave does."}]},
-  {day:"Wednesday cook",time:"45 min",covers:"Thursday through Sunday",yields:"7 portions",
-   kit:"One large deep pan.",
-   timeline:[
-    ["0:00","Dice 2 onions and 3 peppers. Blitz or crush the peanuts, then mix the suya spice: peanuts, paprika, cayenne, ginger, garlic and onion powder, crumbled stock cube."],
-    ["0:08","Pan on high: brown the beef in two 500 g batches, 5 min each. Lift out, leave the fat."],
-    ["0:18","Onions and peppers, 6 min."],
-    ["0:24","Tomato pur\u00e9e 2 min, then two thirds of the suya mix for 1 min."],
-    ["0:27","Tomatoes in, beef back, splash of water. Simmer uncovered 12 min."],
-    ["0:39","Spinach through. Off the heat, stir in the last third of the suya mix \u2014 that is what keeps it tasting fresh rather than cooked flat."],
-    ["0:42","Cool uncovered, seven portions, two to the freezer."]],
-   dishes:[
-    {name:"Suya beef and pepper stew",portions:"7 portions",
-     macros:"543 kcal \u00b7 40 g protein \u00b7 about 505 g cooked per portion, with 60 g dry rice",
-     self:"60 g dry rice on the night.",
-     ing:["1 kg beef mince, 5% fat (two 500 g packs)","3 red peppers, diced","2 onions, diced","2 \u00d7 400 g tins chopped tomatoes","2 tbsp tomato pur\u00e9e","200 g spinach","1 tbsp oil, salt","Suya spice: 60 g roasted peanuts, blitzed; 2 tsp smoked paprika; 1\u20132 tsp cayenne; 1 tsp ground ginger; 1 tsp garlic powder; 1 tsp onion powder; 1 beef stock cube"],
-     steps:["Pulse the peanuts to a coarse powder. Mix with the paprika, cayenne, ground ginger, garlic powder, onion powder and crumbled stock cube.","Large pan, high heat, 1 tbsp oil.","Half the beef in. 3 minutes untouched, then break it up, 2 minutes more. Out with a slotted spoon. Repeat with the rest.","Heat to medium. Onions and peppers in with a pinch of salt, 6 minutes.","Tomato purée in, 2 minutes. Then two thirds of the suya mix, 1 minute.","Tomatoes and the beef back in with 100 ml water. Bring to a bubble, heat to low, uncovered, 12 minutes.","Spinach in a handful at a time. Off the heat, stir in the last third of the suya mix. Season, divide into seven."],
-     reheat:"Splash of water, 3 min in the microwave."}]}]}
+{id:"jollofcauli",name:"Jollof chicken with cauliflower rice",time:"50 min",portions:"5 portions",
+ macros:"566 kcal · 60 g protein · 23 g carbs",
+ ing:["1.1 kg chicken thigh fillets","800 g cauliflower rice (or 2 heads, blitzed)","3 red peppers",
+  "2 onions","1 × 400 g tin chopped tomatoes","1 scotch bonnet","3 tbsp tomato purée",
+  "2 tsp curry powder, 1 tsp dried thyme, 2 bay leaves","1 chicken stock cube","2½ tbsp oil"],
+ steps:["Blend 2 peppers, the tomatoes, 1 onion and the scotch bonnet smooth. Slice the last pepper and onion.",
+  "Large pan, medium-high, 1 tbsp oil. Chicken in two batches, 4 minutes a side. Out.",
+  "Heat to medium, 1 tbsp oil. Sliced onion and pepper in with a pinch of salt, 5 minutes. Tomato purée, 3 minutes, stirring.",
+  "Blended base in. High heat, boil hard and uncovered 12 minutes, stirring now and then.",
+  "Curry powder, thyme, bay and crumbled stock cube. Chicken back in. Lid on, low, 15 minutes.",
+  "Separate pan, ½ tbsp oil, medium-high. Cauliflower rice in, 5 minutes, stirring. Salt.",
+  "Cauliflower rice into five containers, chicken and sauce over the top."],
+ reheat:"3 min in the microwave. Cauliflower rice goes soft if you reheat twice."},
+
+{id:"beefbean",name:"Beef and green bean stir-fry",time:"25 min",portions:"5 portions",
+ macros:"495 kcal · 50 g protein · 24 g carbs",
+ ing:["1 kg beef mince, 5% fat","600 g green beans, trimmed","2 red peppers","1 onion",
+  "80 ml soy sauce","1 thumb ginger, grated","4 garlic cloves","80 g cashews","1 tbsp oil",
+  "1 tsp chilli flakes"],
+ steps:["Large pan or wok, high heat, 1 tbsp oil.",
+  "Half the beef in. 3 minutes untouched, break it up, 2 minutes more. Out. Repeat with the rest.",
+  "Green beans in, still on high. 4 minutes, tossing, until they blister in places.",
+  "Peppers and onion in, 3 minutes.",
+  "Heat to medium. Garlic, ginger and chilli flakes, 1 minute.",
+  "Beef back in with the soy sauce and cashews. Toss 2 minutes. Divide into five."],
+ reheat:"2 min in the microwave. The beans lose their bite but hold up."},
+
+{id:"harissa",name:"Harissa chicken and chickpeas",time:"45 min",portions:"5 portions",
+ macros:"542 kcal · 62 g protein · 20 g carbs",
+ ing:["1.1 kg chicken thigh fillets","1 × 400 g tin chickpeas, drained",
+  "1 × 400 g tin chopped tomatoes","3 tbsp rose harissa","2 onions","3 garlic cloves",
+  "1 thumb ginger, grated","400 ml chicken stock","200 g spinach","Juice of half a lemon","1 tbsp oil"],
+ steps:["Pat the chicken dry and salt it. Casserole on medium-high, 1 tbsp oil.",
+  "Half the chicken in, one layer. 4 minutes a side, untouched. Out. Repeat with the rest.",
+  "Heat to medium. Onions in with a pinch of salt, 6 minutes. Garlic, ginger and harissa, 2 minutes.",
+  "Chicken back in with its juices, then the tomatoes, drained chickpeas and stock. Bubble, lid on, low, 25 minutes.",
+  "Lid off, 10 minutes.",
+  "Off the heat. Spinach a handful at a time. Lemon, salt. Divide into five."],
+ reheat:"Splash of water, 3 min in the microwave."},
+
+{id:"currychicken",name:"Chicken and spinach curry",time:"40 min",portions:"5 portions",
+ macros:"566 kcal · 59 g protein · 13 g carbs",
+ ing:["1.1 kg chicken thigh fillets, diced","400 ml light coconut milk",
+  "1 × 400 g tin chopped tomatoes","2 onions","1 thumb ginger, grated","4 garlic cloves",
+  "400 g spinach","2 tbsp oil",
+  "Spices: 2 tsp cumin, 2 tsp coriander, 1 tsp turmeric, 1 tsp garam masala, ½–1 tsp chilli powder"],
+ steps:["Large pan, medium-high, 1 tbsp oil. Chicken in two batches, 4 minutes each. Out.",
+  "Heat to medium, 1 tbsp oil. Onions in with a pinch of salt, 8 minutes.",
+  "Garlic, ginger and all the spices in. Stir constantly, 90 seconds.",
+  "Tomatoes in, 5 minutes, stirring, until it thickens and darkens.",
+  "Coconut milk and the chicken back in. Bubble, then low, uncovered, 15 minutes.",
+  "Spinach in a few handfuls at a time until it collapses. Season, divide into five."],
+ reheat:"3 min in the microwave, stirred at halfway."},
+
+{id:"frittata",name:"Turkey and courgette frittata",time:"35 min",portions:"5 portions",
+ macros:"569 kcal · 58 g protein · 10 g carbs",
+ ing:["14 eggs","700 g turkey mince, 5% fat","2 courgettes, grated","2 red peppers, diced",
+  "1 onion, diced","150 g mature cheddar, grated","1 tbsp oil","1 tsp paprika, 1 tsp oregano"],
+ steps:["Oven to 180°C fan.",
+  "Squeeze the grated courgette in a clean tea towel until no more water comes out. Wet courgette makes it soggy.",
+  "Large ovenproof pan, medium-high, 1 tbsp oil. Turkey in, broken up, 6 minutes with the paprika and oregano.",
+  "Onion and peppers in, 5 minutes. Courgette in, 2 minutes. Spread flat and take off the heat.",
+  "Beat the eggs with 1 tsp salt and plenty of pepper. Pour over. Cheese on top.",
+  "20 minutes in the oven, until the middle is set and does not wobble. Cool 10 minutes, cut into five."],
+ reheat:"2 min in the microwave, or eat it cold — it is good cold."},
+
+{id:"porkcabbage",name:"Pork and cabbage stir-fry",time:"25 min",portions:"5 portions",
+ macros:"478 kcal · 53 g protein · 22 g carbs",
+ ing:["1.1 kg pork loin, cut into strips","1 small white cabbage, shredded","2 red peppers",
+  "1 onion","80 ml soy sauce","1 thumb ginger, grated","4 garlic cloves","60 g cashews",
+  "1 tbsp oil","1 tsp sesame oil","1 tsp chilli flakes"],
+ steps:["Large pan or wok, high heat, 1 tbsp oil.",
+  "Half the pork in, one layer. 3 minutes untouched, then 2 minutes tossing. Out. Repeat with the rest.",
+  "Cabbage, peppers and onion in, still on high. 5 minutes, tossing, until the cabbage wilts but keeps some bite.",
+  "Heat to medium. Garlic, ginger and chilli flakes, 1 minute.",
+  "Pork back in with the soy sauce and cashews. Toss 2 minutes.",
+  "Off the heat, sesame oil through. Divide into five."],
+ reheat:"2 min in the microwave."},
+
+{id:"codchorizo",name:"Cod, chorizo and butter beans",time:"35 min",portions:"5 portions",
+ macros:"519 kcal · 56 g protein · 26 g carbs",
+ ing:["1.1 kg cod fillets (frozen is fine, defrosted)","150 g cooking chorizo, sliced",
+  "2 × 400 g tins butter beans, drained","1 × 400 g tin chopped tomatoes","2 red peppers",
+  "1 onion","200 g spinach","3 garlic cloves","1 tsp smoked paprika","1 tbsp oil"],
+ steps:["Deep pan, medium heat. Chorizo in, no oil. 4 minutes, until the fat runs orange.",
+  "Onion and peppers in with a pinch of salt, 6 minutes. Garlic and paprika, 1 minute.",
+  "Tomatoes and drained butter beans in with 100 ml water. Bubble, then low, 8 minutes.",
+  "Pat the cod dry, salt it, and lay the fillets on top of the sauce. Lid on, 8 minutes — do not stir.",
+  "Spinach tucked around the fish, lid back on, 2 minutes.",
+  "Break the fish into large flakes and fold through gently. Divide into five."],
+ reheat:"3 min in the microwave. Fish goes firm on reheating — that is normal."}
 ];
 
 const FIXED=[
- {name:"Breakfast",macros:"382 kcal \u00b7 34 g protein",what:"300 g 0% Greek yoghurt, 40 g granola, 80 g frozen berries."},
- {name:"Afternoon",macros:"234 kcal \u00b7 24 g protein",what:"200 g Greek yoghurt, 20 g nuts."}
+ {name:"Breakfast",macros:"382 kcal · 34 g protein",what:"300 g 0% Greek yoghurt, 40 g granola, 80 g frozen berries."},
+ {name:"Afternoon",macros:"234 kcal · 24 g protein",what:"200 g Greek yoghurt, 20 g nuts."}
 ];
 
-/* Two protein slots a day, mid-morning and evening. Pick one set for the
-   week and eat it through \u2014 two things to buy, not eight. */
 const SNACK_SETS=[
- {label:"Set A",a:"2 boiled eggs",b:"Tin of tuna in spring water",macros:"263 kcal \u00b7 39 g protein",
+ {label:"Set A",a:"2 boiled eggs",b:"Tin of tuna in spring water",macros:"263 kcal · 39 g protein",
   buy:"14 eggs, 7 tins of tuna"},
- {label:"Set B",a:"100 g roast chicken slices",b:"200 g Greek yoghurt",macros:"224 kcal \u00b7 44 g protein",
+ {label:"Set B",a:"100 g roast chicken slices",b:"200 g Greek yoghurt",macros:"224 kcal · 44 g protein",
   buy:"700 g chicken slices, 1.4 kg extra yoghurt"},
- {label:"Set C",a:"150 g edamame, from frozen",b:"Tin of tuna in spring water",macros:"300 kcal \u00b7 43 g protein",
+ {label:"Set C",a:"150 g edamame, from frozen",b:"Tin of tuna in spring water",macros:"300 kcal · 43 g protein",
   buy:"1 kg frozen edamame, 7 tins of tuna"}
 ];
 const SNACK_NOTE="One set a week, rotated. Add a banana to the mid-morning one on training days.";
 const SNACK_SWAPS="For a change in either slot: 50 g biltong (145 kcal, 26 g), 150 g king prawns (110, 30), 80 g smoked salmon (145, 20).";
 
-const SHOPPING={
- w1:[
-  {group:"Meat",items:[["Chicken thigh fillets","1.5 kg"],["Beef mince, 5%","2 × 500 g"],["Turkey mince, 8%","2 × 500 g"],["Cooking chorizo","100 g"]]},
-  {group:"Tins — all 400 g",items:[["Chopped tomatoes","5 tins"],["Black beans","2 tins"],["Chickpeas","1 tin"]]},
-  {group:"Dry goods",items:[["Basmati rice","1 kg bag"],["Pasta","500 g"],["Couscous","500 g"],["Porridge oats","1 kg"],["Granola","500 g"],["Mixed nuts","200 g"]]},
-  {group:"Veg",items:[["Onions","4"],["Red peppers","4"],["Carrots","1 pack"],["Celery","1 pack"],["Garlic","2 bulbs"],["Fresh ginger","1 piece"],["Spinach","200 g"],["Bananas","7"],["Lemon","1"]]},
-  {group:"Daily protein",items:[["0% Greek yoghurt","3.5 kg"],["This week's snack set","see Meals — two items"]]},
-  {group:"Chilled & freezer",items:[["Semi-skimmed milk","2 L"],["Frozen berries","500 g"]]},
-  {group:"Cupboard",items:[["Rose harissa","1 jar"],["Tomato purée","1 tube"],["Stock cubes","chicken + beef"],["Smoked paprika, cumin, oregano","if you're out"],["Chilli flakes, bay leaves","if you're out"],["Olive oil","as needed"]]}
- ],
- w2:[
-  {group:"Meat",items:[["Chicken thigh fillets","1 kg"],["Beef mince, 5%","2 \u00d7 500 g"]]},
-  {group:"Tins",items:[["Chopped tomatoes, 400 g","3 tins"]]},
-  {group:"Dry goods",items:[["Long-grain rice","1 kg bag"],["Roasted peanuts","60 g"],["Granola","500 g"],["Mixed nuts","200 g"]]},
-  {group:"Veg",items:[["Onions","6"],["Red peppers","6"],["Scotch bonnet","1\u20132"],["Garlic","1 bulb"],["Fresh ginger","1 piece"],["Spinach","200 g"],["Bananas","7"]]},
-  {group:"Daily protein",items:[["0% Greek yoghurt","3.5 kg"],["This week\u0027s snack set","see Meals \u2014 two items"]]},
-  {group:"Freezer",items:[["Frozen berries","500 g"]]},
-  {group:"Cupboard",items:[["Tomato pur\u00e9e","1 tube"],["Chicken and beef stock cubes","1 pack each"],["Curry powder, dried thyme, bay leaves","if you\u0027re out"],["Smoked paprika, cayenne, ground ginger","if you\u0027re out"],["Garlic powder, onion powder","if you\u0027re out"],["Oil","as needed"]]}
- ]
-};
-
-const SWAPS=[
- ["No rose harissa","Plain harissa, same 3 tbsp, plus 1 tsp honey. Waitrose keeps it in world foods, not with the cooking sauces."],
- ["Sick of eggs","A tin of tuna is 26 g protein for 120 kcal and slots into either snack."],
- ["No roasted peanuts","2 tbsp smooth peanut butter stirred in with the tomatoes."],
- ["Thigh to breast","Add it in the last 12 minutes rather than browning it first."],
- ["No scotch bonnet for the jollof","1 tsp chilli flakes, or leave it out \u2014 the dish works without the heat."]
-];
-
-const TROUBLE=[
- ["Losing more than 0.7 kg a week","Add 50 g dry rice, pasta or lentils per meal."],
- ["Top sets down two sessions running","Add the 50 g of carbs, plus two more eggs at breakfast."],
- ["Jollof dried out","2 tbsp water before reheating, lid on."],
- ["Traybake rice crunchy","Stock wasn't boiling or the foil wasn't sealed. 100 ml boiling water, re-cover, 10 min."]
+const STAPLES=[
+ ["0% Greek yoghurt","3.5 kg"],["Granola","500 g"],["Mixed nuts","200 g"],
+ ["Frozen berries","500 g"],["Bananas","7"],["Olive oil","as needed"],
+ ["Stock cubes","chicken + beef"],["Tomato purée","1 tube"],
+ ["Ground cumin, coriander, paprika, turmeric, cayenne, oregano","if you're out"]
 ];
 
 const STORAGE=[
  "Cool uncovered within an hour, then lid and fridge.",
  "Portion into individual containers straight away.",
- "Fridge at 4\u00b0C or below, eaten within four days.",
- "Week 2's Wednesday cook has to reach Sunday \u2014 freeze two portions on cook day, defrost Saturday night.",
- "Reheat piping hot through, stirring halfway, once only.",
- "Rice: cool fast, eat within 24 hours."
+ "Fridge at 4°C or below, eaten within four days.",
+ "Two meals a day means five portions covers two and a half days. Pick two meals a week and freeze the spare portions.",
+ "Reheat piping hot through, stirring halfway, once only."
 ];
 
+const TROUBLE=[
+ ["Losing more than 0.7 kg a week","Add 150 g of cooked rice or potato to one meal a day."],
+ ["Top sets down two sessions running","Same fix, plus two extra eggs at breakfast."],
+ ["Bored of a meal by day three","Pick two meals a week and alternate them day to day instead of eating one through."],
+ ["Frittata came out soggy","The courgette wasn't squeezed dry enough."]
+];
 const RAMP=[
  {pct:0,reps:"8\u201310",label:"Empty bar, or the lightest setting"},
  {pct:0.5,reps:"5",label:"Half your top weight"},

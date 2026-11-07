@@ -265,10 +265,10 @@ details li{margin-bottom:4px}
 <script src="./app-data.js"></script>
 <script>
 /* ---------- storage: this device only ---------- */
-const KEY_S="ii.sessions.v1",KEY_SHOP="ii.shopping.v1",KEY_DRAFT="ii.draft.v1";
+const KEY_S="ii.sessions.v1",KEY_SHOP="ii.shopping.v1",KEY_DRAFT="ii.draft.v1",KEY_PICK="ii.picked.v1";
 function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch(e){return fb;}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
-let sessions=load(KEY_S,[]),shopChecked=load(KEY_SHOP,{}),drafts=load(KEY_DRAFT,{});
+let sessions=load(KEY_S,[]),shopChecked=load(KEY_SHOP,{}),drafts=load(KEY_DRAFT,{}),picked=load(KEY_PICK,{});
 
 /* ---------- helpers ---------- */
 const $=s=>document.querySelector(s);
@@ -279,7 +279,8 @@ function show(v){for(const k in views)views[k].hidden=true;views[v].hidden=false
   for(const k in tabs)tabs[k].setAttribute("aria-selected",String(k===v||(v==="session"&&k==="train")||(v==="log"&&k==="history")));}
 Object.keys(tabs).forEach(k=>tabs[k].addEventListener("click",()=>{
   if(current&&!views.session.hidden){clearTimeout(dTimer);writeDraft();}
-  show(k);if(k==="train")renderTrain();if(k==="history")renderHistory();if(k==="shop")renderShop();
+  show(k);if(k==="train")renderTrain();if(k==="history")renderHistory();
+  if(k==="meals")renderMeals();if(k==="shop")renderShop();
 }));
 window.addEventListener("pagehide",()=>{if(current&&!views.session.hidden){clearTimeout(dTimer);writeDraft();}});
 document.addEventListener("visibilitychange",()=>{
@@ -474,7 +475,9 @@ function saveSession(){
   if(save(KEY_S,sessions)){
     clearTimeout(dTimer);committed=true;dropDraft(current.key);
     const n=$("#draftnote");if(n)n.textContent="";
-    st.textContent="Saved to your history — "+got.count+" sets logged.";
+    st.textContent="Saved — "+got.count+" sets. Reloading…";
+    $("#savebtn").disabled=true;
+    setTimeout(()=>{try{location.reload();}catch(e){show("train");renderTrain();}},700);
   }else{
     st.textContent="Couldn't write to storage. If you're in a private window, try a normal one.";
   }
@@ -590,41 +593,55 @@ function openLog(id){
 }
 
 /* ---------- meals ---------- */
-function weekPicker(onPick){
-  return '<div class="weekpick">'+WEEKS.map((w,i)=>
-    '<button data-wk="'+i+'" aria-pressed="'+(i===wk)+'">'+esc(w.label)+'</button>').join("")+'</div>';
+function ingKey(mealId,txt){
+  return mealId+"__"+txt.replace(/[^a-z0-9]/gi,"").toLowerCase().slice(0,28);
 }
-function wirePicker(root,rerender){
-  root.querySelectorAll("[data-wk]").forEach(b=>b.addEventListener("click",()=>{
-    wk=parseInt(b.dataset.wk,10);rerender();
+function mealStats(m){
+  const total=m.ing.length;
+  let got=0;
+  m.ing.forEach(t=>{if(shopChecked[ingKey(m.id,t)])got++;});
+  return {total:total,got:got};
+}
+function ingList(m){
+  return m.ing.map(t=>{
+    const k=ingKey(m.id,t),on=!!shopChecked[k];
+    return '<label class="shopitem'+(on?" on":"")+'" data-k="'+k+'"><input type="checkbox"'+(on?" checked":"")+'>'+
+      '<span class="nm">'+esc(t)+'</span></label>';
+  }).join("");
+}
+function wireIngs(root,rerender){
+  root.querySelectorAll(".shopitem input").forEach(inp=>inp.addEventListener("change",ev=>{
+    const k=ev.target.closest(".shopitem").dataset.k;
+    if(ev.target.checked)shopChecked[k]=true;else delete shopChecked[k];
+    save(KEY_SHOP,shopChecked);rerender();
   }));
 }
 function renderMeals(){
-  const w=WEEKS[wk],t=TARGETS[wk===0?"week1":"week2"];
+  const open=[...views.meals.querySelectorAll("details[open]")].map(d=>d.dataset.id);
+  const scroll=window.scrollY;
   views.meals.innerHTML=
-   weekPicker()+
-   '<div class="card"><h2>'+esc(w.label)+'</h2>'+
-   '<p class="lede" style="margin-top:4px">'+esc(w.note)+'</p>'+
-   '<div class="macros"><div class="macro"><b>'+esc(t.kcal)+'</b><span>kcal / day</span></div>'+
-   '<div class="macro"><b>'+esc(t.protein)+'</b><span>g protein</span></div>'+
-   '<div class="macro"><b>\u2212'+esc(t.deficit)+'</b><span>kcal deficit</span></div>'+
-   '<div class="macro"><b>'+esc(t.rate)+'</b><span>kg / week</span></div></div>'+
-   (PORTION_NOTE?'<p class="portionline">'+esc(PORTION_NOTE)+'</p>':'')+'</div>'+
-   w.cooks.map(c=>'<div class="card"><h2>'+esc(c.day)+'</h2>'+
-     '<p class="lede">'+esc(c.time)+' \u00b7 '+esc(c.yields)+' \u00b7 covers '+esc(c.covers)+'</p>'+
-     '<p class="note-bar" style="margin-top:10px">'+esc(c.kit)+'</p>'+
-     '<details class="fold" style="margin-top:12px"><summary><span>Timeline</span><span class="chip">'+esc(c.time)+'</span></summary>'+
-     '<div class="tl" style="margin-top:8px">'+c.timeline.map(r=>'<div class="tlrow"><span class="t">'+esc(r[0])+'</span><span>'+esc(r[1])+'</span></div>').join("")+'</div></details>'+
-     c.dishes.map(d=>'<details class="dish"><summary><span>'+esc(d.name)+'</span><span class="chip warm">'+esc(d.portions)+'</span></summary>'+
-       '<p class="macros-line">'+esc(d.macros)+'</p>'+
-       '<p class="selfline">'+esc(d.self)+'</p>'+
-       '<h4>Ingredients</h4><ul>'+d.ing.map(i=>'<li>'+esc(i)+'</li>').join("")+'</ul>'+
-       '<h4>Method</h4><ol>'+d.steps.map(s=>'<li>'+esc(s)+'</li>').join("")+'</ol>'+
-       '<p class="reheat"><strong>Reheat:</strong> '+esc(d.reheat)+'</p></details>').join("")+'</div>').join("")+
    '<div class="card"><h2>Every day</h2>'+
+   '<div class="macros"><div class="macro"><b>'+esc(TARGETS.kcal)+'</b><span>kcal / day</span></div>'+
+   '<div class="macro"><b>'+esc(TARGETS.protein)+'</b><span>g protein</span></div>'+
+   '<div class="macro"><b>\u2212'+esc(TARGETS.deficit)+'</b><span>kcal deficit</span></div>'+
+   '<div class="macro"><b>'+esc(TARGETS.rate)+'</b><span>kg / week</span></div></div>'+
    FIXED.map(b=>'<div class="qa"><strong>'+esc(b.name)+'</strong>'+
      '<p class="macros-line" style="margin:2px 0 3px">'+esc(b.macros)+'</p>'+
      '<span>'+esc(b.what)+'</span></div>').join("")+'</div>'+
+   '<div class="card"><h2>Meals</h2>'+
+   '<p class="lede" style="margin-top:4px">Five portions each. Tick the box to add a meal to the Shop tab.</p>'+
+   '<div style="margin-top:10px">'+MEALS.map(m=>{
+     const st=mealStats(m),on=!!picked[m.id];
+     return '<details class="dish" data-id="'+m.id+'"'+(open.indexOf(m.id)>=0?" open":"")+'>'+
+       '<summary><span>'+esc(m.name)+'</span>'+
+       '<span class="chip'+(on?" done":"")+'" data-pick="'+m.id+'">'+(on?"picked":"pick")+'</span></summary>'+
+       '<p class="macros-line">'+esc(m.macros)+'</p>'+
+       '<p class="selfline">'+esc(m.time)+' \u00b7 '+esc(m.portions)+
+         (st.got?' \u00b7 '+st.got+' of '+st.total+' ingredients ticked':'')+'</p>'+
+       '<h4>Ingredients</h4><div>'+ingList(m)+'</div>'+
+       '<h4>Method</h4><ol>'+m.steps.map(s=>'<li>'+esc(s)+'</li>').join("")+'</ol>'+
+       '<p class="reheat"><strong>Reheat:</strong> '+esc(m.reheat)+'</p></details>';
+   }).join("")+'</div></div>'+
    '<div class="card"><h2>Protein snacks</h2>'+
    '<p class="lede" style="margin-top:4px">'+esc(SNACK_NOTE)+'</p>'+
    '<div style="margin-top:10px">'+SNACK_SETS.map(s=>
@@ -634,44 +651,51 @@ function renderMeals(){
      '<div class="snackrow"><span class="nm">Evening</span><span class="p">'+esc(s.b)+'</span></div>'+
      '<p class="portionline" style="margin-top:5px">Buy: '+esc(s.buy)+'</p></div>').join("")+'</div>'+
    '<p class="portionline">'+esc(SNACK_SWAPS)+'</p></div>'+
-   '<div class="card"><h2>Storage and reheating</h2><ul style="margin:8px 0 0;padding-left:1.1rem;font-size:.85rem;color:var(--ink-dim)">'+
+   '<div class="card"><h2>Storage</h2><ul style="margin:8px 0 0;padding-left:1.1rem;font-size:.85rem;color:var(--ink-dim)">'+
    STORAGE.map(s=>'<li style="margin-bottom:6px">'+esc(s)+'</li>').join("")+'</ul></div>'+
-   '<div class="card"><h2>Swaps</h2>'+SWAPS.map(s=>'<div class="qa"><strong>'+esc(s[0])+'</strong><span>'+esc(s[1])+'</span></div>').join("")+'</div>'+
    '<div class="card"><h2>When it goes wrong</h2>'+TROUBLE.map(s=>'<div class="qa"><strong>'+esc(s[0])+'</strong><span>'+esc(s[1])+'</span></div>').join("")+'</div>';
-  wirePicker(views.meals,renderMeals);
+  views.meals.querySelectorAll("[data-pick]").forEach(c=>c.addEventListener("click",ev=>{
+    ev.preventDefault();ev.stopPropagation();
+    const id=c.dataset.pick;
+    if(picked[id])delete picked[id];else picked[id]=true;
+    save(KEY_PICK,picked);renderMeals();renderShop();
+  }));
+  wireIngs(views.meals,()=>{renderMeals();renderShop();});
+  window.scrollTo(0,scroll);
 }
 
 /* ---------- shop ---------- */
-function shopList(){return SHOPPING[WEEKS[wk].id];}
 function renderShop(){
-  const done=shopList().reduce((n,g)=>n+g.items.filter(it=>shopChecked[key4(it[0])]).length,0);
-  const total=shopList().reduce((n,g)=>n+g.items.length,0);
-  views.shop.innerHTML=weekPicker()+
-   '<div class="card"><h2>Waitrose list \u2014 '+esc(WEEKS[wk].label)+'</h2>'+
-   '<p class="lede" style="margin-top:4px">'+done+' of '+total+' ticked off.</p>'+
-   '<div id="shoplist" style="margin-top:10px"></div>'+
-   '<div class="btnrow"><button class="btn ghost" id="clearshop">Clear ticks</button></div></div>'+
-   '';
-  paintShop();
-  wirePicker(views.shop,renderShop);
-  $("#clearshop").addEventListener("click",()=>{
-    shopList().forEach(g=>g.items.forEach(it=>{delete shopChecked[key4(it[0])];}));
-    save(KEY_SHOP,shopChecked);renderShop();
+  const chosen=MEALS.filter(m=>picked[m.id]);
+  const scroll=views.shop.hidden?0:window.scrollY;
+  let body;
+  if(!chosen.length){
+    body='<div class="card"><div class="empty"><strong>Nothing picked yet</strong>'+
+      'Open the Meals tab and tap <em>pick</em> on what you are cooking. Their ingredients gather here.</div></div>';
+  }else{
+    let got=0,total=0;
+    chosen.forEach(m=>{const s=mealStats(m);got+=s.got;total+=s.total;});
+    body='<div class="card"><h2>Shopping list</h2>'+
+      '<p class="lede" style="margin-top:4px">'+chosen.length+' meal'+(chosen.length===1?"":"s")+
+      ' \u00b7 '+got+' of '+total+' ticked</p>'+
+      chosen.map(m=>'<div style="margin-top:14px">'+
+        '<p class="shopgroup">'+esc(m.name)+'</p>'+ingList(m)+'</div>').join("")+
+      '<div class="btnrow"><button class="btn ghost" id="clearticks">Clear ticks</button></div></div>';
+  }
+  views.shop.innerHTML=body+
+   '<div class="card"><h2>Staples</h2><p class="lede" style="margin-top:4px">Needed whatever you cook.</p>'+
+   '<div style="margin-top:8px">'+STAPLES.map(s=>{
+     const k="staple__"+s[0].replace(/[^a-z0-9]/gi,"").toLowerCase().slice(0,28),on=!!shopChecked[k];
+     return '<label class="shopitem'+(on?" on":"")+'" data-k="'+k+'"><input type="checkbox"'+(on?" checked":"")+'>'+
+       '<span class="nm">'+esc(s[0])+'</span><span class="q">'+esc(s[1])+'</span></label>';
+   }).join("")+'</div></div>';
+  wireIngs(views.shop,()=>{renderShop();renderMeals();});
+  const c=$("#clearticks");
+  if(c)c.addEventListener("click",()=>{
+    chosen.forEach(m=>m.ing.forEach(t=>{delete shopChecked[ingKey(m.id,t)];}));
+    save(KEY_SHOP,shopChecked);renderShop();renderMeals();
   });
-}
-function key4(nm){return WEEKS[wk].id+"_"+nm.replace(/[^a-z0-9]/gi,"").toLowerCase();}
-function paintShop(){
-  const el=$("#shoplist");if(!el)return;
-  el.innerHTML=shopList().map(g=>'<p class="shopgroup">'+esc(g.group)+'</p>'+g.items.map(function(it){
-    const nm=it[0],q=it[1],k=key4(nm),on=!!shopChecked[k];
-    return '<label class="shopitem'+(on?" on":"")+'" data-k="'+k+'"><input type="checkbox"'+(on?" checked":"")+'>'+
-      '<span class="nm">'+esc(nm)+'</span><span class="q">'+esc(q)+'</span></label>';
-  }).join("")).join("");
-  el.querySelectorAll(".shopitem input").forEach(inp=>inp.addEventListener("change",ev=>{
-    const k=ev.target.closest(".shopitem").dataset.k;
-    if(ev.target.checked)shopChecked[k]=true;else delete shopChecked[k];
-    save(KEY_SHOP,shopChecked);renderShop();
-  }));
+  if(scroll)window.scrollTo(0,scroll);
 }
 
 /* ---------- boot ---------- */
