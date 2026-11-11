@@ -37,7 +37,16 @@ const PLAN=[
    {id:"lyingcurl",tag:"3",n:"Lying leg curl",s:4,r:"10–12",rest:"60 s",rs:60,note:"Different hip angle to Day 2's seated curl."},
    {id:"legext",tag:"4",n:"Leg extension",s:3,r:"12–15",rest:"75 s",rs:75,note:"Last set as a drop set once a fortnight."},
    {id:"seatedcalf",tag:"5",n:"Seated calf raise, dumbbell on knees",s:3,r:"12–15",rest:"75 s",rs:75,note:"Sit on a bench, balls of feet on a plate or step, one heavy dumbbell upright on your knees. Knees at 90°. Leg press with a soft knee works too."},
-   {id:"crunch",tag:"6",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips."}]}
+   {id:"crunch",tag:"6",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips."}]},
+ {key:"cardio",n:5,name:"Cardio",day:"Saturday",focus:"Steady state, one session a week",cardio:true,
+  warmup:{general:"3 min on the Renegade bike, easy \u2014 just turning the pedals.",drills:["10 leg swings each side","10 arm circles each way"]},
+  blurb:"",
+  ex:[
+   {id:"airbike",tag:"1",n:"Renegade air bike",s:1,r:"10 min",rest:"2 min",rs:120,cols:["min","cal"],note:"60\u201365 rpm, able to hold a conversation. Arms and legs together, not legs alone."},
+   {id:"rower",tag:"2",n:"Rower",s:1,r:"8 min",rest:"2 min",rs:120,cols:["min","metres"],note:"22\u201324 strokes a minute. Legs, then back, then arms."},
+   {id:"inclinewalk",tag:"3",n:"Incline treadmill walk",s:1,r:"10 min",rest:"2 min",rs:120,cols:["min","km"],note:"10\u201312% incline, 5\u20136 km/h. No holding the rails."},
+   {id:"bikeintervals",tag:"4",n:"Air bike intervals \u2014 optional",s:6,r:"20 s hard / 40 s easy",rest:"40 s",rs:40,cols:["round","cal"],note:"Only if your legs feel fresh. Skip it the day before Lower A."},
+   {id:"cooldown",tag:"5",n:"Cool-down walk",s:1,r:"4 min",rest:"\u2014",rs:60,cols:["min","km"],note:"Flat, easy, until your breathing settles."}]}
 ];
 
 /* Ten meals. Each makes 5 portions, protein-heavy and light on carbs.

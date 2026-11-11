@@ -383,6 +383,11 @@ function topWeightFor(dayKey,exId){
   return top;
 }
 function warmupBlock(d){
+  if(d.cardio){
+    return '<div class="warm"><h3>Warm-up</h3>'+
+      '<p class="gen">'+esc(d.warmup.general)+'</p>'+
+      '<h4>Then</h4><ul>'+d.warmup.drills.map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul></div>';
+  }
   const first=d.ex[0],top=topWeightFor(d.key,first.id);
   let ramp;
   if(top===null||top<=0){
@@ -430,14 +435,15 @@ function openSession(key){
    (last?'<div class="note-bar">Last logged '+esc(daysAgo(last.date))+', '+esc(fmtDate(last.date))+'.</div>':'')+
    '<div class="card">'+d.ex.map(e=>{
      const prev=lastSets[e.id]||[];
-     let rows='<div class="colhead"><span>Set</span><span>kg</span><span>Reps</span><span>Last</span></div><div class="sets">';
+     const cols=e.cols||["kg","reps"];
+     let rows='<div class="colhead"><span>'+(d.cardio?"#":"Set")+'</span><span>'+esc(cols[0])+'</span><span>'+esc(cols[1])+'</span><span>Last</span></div><div class="sets">';
      for(let i=0;i<e.s;i++){
        const p=prev[i];
        const dv=(drSets[e.id]||[])[i]||{w:"",r:""};
        rows+='<div class="setrow"><span class="n">'+(i+1)+'</span>'+
-         '<input id="'+e.id+'-w-'+i+'" value="'+esc(dv.w||"")+'" inputmode="decimal" placeholder="kg" aria-label="'+esc(e.n)+' set '+(i+1)+' weight">'+
-         '<input id="'+e.id+'-r-'+i+'" value="'+esc(dv.r||"")+'" inputmode="numeric" placeholder="reps" aria-label="'+esc(e.n)+' set '+(i+1)+' reps">'+
-         '<span class="last">'+(p?esc(p.w)+" × "+esc(p.r):"—")+'</span></div>';
+         '<input id="'+e.id+'-w-'+i+'" value="'+esc(dv.w||"")+'" inputmode="decimal" placeholder="'+esc(cols[0])+'" aria-label="'+esc(e.n)+' set '+(i+1)+' '+esc(cols[0])+'">'+
+         '<input id="'+e.id+'-r-'+i+'" value="'+esc(dv.r||"")+'" inputmode="numeric" placeholder="'+esc(cols[1])+'" aria-label="'+esc(e.n)+' set '+(i+1)+' '+esc(cols[1])+'">'+
+         '<span class="last">'+(p?(d.cardio?esc(p.w)+" / "+esc(p.r):esc(p.w)+" × "+esc(p.r)):"—")+'</span></div>';
      }
      return '<div class="ex"><h3><span class="tag">'+esc(e.tag)+'</span>'+esc(e.n)+'</h3>'+
        '<p class="target">'+e.s+' × '+esc(e.r)+' · rest '+esc(e.rest)+'</p>'+
@@ -566,14 +572,15 @@ function importData(e){
 }
 
 /* ---------- one logged session, in full ---------- */
-function logStats(s){
+function logStats(s,day){
+  const isCardio=day?!!day.cardio:(PLAN.find(x=>x.key===s.dayKey)||{}).cardio;
   let setCount=0,exCount=0,tonnage=0;
   Object.keys(s.sets||{}).forEach(k=>{
     exCount++;
     s.sets[k].forEach(x=>{
       setCount++;
       const w=parseFloat(x.w),r=parseInt(x.r,10);
-      if(!isNaN(w)&&!isNaN(r))tonnage+=w*r;
+      if(!isCardio&&!isNaN(w)&&!isNaN(r))tonnage+=w*r;
     });
   });
   return {setCount:setCount,exCount:exCount,tonnage:Math.round(tonnage)};
@@ -581,7 +588,7 @@ function logStats(s){
 function openLog(id){
   const s=sessions.find(x=>x.id===id);
   if(!s){show("history");renderHistory();return;}
-  const day=PLAN.find(d=>d.key===s.dayKey),st=logStats(s);
+  const day=PLAN.find(d=>d.key===s.dayKey),st=logStats(s,day);
   const order=day?day.ex.map(e=>e.id):Object.keys(s.sets||{});
   const seen={};const rows=[];
   order.concat(Object.keys(s.sets||{})).forEach(k=>{
@@ -591,8 +598,10 @@ function openLog(id){
     rows.push('<div class="logex"><h3>'+esc(label)+'</h3>'+
       (meta?'':'<p class="tagline">no longer in the plan</p>')+
       (meta?'<p class="tagline">'+esc(meta.tag)+' \u00b7 target '+meta.s+' \u00d7 '+esc(meta.r)+'</p>':'')+
-      '<div class="logsets">'+s.sets[k].map((x,i)=>
-        '<span class="logset"><i>'+(i+1)+'</i><b>'+esc(x.w||"\u2013")+'</b> kg \u00d7 '+esc(x.r||"\u2013")+'</span>').join("")+
+      '<div class="logsets">'+s.sets[k].map((x,i)=>{
+        const c=(meta&&meta.cols)||["kg","reps"];
+        return '<span class="logset"><i>'+(i+1)+'</i><b>'+esc(x.w||"\u2013")+'</b> '+esc(c[0])+' \u00b7 '+esc(x.r||"\u2013")+' '+esc(c[1])+'</span>';
+      }).join("")+
       '</div></div>');
   });
   views.log.innerHTML=
