@@ -265,10 +265,43 @@ details li{margin-bottom:4px}
 <script src="./app-data.js"></script>
 <script>
 /* ---------- storage: this device only ---------- */
-const KEY_S="ii.sessions.v1",KEY_SHOP="ii.shopping.v1",KEY_DRAFT="ii.draft.v1",KEY_PICK="ii.picked.v1",KEY_EXP="ii.lastexport.v1";
+const KEY_S="ii.sessions.v1",KEY_SHOP="ii.shopping.v1",KEY_DRAFT="ii.draft.v1",KEY_PICK="ii.picked.v1",KEY_EXP="ii.lastexport.v1",KEY_MIG="ii.migrated.v2";
 function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch(e){return fb;}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
 let sessions=load(KEY_S,[]),shopChecked=load(KEY_SHOP,{}),drafts=load(KEY_DRAFT,{}),picked=load(KEY_PICK,{}),lastExport=load(KEY_EXP,null);
+
+/* ---------- migration: two lower days became one ---------- */
+/* Sessions logged as Lower A or Lower B are re-filed under the single Lower day,
+   so their sets still feed the Last column. Two logged on the same date merge.
+   Exercises that left the plan keep their records and show in History by name. */
+function migrateLowerDays(){
+  if(load(KEY_MIG,false))return 0;
+  const byId={};let moved=0;
+  sessions.forEach(s=>{
+    let key=s.dayKey,name=s.dayName;
+    if(key==="lowerA"||key==="lowerB"){key="lower";name="Lower";moved++;}
+    const id=s.date+"__"+key;
+    if(byId[id]){
+      const t=byId[id];
+      Object.keys(s.sets||{}).forEach(k=>{if(!t.sets[k])t.sets[k]=s.sets[k];});
+      if((s.savedAt||"")>(t.savedAt||""))t.savedAt=s.savedAt;
+    }else{
+      byId[id]={id:id,date:s.date,dayKey:key,dayName:name,
+                sets:Object.assign({},s.sets||{}),savedAt:s.savedAt};
+    }
+  });
+  sessions=Object.keys(byId).map(k=>byId[k]).sort((a,b)=>a.date<b.date?1:-1);
+  save(KEY_S,sessions);
+  const nd={};
+  Object.keys(drafts).forEach(k=>{
+    const nk=k.replace(/__lower[AB]$/,"__lower");
+    if(nd[nk]){Object.keys(drafts[k].sets||{}).forEach(x=>{if(!nd[nk].sets[x])nd[nk].sets[x]=drafts[k].sets[x];});}
+    else nd[nk]=drafts[k];
+  });
+  drafts=nd;save(KEY_DRAFT,drafts);
+  save(KEY_MIG,true);
+  return moved;
+}
 
 /* ---------- helpers ---------- */
 const $=s=>document.querySelector(s);
@@ -291,6 +324,10 @@ function fmtDate(iso){return new Date(iso+"T12:00:00").toLocaleDateString("en-GB
 function daysAgo(iso){const d=Math.round((Date.now()-new Date(iso+"T12:00:00").getTime())/86400000);
   return d<=0?"today":d===1?"yesterday":d+" days ago";}
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function exMeta(id){
+  for(let i=0;i<PLAN.length;i++){const e=PLAN[i].ex.find(x=>x.id===id);if(e)return e;}
+  return null;
+}
 function lastFor(key){return sessions.filter(s=>s.dayKey===key).sort((a,b)=>b.date<a.date?-1:1)[0];}
 function mmss(sec){const m=Math.floor(Math.abs(sec)/60),s=Math.abs(sec)%60;return (sec<0?"-":"")+m+":"+String(s).padStart(2,"0");}
 
@@ -593,10 +630,10 @@ function openLog(id){
   const seen={};const rows=[];
   order.concat(Object.keys(s.sets||{})).forEach(k=>{
     if(seen[k]||!s.sets[k])return;seen[k]=true;
-    const meta=day?day.ex.find(e=>e.id===k):null;
+    const meta=(day?day.ex.find(e=>e.id===k):null)||exMeta(k);
     const label=meta?meta.n:(RETIRED[k]||k);
     rows.push('<div class="logex"><h3>'+esc(label)+'</h3>'+
-      (meta?'':'<p class="tagline">no longer in the plan</p>')+
+      ((day&&day.ex.find(e=>e.id===k))?'':'<p class="tagline">'+(exMeta(k)?'now on another day':'no longer in the plan')+'</p>')+
       (meta?'<p class="tagline">'+esc(meta.tag)+' \u00b7 target '+meta.s+' \u00d7 '+esc(meta.r)+'</p>':'')+
       '<div class="logsets">'+s.sets[k].map((x,i)=>{
         const c=(meta&&meta.cols)||["kg","reps"];
@@ -745,6 +782,7 @@ function setNet(){
 }
 window.addEventListener("online",setNet);window.addEventListener("offline",setNet);
 pruneDrafts();
+migrateLowerDays();
 renderTrain();renderMeals();renderHistory();renderShop();setNet();
 if("serviceWorker" in navigator){
   /* When a new service worker takes over, reload once so the page shows the new

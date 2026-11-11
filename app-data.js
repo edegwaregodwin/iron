@@ -1,6 +1,6 @@
 /* Iron & Icebox — plan data. Edit here; index.html renders it. */
 const PLAN=[
- {key:"upperA",warmup:{general:"5 min on the rower, easy pace \u2014 just enough to raise your temperature.",drills:["20 band pull-aparts","10 scapular push-ups","10 arm circles each way"]},n:1,name:"Upper A",day:"Monday",focus:"Horizontal push, vertical pull",
+ {key:"upperA",n:1,name:"Upper A",day:"Monday",focus:"Horizontal push, vertical pull",warmup:{general:"5 min on the rower, easy pace \u2014 just enough to raise your temperature.",drills:["20 band pull-aparts","10 scapular push-ups","10 arm circles each way"]},
   blurb:"",
   ex:[
    {id:"bench",tag:"1",n:"Barbell bench press",s:4,r:"6–8",rest:"2–3 min",rs:150,note:"Main strength lift. Add weight before reps."},
@@ -10,16 +10,16 @@ const PLAN=[
    {id:"machinecurl",tag:"5",n:"Machine arm curl",s:3,r:"10–12",rest:"75 s",rs:75,note:"Upper arms flat on the pad the whole set. Three seconds lowering."},
    {id:"ohtri",tag:"6",n:"Overhead cable triceps extension",s:3,r:"12–15",rest:"75 s",rs:75,note:"Rope, full stretch overhead."},
    {id:"pulldown",tag:"7",n:"Lat pulldown, wide grip",s:3,r:"10–12",rest:"60 s",rs:60,note:"Lean back about 15°, drive the elbows down rather than back."}]},
- {key:"lowerA",warmup:{general:"5 min on the bike, easy pace.",drills:["10 bodyweight squats, slow and deep","10 leg swings each side","20 glute bridges","10 ankle rocks each side"]},n:2,name:"Lower A",day:"Tuesday",focus:"Squat",
+ {key:"lower",n:2,name:"Lower",day:"Tuesday",focus:"Quads, hamstrings, calves",warmup:{general:"5 min on the bike, easy pace.",drills:["10 bodyweight squats, slow and deep","10 leg swings each side","20 glute bridges","10 ankle rocks each side"]},
   blurb:"",
   ex:[
    {id:"squat",tag:"1",n:"Back squat",s:4,r:"5–8",rest:"3 min",rs:180,note:"Below parallel if your hips allow. Belt optional on the top set."},
    {id:"legpress",tag:"2",n:"Leg press",s:3,r:"10–12",rest:"2 min",rs:120,note:"Feet mid-platform, knees track over toes."},
-   {id:"lunge",tag:"3",n:"Walking lunge",s:2,r:"10–12 / leg",rest:"60 s",rs:60,note:"Dumbbells at your sides. Long strides."},
+   {id:"legext",tag:"3",n:"Leg extension",s:3,r:"12–15",rest:"75 s",rs:75,note:"Last set as a drop set once a fortnight."},
    {id:"seatedcurl",tag:"4",n:"Seated leg curl",s:3,r:"12–15",rest:"75 s",rs:75,note:"More stretch than lying."},
-   {id:"standcalf",tag:"5",n:"Standing calf raise",s:3,r:"10–15",rest:"75 s",rs:75,note:"2-second pause at the bottom of every rep."},
-   {id:"abwheel",tag:"6",n:"Core — ab wheel or long-lever plank",s:2,r:"8–12 or 30 s",rest:"45 s",rs:45,note:"Ribs down, no sagging."}]},
- {key:"upperB",warmup:{general:"5 min on the rower, easy pace.",drills:["20 band pull-aparts","10 wall slides","10 shoulder dislocates with a band or broomstick"]},n:3,name:"Upper B",day:"Thursday",focus:"Vertical push, horizontal pull",
+   {id:"backext",tag:"5",n:"45° back extension, weighted",s:3,r:"10–12",rest:"2 min",rs:120,note:"Plate at the chest. Squeeze the glutes at the top, don't hyperextend."},
+   {id:"standcalf",tag:"6",n:"Standing calf raise",s:4,r:"10–15",rest:"60 s",rs:60,note:"2-second pause at the bottom of every rep."}]},
+ {key:"upperB",n:3,name:"Upper B",day:"Thursday",focus:"Vertical push, horizontal pull",warmup:{general:"5 min on the rower, easy pace.",drills:["20 band pull-aparts","10 wall slides","10 shoulder dislocates with a band or broomstick"]},
   blurb:"",
   ex:[
    {id:"ohp",tag:"1",n:"Seated shoulder press",s:4,r:"6–8",rest:"2–3 min",rs:150,note:"Backrest at 80–85°. More reclined turns it into a chest press."},
@@ -29,24 +29,16 @@ const PLAN=[
    {id:"inclinecurl",tag:"5",n:"Incline dumbbell curl",s:3,r:"10–12",rest:"75 s",rs:75,note:"Bench at 45°, arms hanging behind you."},
    {id:"pushdown",tag:"6",n:"Rope pushdown or dips",s:3,r:"10–12",rest:"75 s",rs:75,note:"Dips if your shoulders are happy, pushdowns if not."},
    {id:"facepull",tag:"7",n:"Face pull",s:3,r:"15–20",rest:"75 s",rs:75,note:"Light and controlled."}]},
- {key:"lowerB",warmup:{general:"5 min on the bike, easy pace.",drills:["10 walking lunges","10 leg swings each side","10 hip-flexor rocks each side","20 bodyweight calf raises"]},n:4,name:"Lower B",day:"Friday",focus:"Single-leg and posterior chain",
-  blurb:"",
-  ex:[
-   {id:"bulgarian",tag:"1",n:"Bulgarian split squat",s:3,r:"8–10 / leg",rest:"2–3 min",rs:150,note:"Upright for quads, leaned forward for glutes."},
-   {id:"backext",tag:"2",n:"45° back extension, weighted",s:3,r:"10–12",rest:"2 min",rs:120,note:"Plate at the chest. Squeeze the glutes at the top, don't hyperextend."},
-   {id:"lyingcurl",tag:"3",n:"Lying leg curl",s:4,r:"10–12",rest:"60 s",rs:60,note:"Different hip angle to Day 2's seated curl."},
-   {id:"legext",tag:"4",n:"Leg extension",s:3,r:"12–15",rest:"75 s",rs:75,note:"Last set as a drop set once a fortnight."},
-   {id:"seatedcalf",tag:"5",n:"Seated calf raise, dumbbell on knees",s:3,r:"12–15",rest:"75 s",rs:75,note:"Sit on a bench, balls of feet on a plate or step, one heavy dumbbell upright on your knees. Knees at 90°. Leg press with a soft knee works too."},
-   {id:"crunch",tag:"6",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips."}]},
- {key:"cardio",n:5,name:"Cardio",day:"Saturday",focus:"Steady state, one session a week",cardio:true,
-  warmup:{general:"3 min on the Renegade bike, easy \u2014 just turning the pedals.",drills:["10 leg swings each side","10 arm circles each way"]},
+ {key:"cardio",n:4,name:"Cardio",day:"Friday",focus:"Steady state and core",cardio:true,warmup:{general:"3 min on the Renegade bike, easy \u2014 just turning the pedals.",drills:["10 leg swings each side","10 arm circles each way"]},
   blurb:"",
   ex:[
    {id:"airbike",tag:"1",n:"Renegade air bike",s:1,r:"10 min",rest:"2 min",rs:120,cols:["min","cal"],note:"60\u201365 rpm, able to hold a conversation. Arms and legs together, not legs alone."},
    {id:"rower",tag:"2",n:"Rower",s:1,r:"8 min",rest:"2 min",rs:120,cols:["min","metres"],note:"22\u201324 strokes a minute. Legs, then back, then arms."},
    {id:"inclinewalk",tag:"3",n:"Incline treadmill walk",s:1,r:"10 min",rest:"2 min",rs:120,cols:["min","km"],note:"10\u201312% incline, 5\u20136 km/h. No holding the rails."},
    {id:"bikeintervals",tag:"4",n:"Air bike intervals \u2014 optional",s:6,r:"20 s hard / 40 s easy",rest:"40 s",rs:40,cols:["round","cal"],note:"Only if your legs feel fresh. Skip it the day before Lower A."},
-   {id:"cooldown",tag:"5",n:"Cool-down walk",s:1,r:"4 min",rest:"\u2014",rs:60,cols:["min","km"],note:"Flat, easy, until your breathing settles."}]}
+   {id:"abwheel",tag:"5",n:"Core — ab wheel or long-lever plank",s:3,r:"8–12 or 30 s",rest:"60 s",rs:60,note:"Ribs down, no sagging."},
+   {id:"crunch",tag:"6",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips."},
+   {id:"cooldown",tag:"7",n:"Cool-down walk",s:1,r:"4 min",rest:"\u2014",rs:60,cols:["min","km"],note:"Flat, easy, until your breathing settles."}]}
 ];
 
 /* Ten meals. Each makes 5 portions, protein-heavy and light on carbs.
@@ -237,4 +229,4 @@ const RAMP_NOHIST="No history yet \u2014 work up in three or four jumps, 5, 3 an
 
 /* Exercises that have been replaced. Past sessions still carry their ids,
    so History keeps showing a readable name instead of the raw key. */
-const RETIRED={ezcurl:"EZ-bar curl"};
+const RETIRED={ezcurl:"EZ-bar curl",lunge:"Walking lunge",bulgarian:"Bulgarian split squat",lyingcurl:"Lying leg curl",seatedcalf:"Seated calf raise"};

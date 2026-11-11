@@ -2,7 +2,7 @@
    App shell (the page and the plan data) is network-first, so an update lands as
    soon as you open the app with signal. Everything else is cache-first.
    Offline still works: a failed fetch falls back to the cache. */
-const VERSION = 'logged-v24';
+const VERSION = 'logged-v25';
 const SHELL = [
   './',
   './index.html',
