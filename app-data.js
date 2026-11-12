@@ -29,16 +29,18 @@ const PLAN=[
    {id:"inclinecurl",tag:"5",n:"Incline dumbbell curl",s:3,r:"10–12",rest:"75 s",rs:75,note:"Bench at 45°, arms hanging behind you."},
    {id:"pushdown",tag:"6",n:"Rope pushdown or dips",s:3,r:"10–12",rest:"75 s",rs:75,note:"Dips if your shoulders are happy, pushdowns if not."},
    {id:"facepull",tag:"7",n:"Face pull",s:3,r:"15–20",rest:"75 s",rs:75,note:"Light and controlled."}]},
- {key:"cardio",n:4,name:"Cardio",day:"Friday",focus:"Steady state and core",cardio:true,warmup:{general:"3 min on the Renegade bike, easy \u2014 just turning the pedals.",drills:["10 leg swings each side","10 arm circles each way"]},
+ {key:"cardio",n:4,name:"Cardio",day:"Friday",focus:"Steady state, forearms and core",cardio:true,warmup:{general:"3 min on the Renegade bike, easy \u2014 just turning the pedals.",drills:["10 leg swings each side","10 arm circles each way"]},
   blurb:"",
   ex:[
    {id:"airbike",tag:"1",n:"Renegade air bike",s:1,r:"10 min",rest:"2 min",rs:120,cols:["min","cal"],note:"60\u201365 rpm, able to hold a conversation. Arms and legs together, not legs alone."},
    {id:"rower",tag:"2",n:"Rower",s:1,r:"8 min",rest:"2 min",rs:120,cols:["min","metres"],note:"22\u201324 strokes a minute. Legs, then back, then arms."},
    {id:"inclinewalk",tag:"3",n:"Incline treadmill walk",s:1,r:"10 min",rest:"2 min",rs:120,cols:["min","km"],note:"10\u201312% incline, 5\u20136 km/h. No holding the rails."},
    {id:"bikeintervals",tag:"4",n:"Air bike intervals \u2014 optional",s:6,r:"20 s hard / 40 s easy",rest:"40 s",rs:40,cols:["round","cal"],note:"Only if your legs feel fresh. Skip it the day before Lower A."},
-   {id:"abwheel",tag:"5",n:"Core — ab wheel or long-lever plank",s:3,r:"8–12 or 30 s",rest:"60 s",rs:60,note:"Ribs down, no sagging."},
-   {id:"crunch",tag:"6",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips."},
-   {id:"cooldown",tag:"7",n:"Cool-down walk",s:1,r:"4 min",rest:"\u2014",rs:60,cols:["min","km"],note:"Flat, easy, until your breathing settles."}]}
+   {id:"farmers",tag:"5",n:"Farmer's carry",s:3,r:"40 m",rest:"90 s",rs:90,cols:["kg","metres"],note:"Heaviest dumbbells you can hold. Walk tall, no shrugging. The set ends when your grip goes."},
+   {id:"revcurl",tag:"6",n:"Reverse curl",s:3,r:"12–15",rest:"60 s",rs:60,note:"Palms down, EZ-bar or dumbbells. Far lighter than a normal curl — start at half."},
+   {id:"abwheel",tag:"7",n:"Core — ab wheel or long-lever plank",s:3,r:"8–12 or 30 s",rest:"60 s",rs:60,note:"Ribs down, no sagging."},
+   {id:"crunch",tag:"8",n:"Core — cable crunch",s:2,r:"12–15",rest:"45 s",rs:45,note:"Round the spine, ribs to hips."},
+   {id:"cooldown",tag:"9",n:"Cool-down walk",s:1,r:"4 min",rest:"\u2014",rs:60,cols:["min","km"],note:"Flat, easy, until your breathing settles."}]}
 ];
 
 /* Ten meals. Each makes 5 portions, protein-heavy and light on carbs.
